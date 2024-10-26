@@ -37,9 +37,9 @@ public class MainMenuManager : Singleton<MainMenuManager>
         _mainMenuButtonSettings.onClick.AddListener(OnMainMenuButtonSettingsPressed);
         _mainMenuButtonQuitGame.onClick.AddListener(OnMainMenuButtonQuitGamePressed);
         // settings
-        _masterScrollbar.onValueChanged.AddListener(OnMasterVolumeChanged);
-        _musicScrollbar.onValueChanged.AddListener(OnMusicVolumeChanged);
-        _SFXScrollbar.onValueChanged.AddListener(OnSFXVolumeChanged);
+        //_masterScrollbar.onValueChanged.AddListener(OnMasterVolumeChanged);
+        //_musicScrollbar.onValueChanged.AddListener(OnMusicVolumeChanged);
+        //_SFXScrollbar.onValueChanged.AddListener(OnSFXVolumeChanged);
         _settingsMenuButtonBack.onClick.AddListener(OnSettingsMenuButtonBackPressed);
     }
 
@@ -52,9 +52,9 @@ public class MainMenuManager : Singleton<MainMenuManager>
         _mainMenuButtonSettings.onClick.RemoveListener(OnMainMenuButtonSettingsPressed);
         _mainMenuButtonQuitGame.onClick.RemoveListener(OnMainMenuButtonQuitGamePressed);
         // settings
-        _masterScrollbar.onValueChanged.RemoveListener(OnMasterVolumeChanged);
-        _musicScrollbar.onValueChanged.RemoveListener(OnMusicVolumeChanged);
-        _SFXScrollbar.onValueChanged.RemoveListener(OnSFXVolumeChanged);
+        //_masterScrollbar.onValueChanged.RemoveListener(OnMasterVolumeChanged);
+        //_musicScrollbar.onValueChanged.RemoveListener(OnMusicVolumeChanged);
+        //_SFXScrollbar.onValueChanged.RemoveListener(OnSFXVolumeChanged);
         _settingsMenuButtonBack.onClick.RemoveListener(OnSettingsMenuButtonBackPressed);
     }
 
@@ -87,9 +87,9 @@ public class MainMenuManager : Singleton<MainMenuManager>
         _mainMenuButtonSettings.Select();
     }
 
-    private void OnMasterVolumeChanged(float value) => WorldSoundManager.StaticInstance.SetVolume(WorldSoundManager.StaticInstance.Master, VolumeType.Master, value);
-    private void OnMusicVolumeChanged(float value) => WorldSoundManager.StaticInstance.SetVolume(WorldSoundManager.StaticInstance.Music, VolumeType.Ambient, value);
-    private void OnSFXVolumeChanged(float value) => WorldSoundManager.StaticInstance.SetVolume(WorldSoundManager.StaticInstance.SFX, VolumeType.SFX, value);
+    //private void OnMasterVolumeChanged(float value) => WorldSoundManager.StaticInstance.SetVolume(WorldSoundManager.StaticInstance.Master, VolumeType.Master, value);
+    //private void OnMusicVolumeChanged(float value) => WorldSoundManager.StaticInstance.SetVolume(WorldSoundManager.StaticInstance.Music, VolumeType.Ambient, value);
+    //private void OnSFXVolumeChanged(float value) => WorldSoundManager.StaticInstance.SetVolume(WorldSoundManager.StaticInstance.SFX, VolumeType.SFX, value);
 
     private void OnMainMenuButtonQuitGamePressed()
     {
