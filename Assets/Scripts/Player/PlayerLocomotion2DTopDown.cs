@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerLocomotion2DTopDown : MonoBehaviour
@@ -9,6 +10,11 @@ public class PlayerLocomotion2DTopDown : MonoBehaviour
     public Vector2 MoveInput;
     [SerializeField] private float _moveSpeed = 4f;
 
+    public void OnMove(InputValue value)
+    {
+        MoveInput = value.Get<Vector2>();
+    }
+
     private void Awake()
     {
         _rb = GetComponent<Rigidbody2D>();
@@ -16,7 +22,6 @@ public class PlayerLocomotion2DTopDown : MonoBehaviour
 
     private void Update()
     {
-        MoveInput = new(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));// временно
         Flip();
     }
 

@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(CharacterController))]
 public class PlayerLocomotion3D : MonoBehaviour
@@ -21,24 +22,28 @@ public class PlayerLocomotion3D : MonoBehaviour
     [SerializeField, Range(0.1f, 1f)] private float _timeToFall = 0.25f;
     [SerializeField] private float _gravity = -20f;
 
+    public void OnMove(InputValue value)
+    {
+        MoveInput = value.Get<Vector2>();
+    }
+
+    public void OnLook(InputValue value)
+    {
+        LookInput = value.Get<Vector2>();
+    }
+
+    public void OnJump()
+    {
+        _jumpTime = _timeToJump;
+    }
+
     private void Awake()
     {
         _cc = GetComponent<CharacterController>();
     }
 
-    public void Jump()
-    {
-        _jumpTime = _timeToJump;
-    }
-
     private void Update()
     {
-        MoveInput = new(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));// временно
-        LookInput = new(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"));// временно
-        if (Input.GetButtonDown("Jump"))// временно
-        {
-            Jump();
-        }
         HandleGravity();
         HandleMovement();
         HandleRotation();

@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerLocomotion2DSideScroller : MonoBehaviour
@@ -17,14 +18,19 @@ public class PlayerLocomotion2DSideScroller : MonoBehaviour
     [SerializeField] private Transform _groundChecker;
     [SerializeField] private Vector2 _groundSize;
 
+    public void OnMove(InputValue value)
+    {
+        MoveInput = value.Get<Vector2>().x;
+    }
+
+    public void OnJump()
+    {
+        _jumpTime = _timeToJump;
+    }
+
     private void Awake()
     {
         _rb = GetComponent<Rigidbody2D>();
-    }
-
-    public void Jump()
-    {
-        _jumpTime = _timeToJump;
     }
 
     private void Update()
@@ -39,11 +45,6 @@ public class PlayerLocomotion2DSideScroller : MonoBehaviour
             _groundedTime -= Time.deltaTime;
         }
         _jumpTime -= Time.deltaTime;
-        MoveInput = Input.GetAxis("Horizontal");// временно
-        if (Input.GetButtonDown("Jump"))// временно
-        {
-            Jump();
-        }
         Flip();
     }
 
