@@ -1104,6 +1104,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 1646274919256594051}
   - {fileID: 7871905050865690412}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1127,9 +1128,6 @@ MonoBehaviour:
   _mainMenuButtonSettings: {fileID: 6832733539618333396}
   _mainMenuButtonQuitGame: {fileID: 2677836715234283774}
   _settingMenuWindow: {fileID: 6813780013777340418}
-  _masterScrollbar: {fileID: 6784627040112335189}
-  _musicScrollbar: {fileID: 3816689803068341381}
-  _SFXScrollbar: {fileID: 2779845279074519604}
   _settingsMenuButtonBack: {fileID: 6331459756028987511}
 --- !u!1 &3490770233794065635
 GameObject:
@@ -2853,6 +2851,72 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!1 &6673892516119477670
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1646274919256594051}
+  - component: {fileID: 4753697164650638635}
+  - component: {fileID: 4430413069759876873}
+  m_Layer: 0
+  m_Name: Audio Settings
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1646274919256594051
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6673892516119477670}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7871148738642827364}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4753697164650638635
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6673892516119477670}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b9468c5f457ace64f8d4df6d642b107f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  LoadEvent: 1
+  UnloadEvent: 0
+  Banks:
+  - Master
+  CollisionTag: 
+  PreloadSamples: 0
+--- !u!114 &4430413069759876873
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6673892516119477670}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 575169eaa6ce5479f934f308a88662d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _masterScrollbar: {fileID: 6784627040112335189}
+  _musicScrollbar: {fileID: 3816689803068341381}
+  _SFXScrollbar: {fileID: 2779845279074519604}
 --- !u!1 &6813780013777340418
 GameObject:
   m_ObjectHideFlags: 0

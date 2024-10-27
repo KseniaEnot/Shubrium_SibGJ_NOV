@@ -14,18 +14,12 @@ public class MainMenuManager : Singleton<MainMenuManager>
     [SerializeField] private Button _mainMenuButtonQuitGame;
     [Header("Settings Menu")]
     [SerializeField] private GameObject _settingMenuWindow;
-    [SerializeField] private Scrollbar _masterScrollbar;
-    [SerializeField] private Scrollbar _musicScrollbar;
-    [SerializeField] private Scrollbar _SFXScrollbar;
     [SerializeField] private Button _settingsMenuButtonBack;
 
     protected override void Awake()
     {
         base.Awake();
         _titleScreenButtonStart.Select();
-        _masterScrollbar.value = AudioPreferences.LoadVolume(VolumeType.Master);
-        _musicScrollbar.value = AudioPreferences.LoadVolume(VolumeType.Ambient);
-        _SFXScrollbar.value = AudioPreferences.LoadVolume(VolumeType.SFX);
     }
 
     private void OnEnable()
@@ -37,9 +31,6 @@ public class MainMenuManager : Singleton<MainMenuManager>
         _mainMenuButtonSettings.onClick.AddListener(OnMainMenuButtonSettingsPressed);
         _mainMenuButtonQuitGame.onClick.AddListener(OnMainMenuButtonQuitGamePressed);
         // settings
-        //_masterScrollbar.onValueChanged.AddListener(OnMasterVolumeChanged);
-        //_musicScrollbar.onValueChanged.AddListener(OnMusicVolumeChanged);
-        //_SFXScrollbar.onValueChanged.AddListener(OnSFXVolumeChanged);
         _settingsMenuButtonBack.onClick.AddListener(OnSettingsMenuButtonBackPressed);
     }
 
@@ -52,9 +43,6 @@ public class MainMenuManager : Singleton<MainMenuManager>
         _mainMenuButtonSettings.onClick.RemoveListener(OnMainMenuButtonSettingsPressed);
         _mainMenuButtonQuitGame.onClick.RemoveListener(OnMainMenuButtonQuitGamePressed);
         // settings
-        //_masterScrollbar.onValueChanged.RemoveListener(OnMasterVolumeChanged);
-        //_musicScrollbar.onValueChanged.RemoveListener(OnMusicVolumeChanged);
-        //_SFXScrollbar.onValueChanged.RemoveListener(OnSFXVolumeChanged);
         _settingsMenuButtonBack.onClick.RemoveListener(OnSettingsMenuButtonBackPressed);
     }
 
@@ -86,10 +74,6 @@ public class MainMenuManager : Singleton<MainMenuManager>
         _mainMenuWindow.SetActive(true);
         _mainMenuButtonSettings.Select();
     }
-
-    //private void OnMasterVolumeChanged(float value) => WorldSoundManager.StaticInstance.SetVolume(WorldSoundManager.StaticInstance.Master, VolumeType.Master, value);
-    //private void OnMusicVolumeChanged(float value) => WorldSoundManager.StaticInstance.SetVolume(WorldSoundManager.StaticInstance.Music, VolumeType.Ambient, value);
-    //private void OnSFXVolumeChanged(float value) => WorldSoundManager.StaticInstance.SetVolume(WorldSoundManager.StaticInstance.SFX, VolumeType.SFX, value);
 
     private void OnMainMenuButtonQuitGamePressed()
     {
