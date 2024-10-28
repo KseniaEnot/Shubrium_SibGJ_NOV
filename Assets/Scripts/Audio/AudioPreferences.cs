@@ -2,7 +2,7 @@ using UnityEngine;
 
 public static class AudioPreferences
 {
-    public static void SaveVolume(VolumeType volumeType, float volume)
+    public static void SetVolume(VolumeType volumeType, float volume)
     {
         PlayerPrefs.SetFloat(volumeType.ToString(), volume);
     }

@@ -20,6 +20,13 @@ public class AudioSettings : MonoBehaviour
 		_SFXScrollbar.onValueChanged.AddListener(OnSFXVolumeChanged);
 	}
 	
+	private void OnDisable()
+	{
+		_masterScrollbar.onValueChanged.RemoveListener(OnMasterVolumeChanged);
+		_musicScrollbar.onValueChanged.RemoveListener(OnMusicVolumeChanged);
+		_SFXScrollbar.onValueChanged.RemoveListener(OnSFXVolumeChanged);
+	}
+
 	private void InitializeBars()
 	{
 		_masterScrollbar.value = AudioPreferences.LoadVolume(VolumeType.Master);
