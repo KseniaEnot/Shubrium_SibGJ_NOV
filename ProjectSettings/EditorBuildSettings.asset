@@ -9,6 +9,6 @@ EditorBuildSettings:
     path: Assets/Scenes/MainMenu.unity
     guid: b031421af30deef46983d35cb144abaf
   - enabled: 1
-    path: Assets/_Fedji/Scenes/Fedji_Scene.unity
+    path: Assets/Scenes/Game.unity
     guid: dc5fa9f2ba63e424ca0e43a78fc886b4
   m_configObjects: {}
