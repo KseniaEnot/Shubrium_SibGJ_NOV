@@ -14,6 +14,8 @@ public static class EventBus
     public static event Action OnSendCharacterToExit;
     public static event Action OnCharacterReachedEnter;
     public static event Action OnCharacterReachedExit;
+    public static event Action<int> OnRequiredCoinsUpdated;
+    public static event Action<int> OnLootedCoinsUpdated;
     public static event Action<int> OnAllCoinsLooted;
 
     public static void GameStarted()
@@ -68,6 +70,16 @@ public static class EventBus
     public static void CharacterReachedExit()
     {
         OnCharacterReachedExit?.Invoke();
+    }
+
+    public static void RequiredCoinsUpdated(int amount)
+    {
+        OnRequiredCoinsUpdated?.Invoke(amount);
+    }
+
+    public static void LootedCoinsUpdated(int amount)
+    {
+        OnLootedCoinsUpdated?.Invoke(amount);
     }
 
     public static void AllCoinsLooted(int amount)

@@ -150,6 +150,7 @@ public class InGameUIManager : MonoBehaviour
 
     private void OnMiniGameButtonEndPressed()
     {
+        _miniGameButtonEnd.gameObject.SetActive(false);
         _miniGameManager.StopSharing();
     }
     // DEADLINE

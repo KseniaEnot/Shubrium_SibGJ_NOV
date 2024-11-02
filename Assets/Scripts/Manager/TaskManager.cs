@@ -90,6 +90,7 @@ public class TaskManager : MonoBehaviour
     public void MarkCurrentTaskAsStarted()
     {
         _tasksForCurrentDay[0].QuestStarted = true;// mark quest as started
+        EventBus.RequiredCoinsUpdated(_tasksForCurrentDay[0].CurrentQuest.RequestedGold);
     }
 
     public void RemoveCurrentTask()
