@@ -42,7 +42,7 @@ public class MoneyBag : MonoBehaviour
             currentAngle = transform.eulerAngles.z;
             if (currentAngle < _maxDownAngle)
             {
-                transform.Rotate(Vector3.forward * _rotateUpSpeed * Time.deltaTime);
+                transform.Rotate(Vector3.forward * _rotateDownSpeed * Time.deltaTime);
             }
             if (currentAngle > _angleToDropCoins)
             {

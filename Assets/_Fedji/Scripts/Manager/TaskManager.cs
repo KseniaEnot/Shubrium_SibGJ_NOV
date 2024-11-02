@@ -55,11 +55,6 @@ public class TaskManager : Singleton<TaskManager>
         }
     }
 
-    public string GetCurrentQuestDescriptionText()
-    {
-        return $"{_tasks[0].CurrentQuest.Description}\n{_tasks[0].CurrentQuest.RequestText} {_tasks[0].CurrentQuest.RequestedGold} золота.";
-    }
-
     public string GetCurrentTaskNoGoldReactionText()
     {
         return _tasks[0].CurrentCharacter.GetNoGoldReaction();
@@ -106,10 +101,18 @@ public class TaskManager : Singleton<TaskManager>
         if (_tasks[0].QuestStarted)
         {
             // сообщает успешно или нет
+            if (_tasks[0].QuestSuccessful)
+            {
+                InGameUIManager.StaticInstance.ShowQuestResultBar($"{_tasks[0].CurrentQuest.SuccessText} {1000f} золота.");// calculate reward!
+            }
+            else
+            {
+                InGameUIManager.StaticInstance.ShowQuestResultBar(_tasks[0].CurrentQuest.FailedText);
+            }
         }
         else
         {
-            InGameUIManager.StaticInstance.ShowQuestRequestBar();
+            InGameUIManager.StaticInstance.ShowQuestRequestBar($"{_tasks[0].CurrentQuest.Description} {_tasks[0].CurrentQuest.RequestedGold} золота.");
         }
     }
 

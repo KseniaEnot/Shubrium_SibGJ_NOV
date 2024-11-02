@@ -4,9 +4,10 @@ using UnityEngine;
 public class QuestConfig : ScriptableObject
 {
     public string DisplayName = "Name";
-    [TextArea] public string Description = "Problem appear. We need more food. Help me.";
-    [TextArea] public string RequestText = "I need/We need/Give me/other.";
+    [TextArea] public string Description = "Problem appear. We need more food. Help me. I need";
     public int RequestedGold = 10;
+    [TextArea] public string SuccessText = "I complete quest and give you";
+    [TextArea] public string FailedText = "I fail quest... Sorry... Cant give you gold...";
     public bool Repeatable = true;
     [Header("Success Chance")]
     [Range(0f, 1f)] public float MinSuccessChance = 0.25f;

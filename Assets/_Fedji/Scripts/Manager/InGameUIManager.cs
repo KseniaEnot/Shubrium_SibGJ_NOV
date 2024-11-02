@@ -48,7 +48,7 @@ public class InGameUIManager : Singleton<InGameUIManager>
         _miniGameButtonStart.onClick.RemoveListener(OnMiniGameButtonStartPressed);
         _miniGameButtonEnd.onClick.RemoveListener(OnMiniGameButtonEndPressed);
     }
-
+    // SUMMARY OF DAY
     private void OnNewGameButtonOkayPressed()
     {
         _newGameNotification.SetActive(false);
@@ -67,10 +67,10 @@ public class InGameUIManager : Singleton<InGameUIManager>
         _summaryOfDayBar.SetActive(false);
         TaskManager.StaticInstance.StartNewDay();
     }
-
-    public void ShowQuestRequestBar()
+    // REQUEST BAR
+    public void ShowQuestRequestBar(string text)
     {
-        _questRequestText.text = TaskManager.StaticInstance.GetCurrentQuestDescriptionText();
+        _questRequestText.text = text;
         _questRequestBar.SetActive(true);
         _questRequestButtonAccept.Select();
         // ui actions
@@ -92,6 +92,14 @@ public class InGameUIManager : Singleton<InGameUIManager>
         _miniGameBar.SetActive(true);
         _miniGameButtonStart.gameObject.SetActive(true);
         _miniGameButtonStart.Select();
+    }
+    // RESULT BAR
+    public void ShowQuestResultBar(string text)
+    {
+        _questRequestText.text = text;
+        _questRequestBar.SetActive(true);
+        _questRequestButtonAccept.Select();
+        // ui actions
     }
 
     private void OnQuestResultButtonOkayPressed()
