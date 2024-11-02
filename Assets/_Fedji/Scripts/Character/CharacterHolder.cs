@@ -1,80 +1,76 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public class CharacterHolder : Singleton<CharacterHolder>
 {
-    [SerializeField] private Transform _enterPoint;
-    [SerializeField] private Transform _exitPoint;
-    [SerializeField] private float _moveSpeed = 4f;
+	[SerializeField] private Transform _enterPoint;
+	[SerializeField] private Transform _exitPoint;
+	[SerializeField] private float _moveSpeed = 4f;
+	[SerializeField] private float _rotationSpeed = 180f;
 
-    [SerializeField] private Animator _animator;
-    private List<GameObject> _characterModels = new();
+	private List<GameObject> _characterModels = new();
+	private Animator _animator;
 
-    protected override void Awake()
-    {
-        base.Awake();
-        for (int i = 0; i < GameDataManager.StaticInstance.CharacterConfigs.Count; i++)
-        {
-            _characterModels.Add(Instantiate(GameDataManager.StaticInstance.CharacterConfigs[i].Model, _exitPoint.position, Quaternion.identity, transform));
-        }
-    }
+	protected override void Awake()
+	{
+		base.Awake();
 
-    public void SwitchActiveCharacter(int index)
-    {
-        for (int i = 0; i < _characterModels.Count; i++)
-        {
-            _characterModels[i].SetActive(i == index);
-        }
-        _animator = GetComponentInChildren<Animator>();
-    }
+		foreach (var config in GameDataManager.StaticInstance.CharacterConfigs)
+		{
+			var character = Instantiate(config.Model, _exitPoint.position, Quaternion.identity, transform);
+			_characterModels.Add(character);
+			character.SetActive(false);
+		}
+	}
 
-    public void SendToEnter()
-    {
-        StartCoroutine(MoveTowardsEnter());
-    }
+	public void SwitchActiveCharacter(int index)
+	{
+		for (int i = 0; i < _characterModels.Count; i++)
+		{
+			_characterModels[i].SetActive(i == index);
+		}
+		_animator = _characterModels[index].GetComponent<Animator>();
+	}
 
-    public void SendToExit()
-    {
-        StartCoroutine(MoveTowardsExit());
-    }
+	public void SendToEnter()
+	{
+		MoveCharacter(_enterPoint.position, _enterPoint.forward, OnEnterReached);
+	}
 
-    private IEnumerator MoveTowardsEnter()
-    {
-        while (_animator.transform.forward != -_exitPoint.forward)// rotate face reverse to door
-        {
-            _animator.transform.forward = Vector3.MoveTowards(_animator.transform.forward, -_exitPoint.forward, Time.deltaTime);
-            yield return null;
-        }
-        _animator.SetBool("IsMoving", true);
-        while (_animator.transform.position != _enterPoint.position)
-        {
-            _animator.transform.position = Vector3.MoveTowards(_animator.transform.position, _enterPoint.position, _moveSpeed * Time.deltaTime);
-            yield return null;
-        }
-        _animator.SetBool("IsMoving", false);
-        while (_animator.transform.forward != _enterPoint.forward)
-        {
-            _animator.transform.forward = Vector3.MoveTowards(_animator.transform.forward, _enterPoint.forward, Time.deltaTime);
-            yield return null;
-        }
-        TaskManager.StaticInstance.OnCharacterReachedEnter();
-    }
+	public void SendToExit()
+	{
+		MoveCharacter(_exitPoint.position, _exitPoint.forward, OnExitReached);
+	}
 
-    private IEnumerator MoveTowardsExit()
-    {
-        while (_animator.transform.forward != _exitPoint.forward)// rotate face to door
-        {
-            _animator.transform.forward = Vector3.MoveTowards(_animator.transform.forward, _exitPoint.forward, Time.deltaTime);
-            yield return null;
-        }
-        _animator.SetBool("IsMoving", true);
-        while (_animator.transform.position != _exitPoint.position)
-        {
-            _animator.transform.position = Vector3.MoveTowards(_animator.transform.position, _exitPoint.position, _moveSpeed * Time.deltaTime);
-            yield return null;
-        }
-        _animator.SetBool("IsMoving", false);
-        TaskManager.StaticInstance.OnCharacterReachedExit();
-    }
+	private void MoveCharacter(Vector3 targetPosition, Vector3 targetDirection, System.Action onReachAction)
+	{
+		Sequence moveSequence = DOTween.Sequence();
+
+		float rotationDuration = _rotationSpeed / 360f;
+		
+		//Look in move direction
+		moveSequence.Append(_animator.transform.DOLookAt(targetPosition, rotationDuration));
+		moveSequence.AppendCallback(() => _animator.SetBool("IsMoving", true));
+
+		float moveDuration = Vector3.Distance(_animator.transform.position, targetPosition) / _moveSpeed;
+
+		moveSequence.Append(_animator.transform.DOMove(targetPosition, moveDuration).SetEase(Ease.Linear));
+		moveSequence.AppendCallback(() => _animator.SetBool("IsMoving", false));
+
+		moveSequence.Append(_animator.transform.DOLookAt(targetDirection, rotationDuration));
+		moveSequence.OnComplete(() => onReachAction?.Invoke());
+	}
+
+
+
+	private void OnEnterReached()
+	{
+		TaskManager.StaticInstance.OnCharacterReachedEnter();
+	}
+
+	private void OnExitReached()
+	{
+		TaskManager.StaticInstance.OnCharacterReachedExit();
+	}
 }
