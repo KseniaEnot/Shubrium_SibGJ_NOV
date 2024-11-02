@@ -14,6 +14,26 @@ public class CharacterConfig : ScriptableObject
     [TextArea] public List<string> HighGoldReactions = new();
     public List<QuestConfig> Quests = new();
 
+    public string GetNoGoldReaction()
+    {
+        return NoGoldReactions[Random.Range(0, NoGoldReactions.Count)];
+    }
+
+    public string GetLowGoldReaction()
+    {
+        return LowGoldReactions[Random.Range(0, LowGoldReactions.Count)];
+    }
+
+    public string GetNormalGoldReaction()
+    {
+        return NormalGoldReactions[Random.Range(0, NormalGoldReactions.Count)];
+    }
+
+    public string GetHighGoldReaction()
+    {
+        return HighGoldReactions[Random.Range(0, HighGoldReactions.Count)];
+    }
+
     public QuestConfig GetRandomQuest()
     {
         return Quests[Random.Range(0, Quests.Count)];

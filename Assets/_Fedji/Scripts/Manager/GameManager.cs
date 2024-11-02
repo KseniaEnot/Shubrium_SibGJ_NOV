@@ -21,6 +21,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject _questResultBar;
     [SerializeField] private TextMeshProUGUI _questResultText;
     [SerializeField] private Button _questResultButtonOkay;
+    [SerializeField, Range(0f, 0.49f)] private float _maxPercentToLowResultReaction = 0.33f;
+    [SerializeField, Range(0.51f, 1f)] private float _minPercentToHighResultReaction = 0.66f;
     [Header("Mini Game")]
     [SerializeField] private GameObject _miniGameBar;
     [Header("Waypoints")]
@@ -28,8 +30,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Transform _exitPoint;
     [Header("Characters/Quests Settings")]
     [SerializeField] private List<CharacterConfig> _characterConfigs = new();
-    [SerializeField, Range(1, 10)] private int _minimalNewQuestsPerDay = 4;
-    [SerializeField, Range(1, 10)] private int _maximalNewQuestsPerDay = 6;
+    [SerializeField, Range(1, 10)] private int _minlNewQuestsPerDay = 4;
+    [SerializeField, Range(1, 10)] private int _maxNewQuestsPerDay = 6;
     private Dictionary<CharacterConfig, bool> _characterVisited = new();
     private List<CharacterConfig> _charactersWithoutQuest = new();
     private List<TaskData> _tasks = new();
@@ -85,7 +87,7 @@ public class GameManager : MonoBehaviour
         {
             _charactersWithoutQuest.Remove(_tasks[i].CurrentCharacter);// remove character from pool
         }
-        int questCount = Random.Range(_minimalNewQuestsPerDay, _maximalNewQuestsPerDay + 1);// how many new quest appear today
+        int questCount = Random.Range(_minlNewQuestsPerDay, _maxNewQuestsPerDay + 1);// how many new quest appear today
         CharacterConfig tempCharacter;
         for (int i = 0; i < questCount; i++)
         {
@@ -131,7 +133,7 @@ public class GameManager : MonoBehaviour
     private void ShowQuestRequestBar()
     {
         _currentConversationState = ConversationState.Request;
-        _questRequestText.text = $"ÌÍÅ ÍÀÄÀ 100000 ÇÎËÀÒÀ";
+        _questRequestText.text = $"{_tasks[0].CurrentQuest.Description}\n{_tasks[0].CurrentQuest.RequestText} {_tasks[0].CurrentQuest.RequestedGold} çîëîòà.";
         _questRequestBar.SetActive(true);
         _questRequestButtonAccept.Select();
         // ui actions
@@ -141,7 +143,7 @@ public class GameManager : MonoBehaviour
     {
         // show negative message
         _currentConversationState = ConversationState.Result;
-        _questResultText.text = $"ÍÓ ÒÛ È ÆÌÎÒ";
+        _questResultText.text = _tasks[0].CurrentCharacter.GetNoGoldReaction();
         _questRequestBar.SetActive(false);
         _questResultBar.SetActive(true);
         _questResultButtonOkay.Select();
@@ -155,18 +157,34 @@ public class GameManager : MonoBehaviour
 
     private void OnQuestResultButtonOkayPressed()
     {
+        _tasks.RemoveAt(0);// remove task
         _questResultBar.SetActive(false);
         SendCharacterToExit();
     }
 
     private void MiniGameCompleted()
     {
-        // calculate results
+        int minGold = 0;
+        int maxGold = _tasks[0].CurrentQuest.RequestedGold * 2;
+        int miniGameGold = 10;// calculate
+        float result = Mathf.InverseLerp(minGold, maxGold, miniGameGold);
         _currentConversationState = ConversationState.Result;
         _miniGameBar.SetActive(false);
-        _questRequestText.text = $"ÏÀÑÈÁÀ";
+        if (result < _maxPercentToLowResultReaction)
+        {
+            _questRequestText.text = _tasks[0].CurrentCharacter.GetLowGoldReaction();
+        }
+        else if (result > _minPercentToHighResultReaction)
+        {
+            _questRequestText.text = _tasks[0].CurrentCharacter.GetHighGoldReaction();
+        }
+        else
+        {
+            _questRequestText.text = _tasks[0].CurrentCharacter.GetNormalGoldReaction();
+        }
         _questRequestBar.SetActive(true);
         _questResultButtonOkay.Select();
+        // remove gold from player (miniGameGold)
     }
 
     private void SendCharacterToExit()
