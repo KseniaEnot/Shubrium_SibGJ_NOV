@@ -4,6 +4,7 @@ using UnityEngine.UI;
 
 public class InGameUIManager : MonoBehaviour
 {
+    [SerializeField] private TaskManager _taskManager;
     [Header("New Game")]
     [SerializeField] private GameObject _newGameNotification;
     [SerializeField] private Button _newGameButtonOkay;
@@ -55,9 +56,9 @@ public class InGameUIManager : MonoBehaviour
         OnSummaryOfDayButtonStartNewDayPressed();
     }
 
-    public void ShowSummaryOfDay()
+    public void ShowSummaryOfDay(string text)
     {
-        //_summaryOfDayText.text = GameDataManager.StaticInstance.GetSummaryOfDayText();
+        _summaryOfDayText.text = text;
         _summaryOfDayBar.SetActive(true);
         _summaryOfDayButtonStartNewDay.Select();
     }
@@ -78,7 +79,7 @@ public class InGameUIManager : MonoBehaviour
 
     private void OnQuestRequestButtonDenyPressed()
     {
-        //_questResultText.text = TaskManager.StaticInstance.GetCurrentTaskNoGoldReactionText();
+        _questResultText.text = _taskManager.GetCurrentTaskNoGoldReactionText();
         _questRequestBar.SetActive(false);
         _questResultBar.SetActive(true);
         _questResultButtonOkay.Select();
@@ -87,7 +88,7 @@ public class InGameUIManager : MonoBehaviour
     private void OnQuestRequestButtonAcceptPressed()
     {
         //MiniGameManager.StaticInstance.StartMiniGame();
-        //TaskManager.StaticInstance.MarkCurrentTaskAsStarted();
+        _taskManager.MarkCurrentTaskAsStarted();
         _miniGameButtonEnd.gameObject.SetActive(false);
         _miniGameBar.SetActive(true);
         _miniGameButtonStart.gameObject.SetActive(true);
@@ -105,7 +106,7 @@ public class InGameUIManager : MonoBehaviour
     private void OnQuestResultButtonOkayPressed()
     {
         _questResultBar.SetActive(false);
-        //TaskManager.StaticInstance.RemoveCurrentTask();
+        _taskManager.RemoveCurrentTask();
         EventBus.SendCharacterToExit();
     }
     // MINI GAME

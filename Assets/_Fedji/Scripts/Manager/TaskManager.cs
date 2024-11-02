@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class TaskManager : MonoBehaviour
 {
+    [SerializeField] private InGameUIManager _inGameUIManager;
     [SerializeField] private QuestSettingsConfig _questSettingsConfig;
     [SerializeField] private CharacterSettingsConfig _characterSettingsConfig;
     private List<CharacterConfig> _charactersWithoutQuest = new();
@@ -55,7 +56,7 @@ public class TaskManager : MonoBehaviour
         }
         else
         {
-            //InGameUIManager.StaticInstance.ShowSummaryOfDay();
+            _inGameUIManager.ShowSummaryOfDay(string.Empty);
         }
     }
 
@@ -88,15 +89,15 @@ public class TaskManager : MonoBehaviour
         _tasks[0].RollQuestStateIsSuccessful(result);
         if (result < _questSettingsConfig.MaxPercentToLowResultReaction)
         {
-            //InGameUIManager.StaticInstance.OnMiniGameCompleted(_tasks[0].CurrentCharacter.GetLowGoldReaction());
+            _inGameUIManager.OnMiniGameCompleted(_tasks[0].CurrentCharacter.GetLowGoldReaction());
         }
         else if (result > _questSettingsConfig.MinPercentToHighResultReaction)
         {
-            //InGameUIManager.StaticInstance.OnMiniGameCompleted(_tasks[0].CurrentCharacter.GetHighGoldReaction());
+            _inGameUIManager.OnMiniGameCompleted(_tasks[0].CurrentCharacter.GetHighGoldReaction());
         }
         else
         {
-            //InGameUIManager.StaticInstance.OnMiniGameCompleted(_tasks[0].CurrentCharacter.GetNormalGoldReaction());
+            _inGameUIManager.OnMiniGameCompleted(_tasks[0].CurrentCharacter.GetNormalGoldReaction());
         }
     }
 
@@ -107,16 +108,16 @@ public class TaskManager : MonoBehaviour
             // сообщает успешно или нет
             if (_tasks[0].QuestSuccessful)
             {
-                //InGameUIManager.StaticInstance.ShowQuestResultBar($"{_tasks[0].CurrentQuest.SuccessText} {1000f} золота.");// calculate reward!
+                _inGameUIManager.ShowQuestResultBar($"{_tasks[0].CurrentQuest.SuccessText} {1000f} золота.");// calculate reward!
             }
             else
             {
-                //InGameUIManager.StaticInstance.ShowQuestResultBar(_tasks[0].CurrentQuest.FailedText);
+                _inGameUIManager.ShowQuestResultBar(_tasks[0].CurrentQuest.FailedText);
             }
         }
         else
         {
-            //InGameUIManager.StaticInstance.ShowQuestRequestBar($"{_tasks[0].CurrentQuest.Description} {_tasks[0].CurrentQuest.RequestedGold} золота.");
+            _inGameUIManager.ShowQuestRequestBar($"{_tasks[0].CurrentQuest.Description} {_tasks[0].CurrentQuest.RequestedGold} золота.");
         }
     }
 
