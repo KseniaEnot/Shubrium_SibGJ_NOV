@@ -50,13 +50,13 @@ public class MainMenuManager : MonoBehaviour
         _titleScreenWindow.SetActive(false);
         _mainMenuWindow.SetActive(true);
         _mainMenuButtonStartGame.Select();
-        // код для инициализации
+        // РєРѕРґ РґР»СЏ РёРЅРёС†РёР°Р»РёР·Р°С†РёРё
     }
 
     private void OnMainMenuButtonStartGamePressed()
     {
         // create new game
-        SceneManager.LoadScene(1, LoadSceneMode.Single);// временно
+        SceneManager.LoadScene(1, LoadSceneMode.Single);// РІСЂРµРјРµРЅРЅРѕ
         _mainMenuWindow.SetActive(false);
     }
 
