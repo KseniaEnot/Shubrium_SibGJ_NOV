@@ -103,16 +103,17 @@ public class InGameUIManager : MonoBehaviour
 
     private void OnQuestRequestButtonAcceptPressed()
     {
-<<<<<<< HEAD
-        _miniGameManager.StartMiniGame();
-        _taskManager.MarkCurrentTaskAsStarted();
-=======
->>>>>>> parent of 5710682 (sf)
+        if (CurrencyManager.StaticInstance.CurrentGold <= 1f)
+        {
+            return;
+        }
         _questRequestBar.SetActive(false);
         _miniGameButtonEnd.gameObject.SetActive(false);
         _miniGameBar.SetActive(true);
         _miniGameButtonStart.gameObject.SetActive(true);
         _miniGameButtonStart.Select();
+        _miniGameManager.StartMiniGame();
+        _taskManager.MarkCurrentTaskAsStarted();
     }
     // RESULT BAR
     public void ShowQuestResultBar(string characterName, string questName, string descriptionText)
