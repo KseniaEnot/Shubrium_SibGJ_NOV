@@ -49,10 +49,10 @@ public class MoneyBag : MonoBehaviour
                 _cooldownTime += Mathf.InverseLerp(_angleToDropCoins, _maxDownAngle, currentAngle) * Time.deltaTime;
                 if (_cooldownTime >= _spawnCooldown)
                 {
-                    if (GameManager.StaticInstance.ReduceGold())
+                    if (GameDataManager.StaticInstance.ReduceGoldByMiniGame())
                     {
                         _cooldownTime = 0f;
-                        MoneyBagManager.StaticInstance.SpawnedCoinsCount++;
+                        MiniGameManager.StaticInstance.SpawnedCoinsCount++;
                         Instantiate(_coinPrefab);// assign position
                     }
                 }
@@ -70,13 +70,13 @@ public class MoneyBag : MonoBehaviour
             transform.Rotate(Vector3.forward * -_rotateUpSpeed * Time.deltaTime);
             if (currentAngle > _angleToDropCoins)
             {
-                _cooldownTime += Time.deltaTime;
+                _cooldownTime += Mathf.InverseLerp(_angleToDropCoins, _maxDownAngle, currentAngle) * Time.deltaTime;
                 if (_cooldownTime >= _spawnCooldown)
                 {
-                    if (GameManager.StaticInstance.ReduceGold())
+                    if (GameDataManager.StaticInstance.ReduceGoldByMiniGame())
                     {
                         _cooldownTime = 0f;
-                        MoneyBagManager.StaticInstance.SpawnedCoinsCount++;
+                        MiniGameManager.StaticInstance.SpawnedCoinsCount++;
                         Instantiate(_coinPrefab);// assign position
                     }
                 }
@@ -90,12 +90,12 @@ public class MoneyBag : MonoBehaviour
     {
         if (_grabCoins)
         {
-            MoneyBagManager.StaticInstance.LootedCoinsCount++;
-            MoneyBagManager.StaticInstance.SpawnedCoinsCount--;
+            MiniGameManager.StaticInstance.LootedCoinsCount++;
+            MiniGameManager.StaticInstance.SpawnedCoinsCount--;
             Destroy(collision.gameObject);
-            if (MoneyBagManager.StaticInstance.SpawnedCoinsCount == 0)
+            if (MiniGameManager.StaticInstance.SpawnedCoinsCount == 0)
             {
-                MoneyBagManager.StaticInstance.OnAllCoinsCollected?.Invoke(MoneyBagManager.StaticInstance.LootedCoinsCount);
+                TaskManager.StaticInstance.OnAllCoinsLooted(MiniGameManager.StaticInstance.LootedCoinsCount);
             }
         }
     }
