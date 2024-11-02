@@ -144,7 +144,7 @@ public class TaskManager : MonoBehaviour
             {
                 _inGameUIManager.ShowQuestResultBar(_tasksForCurrentDay[0].CurrentCharacter.DisplayName,
                     _tasksForCurrentDay[0].CurrentQuest.DisplayName,
-                    $"{_tasksForCurrentDay[0].CurrentQuest.SuccessText} {_tasksForCurrentDay[0].CurrentQuest.RequestedGold * Random.Range(_tasksForCurrentDay[0].CurrentQuest.MinRewardPercent, _tasksForCurrentDay[0].CurrentQuest.MaxRewardPercent) + _tasksForCurrentDay[0].CurrentQuest.RequestedGold} золота.");
+                    $"{_tasksForCurrentDay[0].CurrentQuest.SuccessText} {_tasksForCurrentDay[0].CurrentQuest.RequestedGold * Random.Range(_tasksForCurrentDay[0].CurrentQuest.MinRewardPercent, _tasksForCurrentDay[0].CurrentQuest.MaxRewardPercent) + _tasksForCurrentDay[0].CurrentQuest.RequestedGold} Р·РѕР»РѕС‚Р°.");
             }
             else
             {
@@ -156,7 +156,7 @@ public class TaskManager : MonoBehaviour
         {
             _inGameUIManager.ShowQuestRequestBar(_tasksForCurrentDay[0].CurrentCharacter.DisplayName,
                     _tasksForCurrentDay[0].CurrentQuest.DisplayName,
-                    $"{_tasksForCurrentDay[0].CurrentQuest.Description} {_tasksForCurrentDay[0].CurrentQuest.RequestedGold} золота.");
+                    $"{_tasksForCurrentDay[0].CurrentQuest.Description} {_tasksForCurrentDay[0].CurrentQuest.RequestedGold} Р·РѕР»РѕС‚Р°.");
         }
     }
 
