@@ -7,7 +7,6 @@ public class CharacterConfig : ScriptableObject
     public string DisplayName = "Name";
     [TextArea] public string Description = "Description";
     public GameObject Model;
-    [Range(1f, 5f)] public float MoveSpeed = 4f;
     [TextArea] public List<string> NoGoldReactions = new();
     [TextArea] public List<string> LowGoldReactions = new();
     [TextArea] public List<string> NormalGoldReactions = new();

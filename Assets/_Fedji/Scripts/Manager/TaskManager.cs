@@ -3,8 +3,6 @@ using UnityEngine;
 
 public class TaskManager : Singleton<TaskManager>
 {
-    public QuestSettingsConfig QuestSettingsConfig;
-
     private Dictionary<CharacterConfig, bool> _characterVisited = new();
     private List<CharacterConfig> _charactersWithoutQuest = new();
     private List<TaskData> _tasks = new();
@@ -16,9 +14,9 @@ public class TaskManager : Singleton<TaskManager>
     protected override void Awake()
     {
         base.Awake();
-        for (int i = 0; i < QuestSettingsConfig.CharacterConfigs.Count; i++)
+        for (int i = 0; i < GameDataManager.StaticInstance.QuestSettingsConfig.CharacterConfigs.Count; i++)
         {
-            _characterVisited.Add(QuestSettingsConfig.CharacterConfigs[i], false);// create pool
+            _characterVisited.Add(GameDataManager.StaticInstance.QuestSettingsConfig.CharacterConfigs[i], false);// create pool
         }
     }
 
@@ -27,14 +25,14 @@ public class TaskManager : Singleton<TaskManager>
         _charactersWithoutQuest.Clear();// clear pool
         for (int i = 0; i < _characterVisited.Count; i++)
         {
-            _characterVisited[QuestSettingsConfig.CharacterConfigs[i]] = false;// toogle visited pool
-            _charactersWithoutQuest.Add(QuestSettingsConfig.CharacterConfigs[i]);// add characters to pool
+            _characterVisited[GameDataManager.StaticInstance.QuestSettingsConfig.CharacterConfigs[i]] = false;// toogle visited pool
+            _charactersWithoutQuest.Add(GameDataManager.StaticInstance.QuestSettingsConfig.CharacterConfigs[i]);// add characters to pool
         }
         for (int i = _tasks.Count - 1; i <= 0; i--)
         {
             _charactersWithoutQuest.Remove(_tasks[i].CurrentCharacter);// remove character from pool
         }
-        int questCount = Random.Range(QuestSettingsConfig.MinNewQuestsPerDay, QuestSettingsConfig.MaxNewQuestsPerDay + 1);// how many new quest appear today
+        int questCount = Random.Range(GameDataManager.StaticInstance.QuestSettingsConfig.MinNewQuestsPerDay, GameDataManager.StaticInstance.QuestSettingsConfig.MaxNewQuestsPerDay + 1);// how many new quest appear today
         CharacterConfig tempCharacter;
         for (int i = 0; i < questCount; i++)
         {
@@ -95,11 +93,11 @@ public class TaskManager : Singleton<TaskManager>
         int maxGold = Mathf.FloorToInt(_tasks[0].CurrentQuest.RequestedGold * _tasks[0].CurrentQuest.MaxGoldMultiplier);
         float result = Mathf.InverseLerp(minGold, maxGold, goldAmount);
         _tasks[0].RollQuestStateIsSuccessful(result);
-        if (result < QuestSettingsConfig.MaxPercentToLowResultReaction)
+        if (result < GameDataManager.StaticInstance.QuestSettingsConfig.MaxPercentToLowResultReaction)
         {
             InGameUIManager.StaticInstance.OnMiniGameCompleted(_tasks[0].CurrentCharacter.GetLowGoldReaction());
         }
-        else if (result > QuestSettingsConfig.MinPercentToHighResultReaction)
+        else if (result > GameDataManager.StaticInstance.QuestSettingsConfig.MinPercentToHighResultReaction)
         {
             InGameUIManager.StaticInstance.OnMiniGameCompleted(_tasks[0].CurrentCharacter.GetHighGoldReaction());
         }

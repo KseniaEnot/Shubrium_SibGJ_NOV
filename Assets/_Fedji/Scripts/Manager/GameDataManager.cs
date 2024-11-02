@@ -3,6 +3,7 @@ using UnityEngine;
 public class GameDataManager : Singleton<GameDataManager>
 {
     public int Gold = 100;
+    public QuestSettingsConfig QuestSettingsConfig;
 
     public bool ReduceGoldByMiniGame()
     {

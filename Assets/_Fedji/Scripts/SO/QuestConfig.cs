@@ -7,6 +7,7 @@ public class QuestConfig : ScriptableObject
     [TextArea] public string Description = "Problem appear. We need more food. Help me.";
     [TextArea] public string RequestText = "I need/We need/Give me/other.";
     public int RequestedGold = 10;
+    public bool Repeatable = true;
     [Header("Success Chance")]
     [Range(0f, 1f)] public float MinSuccessChance = 0.25f;
     [Range(0f, 1f)] public float MaxSuccessChance = 0.75f;

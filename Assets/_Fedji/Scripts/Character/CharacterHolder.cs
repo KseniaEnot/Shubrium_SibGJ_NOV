@@ -1,13 +1,33 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
-public class CharacterHolder : MonoBehaviour
+public class CharacterHolder : Singleton<CharacterHolder>
 {
-    [SerializeField] private CharacterConfig _config;
-    [SerializeField] private Animator _animator;
+    [SerializeField] private Transform _enterPoint;
+    [SerializeField] private Transform _exitPoint;
+    [SerializeField] private float _moveSpeed = 4f;
 
-    public CharacterConfig Config => _config;
-    public Animator Animator => _animator;
+    private Animator _animator;
+    private List<GameObject> _characterModels = new();
+
+    protected override void Awake()
+    {
+        base.Awake();
+        for (int i = 0; i < GameDataManager.StaticInstance.QuestSettingsConfig.CharacterConfigs.Count; i++)
+        {
+            _characterModels.Add(Instantiate(GameDataManager.StaticInstance.QuestSettingsConfig.CharacterConfigs[i]).Model);
+        }
+    }
+
+    public void SwitchActiveCharacter(int index)
+    {
+        for (int i = 0; i < _characterModels.Count; i++)
+        {
+            _characterModels[i].SetActive(i == index);
+        }
+        _animator = GetComponentInChildren<Animator>();
+    }
 
     public void SendToEnter()
     {
@@ -21,21 +41,21 @@ public class CharacterHolder : MonoBehaviour
 
     private IEnumerator MoveTowardsEnter()
     {
-        while (transform.forward != -WaypointsManager.StaticInstance.ExitPoint.forward)// rotate face reverse to door
+        while (transform.forward != -_exitPoint.forward)// rotate face reverse to door
         {
-            transform.forward = Vector3.MoveTowards(transform.forward, -WaypointsManager.StaticInstance.ExitPoint.forward, Time.deltaTime);
+            transform.forward = Vector3.MoveTowards(transform.forward, -_exitPoint.forward, Time.deltaTime);
             yield return null;
         }
         _animator.SetBool("IsMoving", true);
-        while (transform.position != WaypointsManager.StaticInstance.EnterPoint.position)
+        while (transform.position != _enterPoint.position)
         {
-            transform.position = Vector3.MoveTowards(transform.position, WaypointsManager.StaticInstance.EnterPoint.position, _config.MoveSpeed * Time.deltaTime);
+            transform.position = Vector3.MoveTowards(transform.position, _enterPoint.position, _moveSpeed * Time.deltaTime);
             yield return null;
         }
         _animator.SetBool("IsMoving", false);
-        while (transform.forward != WaypointsManager.StaticInstance.EnterPoint.forward)
+        while (transform.forward != _enterPoint.forward)
         {
-            transform.forward = Vector3.MoveTowards(transform.forward, WaypointsManager.StaticInstance.EnterPoint.forward, Time.deltaTime);
+            transform.forward = Vector3.MoveTowards(transform.forward, _enterPoint.forward, Time.deltaTime);
             yield return null;
         }
         TaskManager.StaticInstance.OnCharacterReachedEnter();
@@ -43,15 +63,15 @@ public class CharacterHolder : MonoBehaviour
 
     private IEnumerator MoveTowardsExit()
     {
-        while (transform.forward != WaypointsManager.StaticInstance.ExitPoint.forward)// rotate face to door
+        while (transform.forward != _exitPoint.forward)// rotate face to door
         {
-            transform.forward = Vector3.MoveTowards(transform.forward, WaypointsManager.StaticInstance.ExitPoint.forward, Time.deltaTime);
+            transform.forward = Vector3.MoveTowards(transform.forward, _exitPoint.forward, Time.deltaTime);
             yield return null;
         }
         _animator.SetBool("IsMoving", true);
-        while (transform.position != WaypointsManager.StaticInstance.ExitPoint.position)
+        while (transform.position != _exitPoint.position)
         {
-            transform.position = Vector3.MoveTowards(transform.position, WaypointsManager.StaticInstance.ExitPoint.position, _config.MoveSpeed * Time.deltaTime);
+            transform.position = Vector3.MoveTowards(transform.position, _exitPoint.position, _moveSpeed * Time.deltaTime);
             yield return null;
         }
         _animator.SetBool("IsMoving", false);
