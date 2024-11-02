@@ -103,6 +103,10 @@ public class InGameUIManager : MonoBehaviour
 
     private void OnQuestRequestButtonAcceptPressed()
     {
+        if(CurrencyManager.StaticInstance.CurrentGold <= 1f)
+        {
+            return;
+        }
         _questRequestBar.SetActive(false);
         _miniGameButtonEnd.gameObject.SetActive(false);
         _miniGameBar.SetActive(true);
