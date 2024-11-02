@@ -1,10 +1,12 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class InGameUIManager : MonoBehaviour
 {
     [SerializeField] private TaskManager _taskManager;
+    [SerializeField] private MiniGameManager _miniGameManager;
     [Header("New Game")]
     [SerializeField] private GameObject _newGameNotification;
     [SerializeField] private Button _newGameButtonOkay;
@@ -25,6 +27,8 @@ public class InGameUIManager : MonoBehaviour
     [SerializeField] private GameObject _miniGameBar;
     [SerializeField] private Button _miniGameButtonStart;
     [SerializeField] private Button _miniGameButtonEnd;
+
+    private bool _deadline;
 
     private void OnEnable()
     {
@@ -65,8 +69,15 @@ public class InGameUIManager : MonoBehaviour
 
     private void OnSummaryOfDayButtonStartNewDayPressed()
     {
-        _summaryOfDayBar.SetActive(false);
-        EventBus.NextDay();
+        if (_deadline)
+        {
+            SceneManager.LoadScene(0);// GAME OVER =)
+        }
+        else
+        {
+            _summaryOfDayBar.SetActive(false);
+            EventBus.NextDay();
+        }
     }
     // REQUEST BAR
     public void ShowQuestRequestBar(string text)
@@ -79,15 +90,12 @@ public class InGameUIManager : MonoBehaviour
 
     private void OnQuestRequestButtonDenyPressed()
     {
-        _questResultText.text = _taskManager.GetCurrentTaskNoGoldReactionText();
-        _questRequestBar.SetActive(false);
-        _questResultBar.SetActive(true);
-        _questResultButtonOkay.Select();
+        ShowQuestResultBar(_taskManager.GetCurrentTaskNoGoldReactionText());
     }
 
     private void OnQuestRequestButtonAcceptPressed()
     {
-        //MiniGameManager.StaticInstance.StartMiniGame();
+        _miniGameManager.StartMiniGame();
         _taskManager.MarkCurrentTaskAsStarted();
         _miniGameButtonEnd.gameObject.SetActive(false);
         _miniGameBar.SetActive(true);
@@ -97,9 +105,9 @@ public class InGameUIManager : MonoBehaviour
     // RESULT BAR
     public void ShowQuestResultBar(string text)
     {
-        _questRequestText.text = text;
-        _questRequestBar.SetActive(true);
-        _questRequestButtonAccept.Select();
+        _questResultText.text = text;
+        _questResultBar.SetActive(true);
+        _questResultButtonOkay.Select();
         // ui actions
     }
 
@@ -120,7 +128,7 @@ public class InGameUIManager : MonoBehaviour
 
     private void OnMiniGameButtonStartPressed()
     {
-        //MiniGameManager.StaticInstance.StartSharing();
+        _miniGameManager.StartSharing();
         _miniGameButtonStart.gameObject.SetActive(false);
         _miniGameButtonEnd.gameObject.SetActive(true);
         _miniGameButtonEnd.Select();
@@ -128,6 +136,12 @@ public class InGameUIManager : MonoBehaviour
 
     private void OnMiniGameButtonEndPressed()
     {
-        //MiniGameManager.StaticInstance.StopSharing();
+        _miniGameManager.StopSharing();
+    }
+    // DEADLINE
+    public void ShowDeadlineNotification()
+    {
+        _deadline = true;
+        ShowSummaryOfDay(string.Empty);// add overall info text
     }
 }

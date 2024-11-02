@@ -1,13 +1,14 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class MiniGameManager : MonoBehaviour
 {
-    public RectTransform PlayerBag;
-    public RectTransform CharacterBag;
+    [SerializeField] private GameObject _playerBag;
+    [SerializeField] private GameObject _characterBag;
 
-    public int SpawnedCoinsCount;
-    public int LootedCoinsCount;
+    [SerializeField] private int _spawnedCoinsCount;
+    [SerializeField] private int _lootedCoinsCount;
 
     [Header("For players's bag")]
     [SerializeField] private float _spawnCooldown = 0.5f;
@@ -16,17 +17,16 @@ public class MiniGameManager : MonoBehaviour
     [SerializeField] private float _rotateUpSpeed = 90f;
     [SerializeField, Range(45f, 90f)] private float _angleToDropCoins = 60f;
     [SerializeField, Range(90f, 180f)] private float _maxDownAngle = 135f;
-    [Header("For character's bag (check true)")]
-    [SerializeField] private bool _grabCoins;
 
     private float _cooldownTime;
     private Coroutine _coroutine;
+    private List<GameObject> _spawnedCoins = new();
 
     public void StartMiniGame()
     {
-
+        _playerBag.SetActive(true);
+        _characterBag.SetActive(true);
     }
-
 
     public void StartSharing()
     {
@@ -49,24 +49,39 @@ public class MiniGameManager : MonoBehaviour
     private IEnumerator RotateDown()
     {
         float currentAngle;
+        bool coinSpawned;
         while (true)
         {
             currentAngle = transform.eulerAngles.z;
             if (currentAngle < _maxDownAngle)
             {
-                transform.Rotate(Vector3.forward * _rotateDownSpeed * Time.deltaTime);
+                _playerBag.transform.Rotate(Vector3.forward * _rotateDownSpeed * Time.deltaTime);
             }
             if (currentAngle > _angleToDropCoins)
             {
                 _cooldownTime += Mathf.InverseLerp(_angleToDropCoins, _maxDownAngle, currentAngle) * Time.deltaTime;
                 if (_cooldownTime >= _spawnCooldown)
                 {
-                    //if (GameDataManager.StaticInstance.ReduceGoldByMiniGame())
-                    //{
-                    //    _cooldownTime = 0f;
-                    //    SpawnedCoinsCount++;
-                    //    Instantiate(_coinPrefab);// assign position
-                    //}
+                    if (CurrencyManager.StaticInstance.ReduceGoldByMiniGame())
+                    {
+                        coinSpawned = false;
+                        _cooldownTime = 0f;
+                        _spawnedCoinsCount++;
+                        foreach (GameObject coin in _spawnedCoins)
+                        {
+                            if (!coin.activeSelf)
+                            {
+                                coin.transform.position = _playerBag.transform.position;
+                                coin.SetActive(true);
+                                coinSpawned = true;
+                                break;
+                            }
+                        }
+                        if (!coinSpawned)
+                        {
+                            _spawnedCoins.Add(Instantiate(_coinPrefab, _playerBag.transform.position, Quaternion.identity));
+                        }
+                    }
                 }
             }
             yield return null;
@@ -79,7 +94,7 @@ public class MiniGameManager : MonoBehaviour
         while (currentAngle > 0f)
         {
             currentAngle = transform.eulerAngles.z;
-            transform.Rotate(Vector3.forward * -_rotateUpSpeed * Time.deltaTime);
+            _playerBag.transform.Rotate(Vector3.forward * -_rotateUpSpeed * Time.deltaTime);
             if (currentAngle > _angleToDropCoins)
             {
                 _cooldownTime += Mathf.InverseLerp(_angleToDropCoins, _maxDownAngle, currentAngle) * Time.deltaTime;
@@ -89,7 +104,7 @@ public class MiniGameManager : MonoBehaviour
                     //{
                     //    _cooldownTime = 0f;
                     //    SpawnedCoinsCount++;
-                    //    Instantiate(_coinPrefab);// assign position
+                    //    _spawnedCoins.Add(Instantiate(_coinPrefab, transform));// assign position
                     //}
                 }
             }
@@ -98,17 +113,17 @@ public class MiniGameManager : MonoBehaviour
         _coroutine = null;
     }
 
-    private void CollectCoin()
+    private void OnTriggerEnter(Collider other)
     {
-        if (_grabCoins)
+        _lootedCoinsCount++;
+        _spawnedCoinsCount--;
+        other.GetComponent<Rigidbody>().velocity = Vector3.zero;
+        other.gameObject.SetActive(false);
+        if (_spawnedCoinsCount == 0)
         {
-            LootedCoinsCount++;
-            SpawnedCoinsCount--;
-            // destroy coin
-            if (SpawnedCoinsCount == 0)
-            {
-                //TaskManager.StaticInstance.OnAllCoinsLooted(LootedCoinsCount);
-            }
+            _playerBag.SetActive(false);
+            _characterBag.SetActive(false);
+            EventBus.AllCoinsLooted(_lootedCoinsCount);
         }
     }
 }

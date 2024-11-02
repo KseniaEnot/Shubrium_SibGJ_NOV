@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class MainMenuManager : Singleton<MainMenuManager>
+public class MainMenuManager : MonoBehaviour
 {
     [Header("Title Screen")]
     [SerializeField] private GameObject _titleScreenWindow;
@@ -16,9 +16,8 @@ public class MainMenuManager : Singleton<MainMenuManager>
     [SerializeField] private GameObject _settingMenuWindow;
     [SerializeField] private Button _settingsMenuButtonBack;
 
-    protected override void Awake()
+    private void Awake()
     {
-        base.Awake();
         _titleScreenButtonStart.Select();
     }
 

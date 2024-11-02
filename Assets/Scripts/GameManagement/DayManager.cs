@@ -25,17 +25,15 @@ public class DayManager : MonoBehaviour
 	}
 
 	private void UpdateDay()
-	{
-		EventBus.DayChanged(CurrentDay);
-
-		if (_currentDay % _daysInWeek == 0)
-		{
-			EventBus.WeekCompleted(_currentDay / _daysInWeek);
-		}
-
-		if (_currentDay == _deadlineDay)
-		{
-			EventBus.DeadlineReached();
-		}
+    {
+        if (_currentDay % _daysInWeek == 0)
+        {
+            EventBus.WeekCompleted(_currentDay / _daysInWeek);
+        }
+        if (_currentDay == _deadlineDay)
+        {
+            EventBus.DeadlineReached();
+        }
+        EventBus.DayChanged(CurrentDay);
 	}
 }

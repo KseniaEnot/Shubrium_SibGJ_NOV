@@ -8,25 +8,41 @@ public class TaskManager : MonoBehaviour
     [SerializeField] private CharacterSettingsConfig _characterSettingsConfig;
     private List<CharacterConfig> _charactersWithoutQuest = new();
     private List<TaskData> _tasks = new();
+    private bool _deadline;
 
     public List<TaskData> Tasks => _tasks;
 
     private void OnEnable()
     {
+        EventBus.OnDeadlineReached += OnReachedDeadline;
         EventBus.OnDayChanged += RefreshPools;
         EventBus.OnCharacterReachedEnter += OnCharacterReachedEnter;
         EventBus.OnSendCharacterToExit += OnCharacterReachedExit;
+        EventBus.OnAllCoinsLooted += MiniGameCompleted;
     }
 
     private void OnDisable()
     {
+        EventBus.OnDeadlineReached -= OnReachedDeadline;
         EventBus.OnDayChanged -= RefreshPools;
         EventBus.OnCharacterReachedEnter -= OnCharacterReachedEnter;
         EventBus.OnSendCharacterToExit -= OnCharacterReachedExit;
+        EventBus.OnAllCoinsLooted -= MiniGameCompleted;
+    }
+
+    private void OnReachedDeadline()
+    {
+        _deadline = true;
+        _inGameUIManager.ShowDeadlineNotification();
+        // invoke???
     }
 
     private void RefreshPools(int value)
     {
+        if (_deadline)
+        {
+            return;
+        }
         _charactersWithoutQuest.Clear();// clear pool
         for (int i = 0; i < _characterSettingsConfig.CharacterConfigs.Count; i++)
         {
@@ -56,7 +72,7 @@ public class TaskManager : MonoBehaviour
         }
         else
         {
-            _inGameUIManager.ShowSummaryOfDay(string.Empty);
+            _inGameUIManager.ShowSummaryOfDay(string.Empty);// add day result info
         }
     }
 
@@ -73,12 +89,6 @@ public class TaskManager : MonoBehaviour
     public void RemoveCurrentTask()
     {
         _tasks.RemoveAt(0);
-    }
-
-    public void OnAllCoinsLooted(int goldAmount)
-    {
-        // maybe any other logic
-        MiniGameCompleted(goldAmount);
     }
 
     private void MiniGameCompleted(int goldAmount)
@@ -105,10 +115,9 @@ public class TaskManager : MonoBehaviour
     {
         if (_tasks[0].QuestStarted)
         {
-            // сообщает успешно или нет
             if (_tasks[0].QuestSuccessful)
             {
-                _inGameUIManager.ShowQuestResultBar($"{_tasks[0].CurrentQuest.SuccessText} {1000f} золота.");// calculate reward!
+                _inGameUIManager.ShowQuestResultBar($"{_tasks[0].CurrentQuest.SuccessText} {_tasks[0].CurrentQuest.RequestedGold * _tasks[0].CurrentQuest.RewardPercent + _tasks[0].CurrentQuest.RequestedGold} золота.");
             }
             else
             {
