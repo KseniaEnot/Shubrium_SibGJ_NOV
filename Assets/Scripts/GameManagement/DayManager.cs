@@ -12,8 +12,18 @@ public class DayManager : MonoBehaviour
 	{
 		UpdateDay();
 	}
+	
+	private void OnEnable()
+	{
+		EventBus.OnNextDay += NextDay;
+	}
+	
+	private void OnDisable()
+	{
+		EventBus.OnNextDay -= NextDay;
+	}
 
-	public void NextDay()
+	private void NextDay()
 	{
 		_currentDay++;
 		UpdateDay();
@@ -34,7 +44,7 @@ public class DayManager : MonoBehaviour
 		}
 	}
 
-	public void ResetDays()
+	private void ResetDays()
 	{
 		_currentDay = 1;
 		UpdateDay();
