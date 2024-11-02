@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class MiniGameManager : MonoBehaviour
@@ -45,7 +44,7 @@ public class MiniGameManager : MonoBehaviour
     private IEnumerator RotateDown()
     {
         float currentAngle;
-        CoinManager coinSpawned;
+        bool coinSpawned;
         while (!_requiredCancelCoroutine)
         {
             currentAngle = _playerBag.transform.localEulerAngles.z;
@@ -61,7 +60,7 @@ public class MiniGameManager : MonoBehaviour
                 {
                     if (CurrencyManager.StaticInstance.ReduceGoldByMiniGame())
                     {
-                        coinSpawned = null;
+                        coinSpawned = false;
                         _cooldownTime = 0f;
                         _spawnedCoinsCount++;
                         foreach (GameObject coin in _spawnedCoins)
@@ -70,16 +69,14 @@ public class MiniGameManager : MonoBehaviour
                             {
                                 coin.transform.position = _playerBag.transform.position;
                                 coin.SetActive(true);
-                                coinSpawned = coin.GetComponent<CoinManager>();
+                                coinSpawned = true;
                                 break;
                             }
                         }
-                        if (coinSpawned == null)
+                        if (!coinSpawned)
                         {
-                            coinSpawned = Instantiate(_coinPrefab, _playerBag.transform.position, Quaternion.identity).GetComponent<CoinManager>();
-                            _spawnedCoins.Add(coinSpawned.gameObject);
+                            _spawnedCoins.Add(Instantiate(_coinPrefab, _playerBag.transform.position, Quaternion.identity));
                         }
-                        coinSpawned.Launch(10f);
                     }
                 }
             }
