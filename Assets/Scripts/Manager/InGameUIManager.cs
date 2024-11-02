@@ -103,8 +103,11 @@ public class InGameUIManager : MonoBehaviour
 
     private void OnQuestRequestButtonAcceptPressed()
     {
+<<<<<<< HEAD
         _miniGameManager.StartMiniGame();
         _taskManager.MarkCurrentTaskAsStarted();
+=======
+>>>>>>> parent of 5710682 (sf)
         _questRequestBar.SetActive(false);
         _miniGameButtonEnd.gameObject.SetActive(false);
         _miniGameBar.SetActive(true);
