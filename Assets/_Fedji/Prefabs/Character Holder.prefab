@@ -361,12 +361,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c7bc3fcea20ab44cb4ecaa1118ff2e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _dontDestroyOnLoad: 0
+  _characterSettingsConfig: {fileID: 11400000, guid: a3540c0b9d73f15468e01586916a5964, type: 2}
   _enterPoint: {fileID: 5301205637513419678}
   _exitPoint: {fileID: 3602956770281696532}
-  _spawnPoint: {fileID: 0}
   _moveSpeed: 4
-  _animator: {fileID: 0}
+  _rotationSpeed: 180
 --- !u!1 &8717793047948082848
 GameObject:
   m_ObjectHideFlags: 0

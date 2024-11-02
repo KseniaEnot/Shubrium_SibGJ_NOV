@@ -44,4 +44,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6bc3a6395018e4c4c8b99f3200ff4604, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _dontDestroyOnLoad: 0
+  _questSettingsConfig: {fileID: 11400000, guid: 8642abb2137f2e847aa03226a3d47a04, type: 2}
+  _characterSettingsConfig: {fileID: 11400000, guid: a3540c0b9d73f15468e01586916a5964, type: 2}

@@ -2,9 +2,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 
-public class CharacterHolder : Singleton<CharacterHolder>
+public class CharacterHolder : MonoBehaviour
 {
-	[SerializeField] private Transform _enterPoint;
+    [SerializeField] private CharacterSettingsConfig _characterSettingsConfig;
+    [SerializeField] private Transform _enterPoint;
 	[SerializeField] private Transform _exitPoint;
 	[SerializeField] private float _moveSpeed = 4f;
 	[SerializeField] private float _rotationSpeed = 180f;
@@ -12,11 +13,9 @@ public class CharacterHolder : Singleton<CharacterHolder>
 	private List<GameObject> _characterModels = new();
 	private Animator _animator;
 
-	protected override void Awake()
+	private void Awake()
 	{
-		base.Awake();
-
-		foreach (var config in GameDataManager.StaticInstance.CharacterConfigs)
+		foreach (var config in _characterSettingsConfig.CharacterConfigs)
 		{
 			var character = Instantiate(config.Model, _exitPoint.position, Quaternion.identity, transform);
 			_characterModels.Add(character);
@@ -24,7 +23,21 @@ public class CharacterHolder : Singleton<CharacterHolder>
 		}
 	}
 
-	public void SwitchActiveCharacter(int index)
+    private void OnEnable()
+    {
+		EventBus.OnSendCharacter += SwitchActiveCharacter;
+        EventBus.OnSendCharacterToEnter += SendToEnter;
+        EventBus.OnSendCharacterToExit += SendToExit;
+    }
+
+    private void OnDisable()
+    {
+        EventBus.OnSendCharacter -= SwitchActiveCharacter;
+        EventBus.OnSendCharacterToEnter -= SendToEnter;
+        EventBus.OnSendCharacterToExit -= SendToExit;
+    }
+
+    private void SwitchActiveCharacter(int index)
 	{
 		for (int i = 0; i < _characterModels.Count; i++)
 		{
@@ -33,12 +46,12 @@ public class CharacterHolder : Singleton<CharacterHolder>
 		_animator = _characterModels[index].GetComponent<Animator>();
 	}
 
-	public void SendToEnter()
+	private void SendToEnter()
 	{
 		MoveCharacter(_enterPoint.position, _enterPoint.forward, OnEnterReached);
 	}
 
-	public void SendToExit()
+    private void SendToExit()
 	{
 		MoveCharacter(_exitPoint.position, _exitPoint.forward, OnExitReached);
 	}
@@ -62,15 +75,13 @@ public class CharacterHolder : Singleton<CharacterHolder>
 		moveSequence.OnComplete(() => onReachAction?.Invoke());
 	}
 
-
-
 	private void OnEnterReached()
 	{
-		TaskManager.StaticInstance.OnCharacterReachedEnter();
+		EventBus.CharacterReachedEnter();
 	}
 
 	private void OnExitReached()
-	{
-		TaskManager.StaticInstance.OnCharacterReachedExit();
-	}
+    {
+        EventBus.CharacterReachedExit();
+    }
 }

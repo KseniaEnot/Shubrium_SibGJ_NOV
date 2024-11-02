@@ -2,7 +2,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class InGameUIManager : Singleton<InGameUIManager>
+public class InGameUIManager : MonoBehaviour
 {
     [Header("New Game")]
     [SerializeField] private GameObject _newGameNotification;
@@ -65,7 +65,7 @@ public class InGameUIManager : Singleton<InGameUIManager>
     private void OnSummaryOfDayButtonStartNewDayPressed()
     {
         _summaryOfDayBar.SetActive(false);
-        TaskManager.StaticInstance.StartNewDay();
+        EventBus.NextDay();
     }
     // REQUEST BAR
     public void ShowQuestRequestBar(string text)
@@ -78,7 +78,7 @@ public class InGameUIManager : Singleton<InGameUIManager>
 
     private void OnQuestRequestButtonDenyPressed()
     {
-        _questResultText.text = TaskManager.StaticInstance.GetCurrentTaskNoGoldReactionText();
+        //_questResultText.text = TaskManager.StaticInstance.GetCurrentTaskNoGoldReactionText();
         _questRequestBar.SetActive(false);
         _questResultBar.SetActive(true);
         _questResultButtonOkay.Select();
@@ -86,8 +86,8 @@ public class InGameUIManager : Singleton<InGameUIManager>
 
     private void OnQuestRequestButtonAcceptPressed()
     {
-        MiniGameManager.StaticInstance.StartMiniGame();
-        TaskManager.StaticInstance.MarkCurrentTaskAsStarted();
+        //MiniGameManager.StaticInstance.StartMiniGame();
+        //TaskManager.StaticInstance.MarkCurrentTaskAsStarted();
         _miniGameButtonEnd.gameObject.SetActive(false);
         _miniGameBar.SetActive(true);
         _miniGameButtonStart.gameObject.SetActive(true);
@@ -105,8 +105,8 @@ public class InGameUIManager : Singleton<InGameUIManager>
     private void OnQuestResultButtonOkayPressed()
     {
         _questResultBar.SetActive(false);
-        TaskManager.StaticInstance.RemoveCurrentTask();
-        CharacterHolder.StaticInstance.SendToExit();
+        //TaskManager.StaticInstance.RemoveCurrentTask();
+        EventBus.SendCharacterToExit();
     }
     // MINI GAME
     public void OnMiniGameCompleted(string resultText)
@@ -119,7 +119,7 @@ public class InGameUIManager : Singleton<InGameUIManager>
 
     private void OnMiniGameButtonStartPressed()
     {
-        MiniGameManager.StaticInstance.PlayerBag.StartSharing();
+        //MiniGameManager.StaticInstance.StartSharing();
         _miniGameButtonStart.gameObject.SetActive(false);
         _miniGameButtonEnd.gameObject.SetActive(true);
         _miniGameButtonEnd.Select();
@@ -127,6 +127,6 @@ public class InGameUIManager : Singleton<InGameUIManager>
 
     private void OnMiniGameButtonEndPressed()
     {
-        MiniGameManager.StaticInstance.PlayerBag.StopSharing();
+        //MiniGameManager.StaticInstance.StopSharing();
     }
 }

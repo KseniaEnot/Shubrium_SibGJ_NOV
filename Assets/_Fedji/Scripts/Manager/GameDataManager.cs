@@ -1,11 +1,8 @@
-using System.Collections.Generic;
 using UnityEngine;
 
-public class GameDataManager : Singleton<GameDataManager>
+public class GameDataManager : MonoBehaviour
 {
     public int Gold = 100;
-    public QuestSettingsConfig QuestSettingsConfig;
-    public List<CharacterConfig> CharacterConfigs = new();
 
     public bool ReduceGoldByMiniGame()
     {
