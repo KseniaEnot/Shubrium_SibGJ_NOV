@@ -18,6 +18,7 @@ public class TaskManager : MonoBehaviour
         EventBus.OnCharacterReachedEnter += OnCharacterReachedEnter;
         EventBus.OnCharacterReachedExit += OnCharacterReachedExit;
         EventBus.OnAllCoinsLooted += MiniGameCompleted;
+        EventBus.OnGameOver += OnGameOver;
     }
 
     private void OnDisable()
@@ -27,13 +28,19 @@ public class TaskManager : MonoBehaviour
         EventBus.OnCharacterReachedEnter -= OnCharacterReachedEnter;
         EventBus.OnCharacterReachedExit -= OnCharacterReachedExit;
         EventBus.OnAllCoinsLooted -= MiniGameCompleted;
+        EventBus.OnGameOver -= OnGameOver;
+    }
+
+    private void OnGameOver()
+    {
+        _deadline = true;
+        _inGameUIManager.ShowGameOverNotification();
     }
 
     private void OnReachedDeadline()
     {
         _deadline = true;
         _inGameUIManager.ShowDeadlineNotification();
-        // invoke???
     }
 
     private void RefreshPools(int value)

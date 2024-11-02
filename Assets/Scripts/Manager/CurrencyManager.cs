@@ -7,12 +7,14 @@ public class CurrencyManager : Singleton<CurrencyManager>
     [SerializeField, TextArea] private string _loseText = "You died! =(";
     [SerializeField, TextArea] private string _winText = "You win! =)";
 
+    private bool _gameOver;
     private int _currentGold;
     private int _incomePerDay;
     private int _outcomePerDay;
     private int _incomeOverall;
     private int _outcomeOverall;
 
+    public bool GameOver => _gameOver;
     public int CurrentGold => _currentGold;
     public int RequiredGold => _requiredGold;
     public int IncomePerDay => _incomePerDay;
@@ -28,13 +30,26 @@ public class CurrencyManager : Singleton<CurrencyManager>
 
     private void OnEnable()
     {
-        EventBus.OnDayChanged += OnDayChanged;
+        EventBus.OnNextDay += OnDayChanged;
     }
 
-    private void OnDayChanged(int obj)
+    private void OnDisable()
     {
-        _incomePerDay = 0;
-        _outcomePerDay = 0;
+        EventBus.OnNextDay -= OnDayChanged;
+    }
+
+    private void OnDayChanged()
+    {
+        if (_incomePerDay == 0 && _outcomePerDay == 0 && _currentGold == 0)
+        {
+            _gameOver = true;
+            EventBus.GameOver();
+        }
+        else
+        {
+            _incomePerDay = 0;
+            _outcomePerDay = 0;
+        }
     }
 
     public bool ReduceGoldByMiniGame()

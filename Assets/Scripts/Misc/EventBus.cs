@@ -17,6 +17,7 @@ public static class EventBus
     public static event Action<int> OnRequiredCoinsUpdated;
     public static event Action<int> OnLootedCoinsUpdated;
     public static event Action<int> OnAllCoinsLooted;
+    public static event Action OnGameOver;
 
     public static void GameStarted()
     {
@@ -85,5 +86,10 @@ public static class EventBus
     public static void AllCoinsLooted(int amount)
     {
         OnAllCoinsLooted?.Invoke(amount);
+    }
+
+    public static void GameOver()
+    {
+        OnGameOver?.Invoke();
     }
 }

@@ -161,9 +161,17 @@ public class InGameUIManager : MonoBehaviour
     public void ShowDeadlineNotification()
     {
         _deadline = true;
-        ShowSummaryOfDay($"Overall Income: {CurrencyManager.StaticInstance.IncomeOverall}\n" +
-            $"Overall Outcome: {CurrencyManager.StaticInstance.OutcomeOverall}\n" +
-            $"Required Gold: {CurrencyManager.StaticInstance.RequiredGold}\n" +
+        ShowSummaryOfDay($"Итоговый доход: {CurrencyManager.StaticInstance.IncomeOverall}\n" +
+            $"Итоговый расход: {CurrencyManager.StaticInstance.OutcomeOverall}\n" +
+            $"Сумма долга: {CurrencyManager.StaticInstance.RequiredGold}\n" +
             $"{CurrencyManager.StaticInstance.GetDeadLineResultText()}");
+    }
+
+    public void ShowGameOverNotification()
+    {
+        _deadline = true;
+        ShowSummaryOfDay($"Вы остались ни с чем! Конец игры.\n" +
+            $"Итоговый доход: {CurrencyManager.StaticInstance.IncomeOverall}\n" +
+            $"Итоговый расход: {CurrencyManager.StaticInstance.OutcomeOverall}");
     }
 }
