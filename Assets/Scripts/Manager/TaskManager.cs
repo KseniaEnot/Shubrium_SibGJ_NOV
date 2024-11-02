@@ -76,7 +76,7 @@ public class TaskManager : MonoBehaviour
         }
         else
         {
-            _inGameUIManager.ShowSummaryOfDay(string.Empty);// add day result info
+            _inGameUIManager.ShowSummaryOfDay($"Income: {CurrencyManager.StaticInstance.IncomePerDay}\nOutcome: {CurrencyManager.StaticInstance.OutcomePerDay}");
         }
     }
 

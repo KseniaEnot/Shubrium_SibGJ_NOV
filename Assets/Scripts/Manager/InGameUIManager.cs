@@ -156,6 +156,9 @@ public class InGameUIManager : MonoBehaviour
     public void ShowDeadlineNotification()
     {
         _deadline = true;
-        ShowSummaryOfDay(string.Empty);// add overall info text
+        ShowSummaryOfDay($"Overall Income: {CurrencyManager.StaticInstance.IncomeOverall}\n" +
+            $"Overall Outcome: {CurrencyManager.StaticInstance.OutcomeOverall}\n" +
+            $"Required Gold: {CurrencyManager.StaticInstance.RequiredGold}\n" +
+            $"{CurrencyManager.StaticInstance.GetDeadLineResultText()}");
     }
 }
