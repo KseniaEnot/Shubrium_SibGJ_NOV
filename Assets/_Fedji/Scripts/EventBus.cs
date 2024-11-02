@@ -2,15 +2,17 @@ using System;
 
 public static class EventBus
 {
-    public static Action OnGameStarted;
-    public static Action OnNextDay;
-    public static Action<int> OnDayChanged;
-    public static Action<int> OnGoldChanged;
-    public static Action<int> OnSendCharacter;
-    public static Action OnSendCharacterToEnter;
-    public static Action OnSendCharacterToExit;
-    public static Action OnCharacterReachedEnter;
-    public static Action OnCharacterReachedExit;
+	public static event Action OnGameStarted;
+	public static event Action OnNextDay;
+	public static event Action<int> OnDayChanged;
+	public static event Action<int> OnWeekCompleted;
+	public static event Action OnDeadlineReached;
+	public static event Action<int> OnGoldChanged;
+	public static event Action<int> OnSendCharacter;
+	public static event Action OnSendCharacterToEnter;
+	public static event Action OnSendCharacterToExit;
+	public static event Action OnCharacterReachedEnter;
+	public static event Action OnCharacterReachedExit;
 
     public static void GameStarted()
     {
@@ -27,6 +29,15 @@ public static class EventBus
         OnDayChanged?.Invoke(value);
     }
 
+	public static void DeadlineReached()
+	{
+		OnDeadlineReached?.Invoke();
+	}
+	public static void WeekCompleted(int value)
+	{
+		OnWeekCompleted?.Invoke(value);
+	}
+	
     public static void GoldChanged(int value)
     {
         OnGoldChanged?.Invoke(value);
