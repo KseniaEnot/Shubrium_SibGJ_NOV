@@ -3,8 +3,9 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class GameManager : MonoBehaviour
+public class GameManager : Singleton<GameManager>
 {
+    public int PlayersGold = 100;
     [Header("New Game")]
     [SerializeField] private GameObject _newGameNotification;
     [SerializeField] private Button _newGameButtonOkay;
@@ -25,6 +26,8 @@ public class GameManager : MonoBehaviour
     [SerializeField, Range(0.51f, 1f)] private float _minPercentToHighResultReaction = 0.66f;
     [Header("Mini Game")]
     [SerializeField] private GameObject _miniGameBar;
+    [SerializeField] private Button _miniGameButtonStart;
+    [SerializeField] private Button _miniGameButtonEnd;
     [Header("Waypoints")]
     [SerializeField] private Transform _enterPoint;
     [SerializeField] private Transform _exitPoint;
@@ -57,6 +60,8 @@ public class GameManager : MonoBehaviour
         _questRequestButtonDeny.onClick.AddListener(OnQuestRequestButtonDenyPressed);
         _questRequestButtonAccept.onClick.AddListener(OnQuestRequestButtonAcceptPressed);
         _questResultButtonOkay.onClick.AddListener(OnQuestResultButtonOkayPressed);
+        _miniGameButtonStart.onClick.AddListener(OnMiniGameButtonStartPressed);
+        _miniGameButtonEnd.onClick.AddListener(OnMiniGameButtonEndPressed);
     }
 
     private void OnDisable()
@@ -66,6 +71,8 @@ public class GameManager : MonoBehaviour
         _questRequestButtonDeny.onClick.RemoveListener(OnQuestRequestButtonDenyPressed);
         _questRequestButtonAccept.onClick.RemoveListener(OnQuestRequestButtonAcceptPressed);
         _questResultButtonOkay.onClick.RemoveListener(OnQuestResultButtonOkayPressed);
+        _miniGameButtonStart.onClick.RemoveListener(OnMiniGameButtonStartPressed);
+        _miniGameButtonEnd.onClick.RemoveListener(OnMiniGameButtonEndPressed);
     }
 
     private void OnNewGameButtonOkayPressed()
@@ -94,7 +101,7 @@ public class GameManager : MonoBehaviour
             tempCharacter = _charactersWithoutQuest[Random.Range(0, _charactersWithoutQuest.Count)];// get character without quest
             _charactersWithoutQuest.Remove(tempCharacter);// remove from pool
             _characterVisited[tempCharacter] = true;// toggle visited pool
-            _tasks.Add(new(tempCharacter, tempCharacter.GetRandomQuest(), false));// add random quest to task pool
+            _tasks.Add(new(tempCharacter, tempCharacter.GetRandomQuest()));// add random quest to task pool
         }
         CheckTasks();
     }
@@ -152,7 +159,9 @@ public class GameManager : MonoBehaviour
     private void OnQuestRequestButtonAcceptPressed()
     {
         // start minigame
+        _tasks[0].QuestStarted = true;// mark quest as started
         _currentConversationState = ConversationState.Minigame;
+        StartMiniGame();
     }
 
     private void OnQuestResultButtonOkayPressed()
@@ -162,29 +171,69 @@ public class GameManager : MonoBehaviour
         SendCharacterToExit();
     }
 
-    private void MiniGameCompleted()
+    private void StartMiniGame()
+    {
+        _miniGameButtonEnd.gameObject.SetActive(false);
+        _miniGameBar.SetActive(true);
+        _miniGameButtonStart.gameObject.SetActive(true);
+        _miniGameButtonStart.Select();
+        // show mini game
+    }
+
+    private void OnMiniGameButtonStartPressed()
+    {
+        MoneyBagManager.StaticInstance.PlayerBag.StartSharing();// start rotate bag and spawn coins
+        _miniGameButtonStart.gameObject.SetActive(false);
+        _miniGameButtonEnd.gameObject.SetActive(true);
+        _miniGameButtonEnd.Select();
+    }
+
+    private void OnMiniGameButtonEndPressed()
+    {
+        MoneyBagManager.StaticInstance.OnAllCoinsCollected += OnAllCoinsLooted;
+        MoneyBagManager.StaticInstance.PlayerBag.StopSharing();// reverse rotate bag
+        // wait for OnAllCoinsLooted() callback;
+    }
+
+    public bool ReduceGold()
+    {
+        if (PlayersGold > 0)
+        {
+            PlayersGold--;
+            return true;
+        }
+        return false;
+    }
+
+    private void OnAllCoinsLooted(int goldAmount)
+    {
+        MoneyBagManager.StaticInstance.OnAllCoinsCollected -= OnAllCoinsLooted;
+        // maybe any other logic
+        MiniGameCompleted(goldAmount);
+    }
+
+    private void MiniGameCompleted(int goldAmount)
     {
         int minGold = 0;
-        int maxGold = _tasks[0].CurrentQuest.RequestedGold * 2;
-        int miniGameGold = 10;// calculate
-        float result = Mathf.InverseLerp(minGold, maxGold, miniGameGold);
+        int maxGold = Mathf.FloorToInt(_tasks[0].CurrentQuest.RequestedGold * _tasks[0].CurrentQuest.MaxGoldMultiplier);
+        float result = Mathf.InverseLerp(minGold, maxGold, goldAmount);
+        _tasks[0].RollQuestStateIsSuccessful(result);
         _currentConversationState = ConversationState.Result;
         _miniGameBar.SetActive(false);
         if (result < _maxPercentToLowResultReaction)
         {
-            _questRequestText.text = _tasks[0].CurrentCharacter.GetLowGoldReaction();
+            _questResultText.text = _tasks[0].CurrentCharacter.GetLowGoldReaction();
         }
         else if (result > _minPercentToHighResultReaction)
         {
-            _questRequestText.text = _tasks[0].CurrentCharacter.GetHighGoldReaction();
+            _questResultText.text = _tasks[0].CurrentCharacter.GetHighGoldReaction();
         }
         else
         {
-            _questRequestText.text = _tasks[0].CurrentCharacter.GetNormalGoldReaction();
+            _questResultText.text = _tasks[0].CurrentCharacter.GetNormalGoldReaction();
         }
-        _questRequestBar.SetActive(true);
+        _questResultBar.SetActive(true);
         _questResultButtonOkay.Select();
-        // remove gold from player (miniGameGold)
     }
 
     private void SendCharacterToExit()
@@ -199,7 +248,14 @@ public class GameManager : MonoBehaviour
         _currentCharacterOnScreen.OnReachedDestination -= OnCharacterReachedDestination;
         if (_currentConversationState == ConversationState.Entering)
         {
-            ShowQuestRequestBar();
+            if (_tasks[0].QuestStarted)
+            {
+
+            }
+            else
+            {
+                ShowQuestRequestBar();
+            }
         }
         else if (_currentConversationState == ConversationState.Exiting)
         {
