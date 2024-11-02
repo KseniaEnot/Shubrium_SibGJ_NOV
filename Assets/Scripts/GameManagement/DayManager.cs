@@ -4,15 +4,10 @@ public class DayManager : MonoBehaviour
 {
 	[SerializeField] private int _deadlineDay = 14;
 	private readonly int _daysInWeek = 7;
-	private int _currentDay = 1;
+	private int _currentDay = 0;
 
 	public int CurrentDay => _currentDay;
 
-	private void Start()
-	{
-		UpdateDay();
-	}
-	
 	private void OnEnable()
 	{
 		EventBus.OnNextDay += NextDay;
@@ -42,11 +37,5 @@ public class DayManager : MonoBehaviour
 		{
 			EventBus.DeadlineReached();
 		}
-	}
-
-	private void ResetDays()
-	{
-		_currentDay = 1;
-		UpdateDay();
 	}
 }
