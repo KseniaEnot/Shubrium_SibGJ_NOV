@@ -24,13 +24,15 @@ public class MiniGameManager : MonoBehaviour
 
     public void StartMiniGame()
     {
+        _lootedCoinsCount = 0;
+        _requiredCancelCoroutine = false;
         _playerBag.SetActive(true);
         _characterBag.SetActive(true);
+        EventBus.LootedCoinsUpdated(_lootedCoinsCount);
     }
 
     public void StartSharing()
     {
-        _requiredCancelCoroutine = false;
         StartCoroutine(RotateDown());
     }
 
@@ -47,7 +49,7 @@ public class MiniGameManager : MonoBehaviour
         {
             currentAngle = _playerBag.transform.localEulerAngles.z;
             Debug.Log(currentAngle);
-            if (currentAngle < _maxDownAngle)
+            if (currentAngle < _maxDownAngle || currentAngle > 355f)
             {
                 _playerBag.transform.Rotate(Vector3.forward * _rotateDownSpeed * Time.deltaTime);
             }
@@ -86,15 +88,15 @@ public class MiniGameManager : MonoBehaviour
 
     private IEnumerator RotateUp()
     {
-        while (_spawnedCoins.Count > 0)
+        while (_spawnedCoinsCount > 0)
         {
-            Debug.Log("Coins " + _spawnedCoins.Count);
             yield return null;
         }
         float currentAngle = _playerBag.transform.localEulerAngles.z;
         //bool coinSpawned;
-        while (currentAngle > 0f)
+        while (currentAngle > 0f && currentAngle < _maxDownAngle + 5f)
         {
+            currentAngle = _playerBag.transform.localEulerAngles.z;
             _playerBag.transform.Rotate(Vector3.forward * -_rotateUpSpeed * Time.deltaTime);
             //if (currentAngle > _angleToDropCoins)
             //{
@@ -123,7 +125,6 @@ public class MiniGameManager : MonoBehaviour
             //        }
             //    }
             //}
-            currentAngle = Mathf.Clamp(_playerBag.transform.localEulerAngles.z, 0f, _maxDownAngle);
             Debug.Log(currentAngle);
             yield return null;
         }
