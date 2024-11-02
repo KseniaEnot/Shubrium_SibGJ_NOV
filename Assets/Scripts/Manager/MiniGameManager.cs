@@ -18,8 +18,8 @@ public class MiniGameManager : MonoBehaviour
     [SerializeField, Range(45f, 135f)] private float _angleToDropCoins = 90f;
     [SerializeField, Range(90f, 180f)] private float _maxDownAngle = 180f;
 
+    private bool _requiredCancelCoroutine;
     private float _cooldownTime;
-    private Coroutine _coroutine;
     private List<GameObject> _spawnedCoins = new();
 
     public void StartMiniGame()
@@ -30,27 +30,20 @@ public class MiniGameManager : MonoBehaviour
 
     public void StartSharing()
     {
-        if (_coroutine != null)
-        {
-            StopCoroutine(_coroutine);
-        }
-        _coroutine = StartCoroutine(RotateDown());
+        _requiredCancelCoroutine = false;
+        StartCoroutine(RotateDown());
     }
 
     public void StopSharing()
     {
-        if (_coroutine != null)
-        {
-            StopCoroutine(_coroutine);
-        }
-        _coroutine = StartCoroutine(RotateUp());
+        _requiredCancelCoroutine = true;
     }
 
     private IEnumerator RotateDown()
     {
         float currentAngle;
         bool coinSpawned;
-        while (true)
+        while (!_requiredCancelCoroutine)
         {
             currentAngle = _playerBag.transform.localEulerAngles.z;
             Debug.Log(currentAngle);
@@ -87,6 +80,8 @@ public class MiniGameManager : MonoBehaviour
             }
             yield return null;
         }
+        _requiredCancelCoroutine = false;
+        StartCoroutine(RotateUp());
     }
 
     private IEnumerator RotateUp()
@@ -133,7 +128,6 @@ public class MiniGameManager : MonoBehaviour
         _playerBag.SetActive(false);
         _characterBag.SetActive(false);
         EventBus.AllCoinsLooted(_lootedCoinsCount);
-        _coroutine = null;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
