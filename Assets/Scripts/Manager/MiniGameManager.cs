@@ -92,6 +92,7 @@ public class MiniGameManager : MonoBehaviour
     private IEnumerator RotateUp()
     {
         float currentAngle = _playerBag.transform.localEulerAngles.z;
+        bool coinSpawned;
         while (currentAngle > 0f)
         {
             currentAngle = _playerBag.transform.localEulerAngles.z;
@@ -101,12 +102,26 @@ public class MiniGameManager : MonoBehaviour
                 _cooldownTime += Mathf.InverseLerp(_angleToDropCoins, _maxDownAngle, currentAngle) * Time.deltaTime;
                 if (_cooldownTime >= _spawnCooldown)
                 {
-                    //if (GameDataManager.StaticInstance.ReduceGoldByMiniGame())
-                    //{
-                    //    _cooldownTime = 0f;
-                    //    SpawnedCoinsCount++;
-                    //    _spawnedCoins.Add(Instantiate(_coinPrefab, transform));// assign position
-                    //}
+                    if (CurrencyManager.StaticInstance.ReduceGoldByMiniGame())
+                    {
+                        coinSpawned = false;
+                        _cooldownTime = 0f;
+                        _spawnedCoinsCount++;
+                        foreach (GameObject coin in _spawnedCoins)
+                        {
+                            if (!coin.activeSelf)
+                            {
+                                coin.transform.position = _playerBag.transform.position;
+                                coin.SetActive(true);
+                                coinSpawned = true;
+                                break;
+                            }
+                        }
+                        if (!coinSpawned)
+                        {
+                            _spawnedCoins.Add(Instantiate(_coinPrefab, _playerBag.transform.position, Quaternion.identity));
+                        }
+                    }
                 }
             }
             yield return null;
@@ -114,12 +129,12 @@ public class MiniGameManager : MonoBehaviour
         _coroutine = null;
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
         _lootedCoinsCount++;
         _spawnedCoinsCount--;
-        other.GetComponent<Rigidbody>().velocity = Vector3.zero;
-        other.gameObject.SetActive(false);
+        collision.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+        collision.gameObject.SetActive(false);
         if (_spawnedCoinsCount == 0)
         {
             _playerBag.SetActive(false);
