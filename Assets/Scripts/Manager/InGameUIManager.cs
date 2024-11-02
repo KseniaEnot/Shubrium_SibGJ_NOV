@@ -103,13 +103,13 @@ public class InGameUIManager : MonoBehaviour
 
     private void OnQuestRequestButtonAcceptPressed()
     {
-        _miniGameManager.StartMiniGame();
-        _taskManager.MarkCurrentTaskAsStarted();
         _questRequestBar.SetActive(false);
         _miniGameButtonEnd.gameObject.SetActive(false);
         _miniGameBar.SetActive(true);
         _miniGameButtonStart.gameObject.SetActive(true);
         _miniGameButtonStart.Select();
+        _miniGameManager.StartMiniGame();
+        _taskManager.MarkCurrentTaskAsStarted();
     }
     // RESULT BAR
     public void ShowQuestResultBar(string characterName, string questName, string descriptionText)
