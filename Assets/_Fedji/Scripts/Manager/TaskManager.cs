@@ -3,32 +3,30 @@ using UnityEngine;
 
 public class TaskManager : Singleton<TaskManager>
 {
-    private Dictionary<CharacterConfig, bool> _characterVisited = new();
+    //private Dictionary<CharacterConfig, bool> _characterVisited = new();
     private List<CharacterConfig> _charactersWithoutQuest = new();
     private List<TaskData> _tasks = new();
-    private CharacterHolder _currentCharacterInRoom;
 
     public List<TaskData> Tasks => _tasks;
-    public CharacterHolder CurrentCharacterInRoom => _currentCharacterInRoom;
 
     protected override void Awake()
     {
         base.Awake();
-        for (int i = 0; i < GameDataManager.StaticInstance.QuestSettingsConfig.CharacterConfigs.Count; i++)
-        {
-            _characterVisited.Add(GameDataManager.StaticInstance.QuestSettingsConfig.CharacterConfigs[i], false);// create pool
-        }
+        //for (int i = 0; i < GameDataManager.StaticInstance.CharacterConfigs.Count; i++)
+        //{
+        //    _characterVisited.Add(GameDataManager.StaticInstance.CharacterConfigs[i], false);// create pool
+        //}
     }
 
     public void StartNewDay()
     {
         _charactersWithoutQuest.Clear();// clear pool
-        for (int i = 0; i < _characterVisited.Count; i++)
+        for (int i = 0; i < GameDataManager.StaticInstance.CharacterConfigs.Count; i++)
         {
-            _characterVisited[GameDataManager.StaticInstance.QuestSettingsConfig.CharacterConfigs[i]] = false;// toogle visited pool
-            _charactersWithoutQuest.Add(GameDataManager.StaticInstance.QuestSettingsConfig.CharacterConfigs[i]);// add characters to pool
+            //_characterVisited[GameDataManager.StaticInstance.CharacterConfigs[i]] = false;// toogle visited pool
+            _charactersWithoutQuest.Add(GameDataManager.StaticInstance.CharacterConfigs[i]);// add characters to pool
         }
-        for (int i = _tasks.Count - 1; i <= 0; i--)
+        for (int i = _tasks.Count - 1; i >= 0; i--)
         {
             _charactersWithoutQuest.Remove(_tasks[i].CurrentCharacter);// remove character from pool
         }
@@ -38,7 +36,7 @@ public class TaskManager : Singleton<TaskManager>
         {
             tempCharacter = _charactersWithoutQuest[Random.Range(0, _charactersWithoutQuest.Count)];// get character without quest
             _charactersWithoutQuest.Remove(tempCharacter);// remove from pool
-            _characterVisited[tempCharacter] = true;// toggle visited pool
+            //_characterVisited[tempCharacter] = true;// toggle visited pool
             _tasks.Add(new(tempCharacter, tempCharacter.GetRandomQuest()));// add random quest to task pool
         }
         CheckTasks();
@@ -46,14 +44,10 @@ public class TaskManager : Singleton<TaskManager>
 
     private void CheckTasks()
     {
-        if (_currentCharacterInRoom != null)
-        {
-            Destroy(_currentCharacterInRoom.gameObject);
-        }
         if (_tasks.Count > 0)
         {
-            _currentCharacterInRoom = Instantiate(_tasks[0].CurrentCharacter.Model).GetComponent<CharacterHolder>();// change to activate
-            _currentCharacterInRoom.SendToEnter();
+            CharacterHolder.StaticInstance.SwitchActiveCharacter(GameDataManager.StaticInstance.CharacterConfigs.IndexOf(_tasks[0].CurrentCharacter));
+            CharacterHolder.StaticInstance.SendToEnter();
         }
         else
         {
@@ -111,7 +105,7 @@ public class TaskManager : Singleton<TaskManager>
     {
         if (_tasks[0].QuestStarted)
         {
-
+            // сообщает успешно или нет
         }
         else
         {

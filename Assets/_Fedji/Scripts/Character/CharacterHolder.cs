@@ -8,15 +8,15 @@ public class CharacterHolder : Singleton<CharacterHolder>
     [SerializeField] private Transform _exitPoint;
     [SerializeField] private float _moveSpeed = 4f;
 
-    private Animator _animator;
+    [SerializeField] private Animator _animator;
     private List<GameObject> _characterModels = new();
 
     protected override void Awake()
     {
         base.Awake();
-        for (int i = 0; i < GameDataManager.StaticInstance.QuestSettingsConfig.CharacterConfigs.Count; i++)
+        for (int i = 0; i < GameDataManager.StaticInstance.CharacterConfigs.Count; i++)
         {
-            _characterModels.Add(Instantiate(GameDataManager.StaticInstance.QuestSettingsConfig.CharacterConfigs[i]).Model);
+            _characterModels.Add(Instantiate(GameDataManager.StaticInstance.CharacterConfigs[i].Model, _exitPoint.position, Quaternion.identity, transform));
         }
     }
 
@@ -41,21 +41,21 @@ public class CharacterHolder : Singleton<CharacterHolder>
 
     private IEnumerator MoveTowardsEnter()
     {
-        while (transform.forward != -_exitPoint.forward)// rotate face reverse to door
+        while (_animator.transform.forward != -_exitPoint.forward)// rotate face reverse to door
         {
-            transform.forward = Vector3.MoveTowards(transform.forward, -_exitPoint.forward, Time.deltaTime);
+            _animator.transform.forward = Vector3.MoveTowards(_animator.transform.forward, -_exitPoint.forward, Time.deltaTime);
             yield return null;
         }
         _animator.SetBool("IsMoving", true);
-        while (transform.position != _enterPoint.position)
+        while (_animator.transform.position != _enterPoint.position)
         {
-            transform.position = Vector3.MoveTowards(transform.position, _enterPoint.position, _moveSpeed * Time.deltaTime);
+            _animator.transform.position = Vector3.MoveTowards(_animator.transform.position, _enterPoint.position, _moveSpeed * Time.deltaTime);
             yield return null;
         }
         _animator.SetBool("IsMoving", false);
-        while (transform.forward != _enterPoint.forward)
+        while (_animator.transform.forward != _enterPoint.forward)
         {
-            transform.forward = Vector3.MoveTowards(transform.forward, _enterPoint.forward, Time.deltaTime);
+            _animator.transform.forward = Vector3.MoveTowards(_animator.transform.forward, _enterPoint.forward, Time.deltaTime);
             yield return null;
         }
         TaskManager.StaticInstance.OnCharacterReachedEnter();
@@ -63,15 +63,15 @@ public class CharacterHolder : Singleton<CharacterHolder>
 
     private IEnumerator MoveTowardsExit()
     {
-        while (transform.forward != _exitPoint.forward)// rotate face to door
+        while (_animator.transform.forward != _exitPoint.forward)// rotate face to door
         {
-            transform.forward = Vector3.MoveTowards(transform.forward, _exitPoint.forward, Time.deltaTime);
+            _animator.transform.forward = Vector3.MoveTowards(_animator.transform.forward, _exitPoint.forward, Time.deltaTime);
             yield return null;
         }
         _animator.SetBool("IsMoving", true);
-        while (transform.position != _exitPoint.position)
+        while (_animator.transform.position != _exitPoint.position)
         {
-            transform.position = Vector3.MoveTowards(transform.position, _exitPoint.position, _moveSpeed * Time.deltaTime);
+            _animator.transform.position = Vector3.MoveTowards(_animator.transform.position, _exitPoint.position, _moveSpeed * Time.deltaTime);
             yield return null;
         }
         _animator.SetBool("IsMoving", false);

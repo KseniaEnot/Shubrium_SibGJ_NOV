@@ -364,7 +364,9 @@ MonoBehaviour:
   _dontDestroyOnLoad: 0
   _enterPoint: {fileID: 5301205637513419678}
   _exitPoint: {fileID: 3602956770281696532}
+  _spawnPoint: {fileID: 0}
   _moveSpeed: 4
+  _animator: {fileID: 0}
 --- !u!1 &8717793047948082848
 GameObject:
   m_ObjectHideFlags: 0

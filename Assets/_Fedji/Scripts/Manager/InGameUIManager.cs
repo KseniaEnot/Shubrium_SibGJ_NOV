@@ -98,7 +98,7 @@ public class InGameUIManager : Singleton<InGameUIManager>
     {
         _questResultBar.SetActive(false);
         TaskManager.StaticInstance.RemoveCurrentTask();
-        TaskManager.StaticInstance.CurrentCharacterInRoom.SendToExit();
+        CharacterHolder.StaticInstance.SendToExit();
     }
     // MINI GAME
     public void OnMiniGameCompleted(string resultText)

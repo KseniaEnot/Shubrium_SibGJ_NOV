@@ -12,9 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 691cc17a04fd8204dbf3ae69bea20062, type: 3}
   m_Name: Default Quest Settings
   m_EditorClassIdentifier: 
-  CharacterConfigs:
-  - {fileID: 11400000, guid: 2c33b3b384aa4a947932e38d6b7e7517, type: 2}
-  MinNewQuestsPerDay: 4
-  MaxNewQuestsPerDay: 6
+  MinNewQuestsPerDay: 2
+  MaxNewQuestsPerDay: 3
   MaxPercentToLowResultReaction: 0.33
   MinPercentToHighResultReaction: 0.66

@@ -44,6 +44,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c146fcc1fb4d06c46bb47cbe8bb98157, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _dontDestroyOnLoad: 0
+  _dontDestroyOnLoad: 1
   Gold: 100
   QuestSettingsConfig: {fileID: 11400000, guid: 8642abb2137f2e847aa03226a3d47a04, type: 2}
+  CharacterConfigs:
+  - {fileID: 11400000, guid: 61e0bcfb272118844a4f6e1ee415d3bc, type: 2}
+  - {fileID: 11400000, guid: 2b6beff2299209043a37e52eeb555cc4, type: 2}
+  - {fileID: 11400000, guid: 604dfe05751996d4d89f439c04fcef5e, type: 2}
+  - {fileID: 11400000, guid: 815782fd4a1adc740aed1ae03f14077e, type: 2}
+  - {fileID: 11400000, guid: 2c33b3b384aa4a947932e38d6b7e7517, type: 2}
+  - {fileID: 11400000, guid: f7eae040fd6ae9f4bae983b28b1ae914, type: 2}
