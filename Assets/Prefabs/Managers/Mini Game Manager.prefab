@@ -344,12 +344,12 @@ MonoBehaviour:
   _characterBag: {fileID: 8400631555077021271}
   _spawnedCoinsCount: 0
   _lootedCoinsCount: 0
-  _spawnCooldown: 0.5
+  _spawnCooldown: 0.1
   _coinPrefab: {fileID: 6100856498369052359, guid: 5843166b4f56e2443aae07c89934fbae, type: 3}
-  _rotateDownSpeed: 45
-  _rotateUpSpeed: 90
-  _angleToDropCoins: 90
-  _maxDownAngle: 180
+  _rotateDownSpeed: 135
+  _rotateUpSpeed: 45
+  _angleToDropCoins: 60
+  _maxDownAngle: 135
 --- !u!50 &4976305619487987975
 Rigidbody2D:
   serializedVersion: 4

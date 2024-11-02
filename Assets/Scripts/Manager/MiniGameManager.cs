@@ -86,11 +86,15 @@ public class MiniGameManager : MonoBehaviour
 
     private IEnumerator RotateUp()
     {
+        while (_spawnedCoins.Count > 0)
+        {
+            Debug.Log("Coins " + _spawnedCoins.Count);
+            yield return null;
+        }
         float currentAngle = _playerBag.transform.localEulerAngles.z;
         //bool coinSpawned;
         while (currentAngle > 0f)
         {
-            currentAngle = _playerBag.transform.localEulerAngles.z;
             _playerBag.transform.Rotate(Vector3.forward * -_rotateUpSpeed * Time.deltaTime);
             //if (currentAngle > _angleToDropCoins)
             //{
@@ -119,10 +123,8 @@ public class MiniGameManager : MonoBehaviour
             //        }
             //    }
             //}
-            yield return null;
-        }
-        while (_spawnedCoins.Count > 0)
-        {
+            currentAngle = Mathf.Clamp(_playerBag.transform.localEulerAngles.z, 0f, _maxDownAngle);
+            Debug.Log(currentAngle);
             yield return null;
         }
         _playerBag.SetActive(false);
