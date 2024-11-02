@@ -7,17 +7,16 @@ public class TaskManager : MonoBehaviour
     [SerializeField] private QuestSettingsConfig _questSettingsConfig;
     [SerializeField] private CharacterSettingsConfig _characterSettingsConfig;
     private List<CharacterConfig> _charactersWithoutQuest = new();
-    private List<TaskData> _tasks = new();
+    [SerializeField] private List<TaskData> _tasksForCurrentDay = new();
+    [SerializeField] private List<TaskData> _tasksForNextDay = new();
     private bool _deadline;
-
-    public List<TaskData> Tasks => _tasks;
 
     private void OnEnable()
     {
         EventBus.OnDeadlineReached += OnReachedDeadline;
         EventBus.OnDayChanged += RefreshPools;
         EventBus.OnCharacterReachedEnter += OnCharacterReachedEnter;
-        EventBus.OnSendCharacterToExit += OnCharacterReachedExit;
+        EventBus.OnCharacterReachedExit += OnCharacterReachedExit;
         EventBus.OnAllCoinsLooted += MiniGameCompleted;
     }
 
@@ -26,7 +25,7 @@ public class TaskManager : MonoBehaviour
         EventBus.OnDeadlineReached -= OnReachedDeadline;
         EventBus.OnDayChanged -= RefreshPools;
         EventBus.OnCharacterReachedEnter -= OnCharacterReachedEnter;
-        EventBus.OnSendCharacterToExit -= OnCharacterReachedExit;
+        EventBus.OnCharacterReachedExit -= OnCharacterReachedExit;
         EventBus.OnAllCoinsLooted -= MiniGameCompleted;
     }
 
@@ -48,26 +47,31 @@ public class TaskManager : MonoBehaviour
         {
             _charactersWithoutQuest.Add(_characterSettingsConfig.CharacterConfigs[i]);// add characters to pool
         }
-        for (int i = _tasks.Count - 1; i >= 0; i--)
+        foreach (TaskData task in _tasksForNextDay)
         {
-            _charactersWithoutQuest.Remove(_tasks[i].CurrentCharacter);// remove character from pool
+            _tasksForCurrentDay.Add(task);
         }
+        for (int i = _tasksForCurrentDay.Count - 1; i >= 0; i--)
+        {
+            _charactersWithoutQuest.Remove(_tasksForCurrentDay[i].CurrentCharacter);// remove character from pool
+        }
+        _tasksForNextDay.Clear();
         int questCount = Random.Range(_questSettingsConfig.MinNewQuestsPerDay, _questSettingsConfig.MaxNewQuestsPerDay + 1);// how many new quest appear today
         CharacterConfig tempCharacter;
         for (int i = 0; i < questCount; i++)
         {
             tempCharacter = _charactersWithoutQuest[Random.Range(0, _charactersWithoutQuest.Count)];// get character without quest
             _charactersWithoutQuest.Remove(tempCharacter);// remove from pool
-            _tasks.Add(new(tempCharacter, tempCharacter.GetRandomQuest()));// add random quest to task pool
+            _tasksForCurrentDay.Add(new(tempCharacter, tempCharacter.GetRandomQuest()));// add random quest to task pool
         }
         CheckTasks();
     }
 
     private void CheckTasks()
     {
-        if (_tasks.Count > 0)
+        if (_tasksForCurrentDay.Count > 0)
         {
-            EventBus.SendCharacter(_characterSettingsConfig.CharacterConfigs.IndexOf(_tasks[0].CurrentCharacter));
+            EventBus.SendCharacter(_characterSettingsConfig.CharacterConfigs.IndexOf(_tasksForCurrentDay[0].CurrentCharacter));
             EventBus.SendCharacterToEnter();
         }
         else
@@ -76,61 +80,79 @@ public class TaskManager : MonoBehaviour
         }
     }
 
-    public string GetCurrentTaskNoGoldReactionText()
+    public void GetCurrentTaskNoGoldReactionText(out string characterName, out string questName, out string descriptionText)
     {
-        return _tasks[0].CurrentCharacter.GetNoGoldReaction();
+        characterName = _tasksForCurrentDay[0].CurrentCharacter.DisplayName;
+        questName = _tasksForCurrentDay[0].CurrentQuest.DisplayName;
+        descriptionText = _tasksForCurrentDay[0].CurrentCharacter.GetNoGoldReaction();
     }
 
     public void MarkCurrentTaskAsStarted()
     {
-        _tasks[0].QuestStarted = true;// mark quest as started
+        _tasksForCurrentDay[0].QuestStarted = true;// mark quest as started
     }
 
     public void RemoveCurrentTask()
     {
-        _tasks.RemoveAt(0);
+        if (!_tasksForCurrentDay[0].CurrentQuest.IsRepeatable)
+        {
+            // remove from quest config ?
+        }
+        _tasksForCurrentDay.RemoveAt(0);
     }
 
     private void MiniGameCompleted(int goldAmount)
     {
         int minGold = 0;
-        int maxGold = Mathf.FloorToInt(_tasks[0].CurrentQuest.RequestedGold * _tasks[0].CurrentQuest.MaxGoldMultiplier);
+        int maxGold = Mathf.FloorToInt(_tasksForCurrentDay[0].CurrentQuest.RequestedGold * _tasksForCurrentDay[0].CurrentQuest.MaxGoldMultiplier);
         float result = Mathf.InverseLerp(minGold, maxGold, goldAmount);
-        _tasks[0].RollQuestStateIsSuccessful(result);
+        _tasksForCurrentDay[0].RollQuestStateIsSuccessful(result);
+        _tasksForNextDay.Add(_tasksForCurrentDay[0]);
         if (result < _questSettingsConfig.MaxPercentToLowResultReaction)
         {
-            _inGameUIManager.OnMiniGameCompleted(_tasks[0].CurrentCharacter.GetLowGoldReaction());
+            _inGameUIManager.OnMiniGameCompleted(_tasksForCurrentDay[0].CurrentCharacter.DisplayName,
+                    _tasksForCurrentDay[0].CurrentQuest.DisplayName,
+                _tasksForCurrentDay[0].CurrentCharacter.GetLowGoldReaction());
         }
         else if (result > _questSettingsConfig.MinPercentToHighResultReaction)
         {
-            _inGameUIManager.OnMiniGameCompleted(_tasks[0].CurrentCharacter.GetHighGoldReaction());
+            _inGameUIManager.OnMiniGameCompleted(_tasksForCurrentDay[0].CurrentCharacter.DisplayName,
+                    _tasksForCurrentDay[0].CurrentQuest.DisplayName,
+                _tasksForCurrentDay[0].CurrentCharacter.GetHighGoldReaction());
         }
         else
         {
-            _inGameUIManager.OnMiniGameCompleted(_tasks[0].CurrentCharacter.GetNormalGoldReaction());
+            _inGameUIManager.OnMiniGameCompleted(_tasksForCurrentDay[0].CurrentCharacter.DisplayName,
+                    _tasksForCurrentDay[0].CurrentQuest.DisplayName,
+                _tasksForCurrentDay[0].CurrentCharacter.GetNormalGoldReaction());
         }
     }
 
-    public void OnCharacterReachedEnter()
+    private void OnCharacterReachedEnter()
     {
-        if (_tasks[0].QuestStarted)
+        if (_tasksForCurrentDay[0].QuestStarted)
         {
-            if (_tasks[0].QuestSuccessful)
+            if (_tasksForCurrentDay[0].QuestSuccessful)
             {
-                _inGameUIManager.ShowQuestResultBar($"{_tasks[0].CurrentQuest.SuccessText} {_tasks[0].CurrentQuest.RequestedGold * _tasks[0].CurrentQuest.RewardPercent + _tasks[0].CurrentQuest.RequestedGold} золота.");
+                _inGameUIManager.ShowQuestResultBar(_tasksForCurrentDay[0].CurrentCharacter.DisplayName,
+                    _tasksForCurrentDay[0].CurrentQuest.DisplayName,
+                    $"{_tasksForCurrentDay[0].CurrentQuest.SuccessText} {_tasksForCurrentDay[0].CurrentQuest.RequestedGold * Random.Range(_tasksForCurrentDay[0].CurrentQuest.MinRewardPercent, _tasksForCurrentDay[0].CurrentQuest.MaxRewardPercent) + _tasksForCurrentDay[0].CurrentQuest.RequestedGold} золота.");
             }
             else
             {
-                _inGameUIManager.ShowQuestResultBar(_tasks[0].CurrentQuest.FailedText);
+                _inGameUIManager.ShowQuestResultBar(_tasksForCurrentDay[0].CurrentCharacter.DisplayName,
+                    _tasksForCurrentDay[0].CurrentQuest.DisplayName, _tasksForCurrentDay[0].CurrentQuest.FailedText);
             }
         }
         else
         {
-            _inGameUIManager.ShowQuestRequestBar($"{_tasks[0].CurrentQuest.Description} {_tasks[0].CurrentQuest.RequestedGold} золота.");
+            _inGameUIManager.ShowQuestRequestBar(_tasksForCurrentDay[0].CurrentCharacter.DisplayName,
+                    _tasksForCurrentDay[0].CurrentQuest.DisplayName,
+                    $"{_tasksForCurrentDay[0].CurrentQuest.Description} {_tasksForCurrentDay[0].CurrentQuest.RequestedGold} золота.");
         }
     }
 
-    public void OnCharacterReachedExit()
+    private void OnCharacterReachedExit()
     {
         CheckTasks();
     }

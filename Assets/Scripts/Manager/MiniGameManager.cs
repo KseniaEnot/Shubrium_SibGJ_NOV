@@ -52,7 +52,8 @@ public class MiniGameManager : MonoBehaviour
         bool coinSpawned;
         while (true)
         {
-            currentAngle = transform.eulerAngles.z;
+            currentAngle =_playerBag.transform.localEulerAngles.z;
+            Debug.Log(currentAngle);
             if (currentAngle < _maxDownAngle)
             {
                 _playerBag.transform.Rotate(Vector3.forward * _rotateDownSpeed * Time.deltaTime);
@@ -90,10 +91,10 @@ public class MiniGameManager : MonoBehaviour
 
     private IEnumerator RotateUp()
     {
-        float currentAngle = transform.eulerAngles.z;
+        float currentAngle = _playerBag.transform.localEulerAngles.z;
         while (currentAngle > 0f)
         {
-            currentAngle = transform.eulerAngles.z;
+            currentAngle = _playerBag.transform.localEulerAngles.z;
             _playerBag.transform.Rotate(Vector3.forward * -_rotateUpSpeed * Time.deltaTime);
             if (currentAngle > _angleToDropCoins)
             {

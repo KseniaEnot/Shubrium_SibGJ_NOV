@@ -3,7 +3,8 @@ using UnityEngine;
 
 public class GoldDisplay : MonoBehaviour
 {
-	[SerializeField] private TextMeshProUGUI _text;
+    [SerializeField] private GameObject _layout;
+    [SerializeField] private TextMeshProUGUI _text;
 	
 	private void OnEnable()
 	{
@@ -16,7 +17,8 @@ public class GoldDisplay : MonoBehaviour
 	}
 
 	private void UpdateText(int value)
-	{
-		_text.text = value.ToString();
+    {
+        _layout.SetActive(true);
+        _text.text = value.ToString();
 	}
 }

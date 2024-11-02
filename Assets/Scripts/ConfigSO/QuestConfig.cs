@@ -6,10 +6,11 @@ public class QuestConfig : ScriptableObject
     public string DisplayName = "Name";
     [TextArea] public string Description = "Problem appear. We need more food. Help me. I need";
     public int RequestedGold = 10;
-    [Range(0f, 10f)] public float RewardPercent = 0.5f;
+    [Range(0f, 10f)] public float MinRewardPercent = 0.25f;
+    [Range(0f, 10f)] public float MaxRewardPercent = 0.75f;
     [TextArea] public string SuccessText = "I complete quest and give you";
     [TextArea] public string FailedText = "I fail quest... Sorry... Cant give you gold...";
-    public bool Repeatable = true;
+    public bool IsRepeatable = true;
     [Header("Success Chance")]
     [Range(0f, 1f)] public float MinSuccessChance = 0.25f;
     [Range(0f, 1f)] public float MaxSuccessChance = 0.75f;

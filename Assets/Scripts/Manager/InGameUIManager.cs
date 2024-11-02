@@ -16,12 +16,16 @@ public class InGameUIManager : MonoBehaviour
     [SerializeField] private Button _summaryOfDayButtonStartNewDay;
     [Header("Quest Request")]
     [SerializeField] private GameObject _questRequestBar;
-    [SerializeField] private TextMeshProUGUI _questRequestText;
+    [SerializeField] private TextMeshProUGUI _questRequestCharacterNameText;
+    [SerializeField] private TextMeshProUGUI _questRequestQuestNameText;
+    [SerializeField] private TextMeshProUGUI _questRequestDescriptionText;
     [SerializeField] private Button _questRequestButtonDeny;
     [SerializeField] private Button _questRequestButtonAccept;
     [Header("Quest Result")]
     [SerializeField] private GameObject _questResultBar;
-    [SerializeField] private TextMeshProUGUI _questResultText;
+    [SerializeField] private TextMeshProUGUI _questResultCharacterNameText;
+    [SerializeField] private TextMeshProUGUI _questResultQuestNameText;
+    [SerializeField] private TextMeshProUGUI _questResultDescriptionText;
     [SerializeField] private Button _questResultButtonOkay;
     [Header("Mini Game")]
     [SerializeField] private GameObject _miniGameBar;
@@ -57,6 +61,7 @@ public class InGameUIManager : MonoBehaviour
     private void OnNewGameButtonOkayPressed()
     {
         _newGameNotification.SetActive(false);
+        CurrencyManager.StaticInstance.ForceUpdateGoldUI();
         OnSummaryOfDayButtonStartNewDayPressed();
     }
 
@@ -80,9 +85,11 @@ public class InGameUIManager : MonoBehaviour
         }
     }
     // REQUEST BAR
-    public void ShowQuestRequestBar(string text)
+    public void ShowQuestRequestBar(string characterName, string questName, string descriptionText)
     {
-        _questRequestText.text = text;
+        _questRequestCharacterNameText.text = characterName;
+        _questRequestQuestNameText.text = questName;
+        _questRequestDescriptionText.text = descriptionText;
         _questRequestBar.SetActive(true);
         _questRequestButtonAccept.Select();
         // ui actions
@@ -90,22 +97,27 @@ public class InGameUIManager : MonoBehaviour
 
     private void OnQuestRequestButtonDenyPressed()
     {
-        ShowQuestResultBar(_taskManager.GetCurrentTaskNoGoldReactionText());
+        _taskManager.GetCurrentTaskNoGoldReactionText(out string characterName, out string questName, out string descriptionText);
+        ShowQuestResultBar(characterName, questName, descriptionText);
     }
 
     private void OnQuestRequestButtonAcceptPressed()
     {
         _miniGameManager.StartMiniGame();
         _taskManager.MarkCurrentTaskAsStarted();
+        _questRequestBar.SetActive(false);
         _miniGameButtonEnd.gameObject.SetActive(false);
         _miniGameBar.SetActive(true);
         _miniGameButtonStart.gameObject.SetActive(true);
         _miniGameButtonStart.Select();
     }
     // RESULT BAR
-    public void ShowQuestResultBar(string text)
+    public void ShowQuestResultBar(string characterName, string questName, string descriptionText)
     {
-        _questResultText.text = text;
+        _questResultCharacterNameText.text = characterName;
+        _questResultQuestNameText.text = questName;
+        _questResultDescriptionText.text = descriptionText;
+        _questRequestBar.SetActive(false);
         _questResultBar.SetActive(true);
         _questResultButtonOkay.Select();
         // ui actions
@@ -118,10 +130,12 @@ public class InGameUIManager : MonoBehaviour
         EventBus.SendCharacterToExit();
     }
     // MINI GAME
-    public void OnMiniGameCompleted(string resultText)
+    public void OnMiniGameCompleted(string characterName, string questName, string descriptionText)
     {
         _miniGameBar.SetActive(false);
-        _questResultText.text = resultText;
+        _questResultCharacterNameText.text = characterName;
+        _questResultQuestNameText.text = questName;
+        _questResultDescriptionText.text = descriptionText;
         _questResultBar.SetActive(true);
         _questResultButtonOkay.Select();
     }
