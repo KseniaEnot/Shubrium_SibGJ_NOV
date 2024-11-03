@@ -12,6 +12,7 @@ public class TaskManager : MonoBehaviour
     public QuestSettingsConfig QuestSettingsConfig => _questSettingsConfig;
     [SerializeField] private OverallRating _overallRating;
     [SerializeField] private List<CharacterRating> _characterRatings = new();
+    private string _colorHex = "#FFFF00";
 
     public TaskData CurrentTask => _tasksForCurrentDay[0];
 
@@ -169,7 +170,11 @@ public class TaskManager : MonoBehaviour
             if (_tasksForCurrentDay[0].QuestSuccessful)
             {
                 int goldGained = Mathf.FloorToInt(_tasksForCurrentDay[0].RequestedGold * Random.Range(_tasksForCurrentDay[0].CurrentQuest.MinRewardPercent, _tasksForCurrentDay[0].CurrentQuest.MaxRewardPercent) + _tasksForCurrentDay[0].RequestedGold * _characterRatings[_characterSettingsConfig.CharacterConfigs.IndexOf(_tasksForCurrentDay[0].CurrentCharacter)].PersonalRatingCoefficient);
-                string resStr = _tasksForCurrentDay[0].CurrentQuest.SuccessText.Replace("{}", goldGained + " золота");
+                string resStr = _tasksForCurrentDay[0].CurrentQuest.SuccessText.Replace(
+                    "{}",
+                    $"<b><color={_colorHex}>{goldGained} золота"
+                );
+
                 GameManager.StaticInstance.UI.ShowQuestResultBar(_tasksForCurrentDay[0].CurrentCharacter.DisplayName,
                     _tasksForCurrentDay[0].CurrentQuest.DisplayName,
                     resStr);
@@ -183,10 +188,16 @@ public class TaskManager : MonoBehaviour
         }
         else
         {
-            string resStr = _tasksForCurrentDay[0].CurrentQuest.Description.Replace("{}", _tasksForCurrentDay[0].RequestedGold + " золота");
-            GameManager.StaticInstance.UI.ShowQuestRequestBar(_tasksForCurrentDay[0].CurrentCharacter.DisplayName,
-                    _tasksForCurrentDay[0].CurrentQuest.DisplayName,
-                    resStr);
+            string resStr = _tasksForCurrentDay[0].CurrentQuest.Description.Replace(
+                "{}",
+                $"<b><color={_colorHex}>{_tasksForCurrentDay[0].RequestedGold} золота</color></b>"
+            );
+
+            GameManager.StaticInstance.UI.ShowQuestRequestBar(
+                _tasksForCurrentDay[0].CurrentCharacter.DisplayName,
+                _tasksForCurrentDay[0].CurrentQuest.DisplayName,
+                resStr
+            );
         }
     }
 
