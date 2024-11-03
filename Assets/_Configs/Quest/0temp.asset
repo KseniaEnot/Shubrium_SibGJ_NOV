@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68ec8f55e647ce547856b8b3f91ed930, type: 3}
+  m_Name: 0temp
+  m_EditorClassIdentifier: 
+  DisplayName: 
+  Description: 
+  RequestedGold: 10
+  MinRewardPercent: 0.25
+  MaxRewardPercent: 0.75
+  SuccessText: 
+  FailedText: 
+  IsRepeatable: 1
+  MinSuccessChance: 0.25
+  MaxSuccessChance: 0.75
+  MaxGoldMultiplier: 2
