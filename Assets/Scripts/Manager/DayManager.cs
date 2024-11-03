@@ -27,10 +27,8 @@ public class DayManager : MonoBehaviour
 
     private void UpdateDay()
     {
-        if (_currentDay % _daysInWeek == 0)
-        {
-            EventBus.WeekCompleted(_currentDay / _daysInWeek);
-        }
+        EventBus.TriggerTimeOfDayChanged(false);
+
         if (_currentDay == _deadlineDay)
         {
             EventBus.DeadlineReached();
