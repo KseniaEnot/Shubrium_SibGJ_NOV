@@ -9,6 +9,9 @@ public class TaskManager : MonoBehaviour
     [SerializeField] private List<TaskData> _tasksForCurrentDay = new();
     [SerializeField] private List<TaskData> _tasksForNextDay = new();
     private bool _deadline;
+    public QuestSettingsConfig QuestSettingsConfig => _questSettingsConfig;
+    [SerializeField] private OverallRating _overallRating;
+    [SerializeField] private List<CharacterRating> _characterRatings = new();
 
     public TaskData CurrentTask => _tasksForCurrentDay[0];
 
@@ -46,6 +49,15 @@ public class TaskManager : MonoBehaviour
 
     private void RefreshPools(int value)
     {
+        if (_characterRatings.Count == 0)
+        {
+            _overallRating = new();
+            for (int i = 0; i < _characterSettingsConfig.CharacterConfigs.Count; i++)
+            {
+                _characterRatings.Add(new(_characterSettingsConfig.CharacterConfigs[i]));
+            }
+        }
+
         if (_deadline)
         {
             return;
@@ -71,6 +83,7 @@ public class TaskManager : MonoBehaviour
             tempCharacter = _charactersWithoutQuest[Random.Range(0, _charactersWithoutQuest.Count)];// get character without quest
             _charactersWithoutQuest.Remove(tempCharacter);// remove from pool
             _tasksForCurrentDay.Add(new(tempCharacter, tempCharacter.GetRandomQuest()));// add random quest to task pool
+            _tasksForCurrentDay[i].RequestedGold = Mathf.RoundToInt(_tasksForCurrentDay[i].CurrentQuest.RequestedGold * _overallRating.OverallRatingCoefficient);
         }
         CheckTasks();
     }
@@ -79,7 +92,7 @@ public class TaskManager : MonoBehaviour
     {
         if (_tasksForCurrentDay.Count > 0)
         {
-            if(_tasksForCurrentDay.Count == _questSettingsConfig.TasksLeftToEnableNight)
+            if (_tasksForCurrentDay.Count == _questSettingsConfig.TasksLeftToEnableNight)
             {
                 EventBus.TimeOfDayChanged(true);
             }
@@ -117,6 +130,8 @@ public class TaskManager : MonoBehaviour
         }
         _tasksForCurrentDay.RemoveAt(0);
     }
+    public void LowerOverallRating() => _overallRating.LowerRating();
+    public void LowerCharacterRatings() => _characterRatings[_characterSettingsConfig.CharacterConfigs.IndexOf(_tasksForCurrentDay[0].CurrentCharacter)].LowerRating();
 
     private void MiniGameCompleted(int goldAmount)
     {
@@ -125,6 +140,8 @@ public class TaskManager : MonoBehaviour
         float result = Mathf.InverseLerp(minGold, maxGold, goldAmount);
         _tasksForCurrentDay[0].RollQuestStateIsSuccessful(result);
         _tasksForNextDay.Add(_tasksForCurrentDay[0]);
+        _characterRatings[_characterSettingsConfig.CharacterConfigs.IndexOf(_tasksForCurrentDay[0].CurrentCharacter)].UpRating(result);
+        _overallRating.UpRating(result);
         if (result < _questSettingsConfig.MaxPercentToLowResultReaction)
         {
             GameManager.StaticInstance.UI.OnMiniGameCompleted(_tasksForCurrentDay[0].CurrentCharacter.DisplayName,
@@ -151,7 +168,7 @@ public class TaskManager : MonoBehaviour
         {
             if (_tasksForCurrentDay[0].QuestSuccessful)
             {
-                int goldGained = Mathf.FloorToInt(_tasksForCurrentDay[0].CurrentQuest.RequestedGold * Random.Range(_tasksForCurrentDay[0].CurrentQuest.MinRewardPercent, _tasksForCurrentDay[0].CurrentQuest.MaxRewardPercent) + _tasksForCurrentDay[0].CurrentQuest.RequestedGold);
+                int goldGained = Mathf.FloorToInt(_tasksForCurrentDay[0].RequestedGold * Random.Range(_tasksForCurrentDay[0].CurrentQuest.MinRewardPercent, _tasksForCurrentDay[0].CurrentQuest.MaxRewardPercent) + _tasksForCurrentDay[0].RequestedGold * _characterRatings[_characterSettingsConfig.CharacterConfigs.IndexOf(_tasksForCurrentDay[0].CurrentCharacter)].PersonalRatingCoefficient);
                 string resStr = _tasksForCurrentDay[0].CurrentQuest.SuccessText.Replace("{}", goldGained + " золота");
                 GameManager.StaticInstance.UI.ShowQuestResultBar(_tasksForCurrentDay[0].CurrentCharacter.DisplayName,
                     _tasksForCurrentDay[0].CurrentQuest.DisplayName,
@@ -166,7 +183,7 @@ public class TaskManager : MonoBehaviour
         }
         else
         {
-            string resStr = _tasksForCurrentDay[0].CurrentQuest.Description.Replace("{}", _tasksForCurrentDay[0].CurrentQuest.RequestedGold + " золота");
+            string resStr = _tasksForCurrentDay[0].CurrentQuest.Description.Replace("{}", _tasksForCurrentDay[0].RequestedGold + " золота");
             GameManager.StaticInstance.UI.ShowQuestRequestBar(_tasksForCurrentDay[0].CurrentCharacter.DisplayName,
                     _tasksForCurrentDay[0].CurrentQuest.DisplayName,
                     resStr);
@@ -176,5 +193,31 @@ public class TaskManager : MonoBehaviour
     private void OnCharacterReachedExit()
     {
         CheckTasks();
+    }
+}
+
+[System.Serializable]
+public class OverallRating
+{
+    public float OverallRatingCoefficient;
+
+    public OverallRating()
+    {
+        OverallRatingCoefficient = 1f;
+    }
+    public void UpRating(float result)
+    {
+        OverallRatingCoefficient += GameManager.StaticInstance.Task.QuestSettingsConfig.OverallRatingPlusCoefficient * Mathf.Clamp(result,
+                        GameManager.StaticInstance.Task.QuestSettingsConfig.MinOverallRatingCoefficient,
+                        GameManager.StaticInstance.Task.QuestSettingsConfig.MaxOverallRatingCoefficient);
+        if (OverallRatingCoefficient > GameManager.StaticInstance.Task.QuestSettingsConfig.MaxOverallRating)
+            OverallRatingCoefficient = GameManager.StaticInstance.Task.QuestSettingsConfig.MaxOverallRating;
+    }
+
+    public void LowerRating()
+    {
+        OverallRatingCoefficient -= GameManager.StaticInstance.Task.QuestSettingsConfig.OverallRatingMinusCoefficient;
+        if (OverallRatingCoefficient < 1f)
+            OverallRatingCoefficient = 1f;
     }
 }
