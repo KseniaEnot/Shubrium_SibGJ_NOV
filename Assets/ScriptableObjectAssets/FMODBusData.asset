@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ce2b0a21587847d9bdb683ca6183f7c, type: 3}
   m_Name: FMODBusData
   m_EditorClassIdentifier: 
-  _masterBusPath: bus:/
-  _musicBusPath: bus:/
-  _SFXBusPath: bus:/
+  _masterBusPath: bus:/Master
+  _musicBusPath: bus:/Master/Music
+  _SFXBusPath: bus:/Master/SFX
