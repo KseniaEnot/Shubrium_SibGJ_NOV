@@ -20,6 +20,7 @@ public class CoinManager : MonoBehaviour
         yield return new WaitForSeconds(time);
         CurrencyManager.StaticInstance.AddGold(1);
         _rb.velocity = Vector2.zero;
+        GameManager.StaticInstance.MiniGame.SpawnedCoinsCount--;
         gameObject.SetActive(false);
     }
 }
