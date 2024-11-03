@@ -21,6 +21,7 @@ public class MiniGameManager : MonoBehaviour
     private List<GameObject> _spawnedCoins = new();
 
     public int SpawnedCoinsCount;
+    public int LootedCoinsCount => _lootedCoinsCount;
 
     public void StartMiniGame()
     {
