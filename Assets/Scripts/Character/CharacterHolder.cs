@@ -61,19 +61,21 @@ public class CharacterHolder : MonoBehaviour
 		Sequence moveSequence = DOTween.Sequence();
 
 		float rotationDuration = _rotationSpeed / 360f;
-		
-		//Look in move direction
-		moveSequence.Append(_animator.transform.DOLookAt(targetPosition, rotationDuration));
+
+		Vector3 lookDirection = targetPosition - _animator.transform.position;
+		Quaternion targetRotation = Quaternion.LookRotation(lookDirection, _animator.transform.up);
+		moveSequence.Append(_animator.transform.DOLocalRotateQuaternion(targetRotation, rotationDuration));
 		moveSequence.AppendCallback(() => _animator.SetBool("IsMoving", true));
 
 		float moveDuration = Vector3.Distance(_animator.transform.position, targetPosition) / _moveSpeed;
-
 		moveSequence.Append(_animator.transform.DOMove(targetPosition, moveDuration).SetEase(Ease.Linear));
 		moveSequence.AppendCallback(() => _animator.SetBool("IsMoving", false));
 
-		moveSequence.Append(_animator.transform.DOLookAt(targetDirection, rotationDuration));
+		Quaternion finalRotation = Quaternion.LookRotation(targetDirection, _animator.transform.up);
+		moveSequence.Append(_animator.transform.DOLocalRotateQuaternion(finalRotation, rotationDuration));
 		moveSequence.OnComplete(() => onReachAction?.Invoke());
 	}
+
 
 	private void OnEnterReached()
 	{
