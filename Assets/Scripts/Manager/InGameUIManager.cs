@@ -99,6 +99,7 @@ public class InGameUIManager : MonoBehaviour
     {
         _taskManager.GetCurrentTaskNoGoldReactionText(out string characterName, out string questName, out string descriptionText);
         ShowQuestResultBar(characterName, questName, descriptionText);
+        // play refuse clip
     }
 
     private void OnQuestRequestButtonAcceptPressed()
@@ -161,17 +162,17 @@ public class InGameUIManager : MonoBehaviour
     public void ShowDeadlineNotification()
     {
         _deadline = true;
-        ShowSummaryOfDay($"Итоговый доход: {CurrencyManager.StaticInstance.IncomeOverall}\n" +
-            $"Итоговый расход: {CurrencyManager.StaticInstance.OutcomeOverall}\n" +
-            $"Сумма долга: {CurrencyManager.StaticInstance.RequiredGold}\n" +
+        ShowSummaryOfDay($"РС‚РѕРіРѕРІС‹Р№ РґРѕС…РѕРґ: {CurrencyManager.StaticInstance.IncomeOverall}\n" +
+            $"РС‚РѕРіРѕРІС‹Р№ СЂР°СЃС…РѕРґ: {CurrencyManager.StaticInstance.OutcomeOverall}\n" +
+            $"РЎСѓРјРјР° РґРѕР»РіР°: {CurrencyManager.StaticInstance.RequiredGold}\n" +
             $"{CurrencyManager.StaticInstance.GetDeadLineResultText()}");
     }
 
     public void ShowGameOverNotification()
     {
         _deadline = true;
-        ShowSummaryOfDay($"Вы остались ни с чем! Конец игры.\n" +
-            $"Итоговый доход: {CurrencyManager.StaticInstance.IncomeOverall}\n" +
-            $"Итоговый расход: {CurrencyManager.StaticInstance.OutcomeOverall}");
+        ShowSummaryOfDay($"Р’С‹ РѕСЃС‚Р°Р»РёСЃСЊ РЅРё СЃ С‡РµРј! РљРѕРЅРµС† РёРіСЂС‹.\n" +
+            $"РС‚РѕРіРѕРІС‹Р№ РґРѕС…РѕРґ: {CurrencyManager.StaticInstance.IncomeOverall}\n" +
+            $"РС‚РѕРіРѕРІС‹Р№ СЂР°СЃС…РѕРґ: {CurrencyManager.StaticInstance.OutcomeOverall}");
     }
 }
