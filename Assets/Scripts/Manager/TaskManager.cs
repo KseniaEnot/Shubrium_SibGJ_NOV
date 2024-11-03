@@ -10,6 +10,8 @@ public class TaskManager : MonoBehaviour
     [SerializeField] private List<TaskData> _tasksForNextDay = new();
     private bool _deadline;
 
+    public TaskData CurrentTask => _tasksForCurrentDay[0];
+
     private void OnEnable()
     {
         EventBus.OnDeadlineReached += OnReachedDeadline;
