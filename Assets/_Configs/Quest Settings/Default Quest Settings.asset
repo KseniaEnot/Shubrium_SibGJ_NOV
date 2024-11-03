@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 691cc17a04fd8204dbf3ae69bea20062, type: 3}
   m_Name: Default Quest Settings
   m_EditorClassIdentifier: 
-  MinNewQuestsPerDay: 2
-  MaxNewQuestsPerDay: 2
+  MinNewQuestsPerDay: 4
+  MaxNewQuestsPerDay: 6
+  TasksLeftToEnableNight: 2
   MaxPercentToLowResultReaction: 0.33
   MinPercentToHighResultReaction: 0.66

@@ -3,7 +3,6 @@ using UnityEngine;
 public class DayManager : MonoBehaviour
 {
     [SerializeField] private int _deadlineDay = 14;
-    private readonly int _daysInWeek = 7;
     private int _currentDay = 0;
 
     public int CurrentDay => _currentDay;
@@ -27,8 +26,7 @@ public class DayManager : MonoBehaviour
 
     private void UpdateDay()
     {
-        EventBus.TriggerTimeOfDayChanged(false);
-
+        EventBus.TimeOfDayChanged(false);
         if (_currentDay == _deadlineDay)
         {
             EventBus.DeadlineReached();

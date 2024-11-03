@@ -35,7 +35,7 @@ TagManager:
   - 
   - 
   - 
-  - 
+  - PostProcess
   - World Space UI
   m_SortingLayers:
   - name: Default
