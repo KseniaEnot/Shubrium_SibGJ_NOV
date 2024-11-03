@@ -3,7 +3,6 @@ using UnityEngine;
 
 public class TaskManager : MonoBehaviour
 {
-    [SerializeField] private InGameUIManager _inGameUIManager;
     [SerializeField] private QuestSettingsConfig _questSettingsConfig;
     [SerializeField] private CharacterSettingsConfig _characterSettingsConfig;
     private List<CharacterConfig> _charactersWithoutQuest = new();
@@ -34,13 +33,13 @@ public class TaskManager : MonoBehaviour
     private void OnGameOver()
     {
         _deadline = true;
-        _inGameUIManager.ShowGameOverNotification();
+        GameManager.StaticInstance.UI.ShowGameOverNotification();
     }
 
     private void OnReachedDeadline()
     {
         _deadline = true;
-        _inGameUIManager.ShowDeadlineNotification();
+        GameManager.StaticInstance.UI.ShowDeadlineNotification();
     }
 
     private void RefreshPools(int value)
@@ -83,7 +82,7 @@ public class TaskManager : MonoBehaviour
         }
         else
         {
-            _inGameUIManager.ShowSummaryOfDay($"Income: {CurrencyManager.StaticInstance.IncomePerDay}\nOutcome: {CurrencyManager.StaticInstance.OutcomePerDay}");
+            GameManager.StaticInstance.UI.ShowSummaryOfDay($"Income: {CurrencyManager.StaticInstance.IncomePerDay}\nOutcome: {CurrencyManager.StaticInstance.OutcomePerDay}");
         }
     }
 
@@ -118,19 +117,19 @@ public class TaskManager : MonoBehaviour
         _tasksForNextDay.Add(_tasksForCurrentDay[0]);
         if (result < _questSettingsConfig.MaxPercentToLowResultReaction)
         {
-            _inGameUIManager.OnMiniGameCompleted(_tasksForCurrentDay[0].CurrentCharacter.DisplayName,
+            GameManager.StaticInstance.UI.OnMiniGameCompleted(_tasksForCurrentDay[0].CurrentCharacter.DisplayName,
                     _tasksForCurrentDay[0].CurrentQuest.DisplayName,
                 _tasksForCurrentDay[0].CurrentCharacter.GetLowGoldReaction());
         }
         else if (result > _questSettingsConfig.MinPercentToHighResultReaction)
         {
-            _inGameUIManager.OnMiniGameCompleted(_tasksForCurrentDay[0].CurrentCharacter.DisplayName,
+            GameManager.StaticInstance.UI.OnMiniGameCompleted(_tasksForCurrentDay[0].CurrentCharacter.DisplayName,
                     _tasksForCurrentDay[0].CurrentQuest.DisplayName,
                 _tasksForCurrentDay[0].CurrentCharacter.GetHighGoldReaction());
         }
         else
         {
-            _inGameUIManager.OnMiniGameCompleted(_tasksForCurrentDay[0].CurrentCharacter.DisplayName,
+            GameManager.StaticInstance.UI.OnMiniGameCompleted(_tasksForCurrentDay[0].CurrentCharacter.DisplayName,
                     _tasksForCurrentDay[0].CurrentQuest.DisplayName,
                 _tasksForCurrentDay[0].CurrentCharacter.GetNormalGoldReaction());
         }
@@ -143,20 +142,20 @@ public class TaskManager : MonoBehaviour
             if (_tasksForCurrentDay[0].QuestSuccessful)
             {
                 int goldGained = Mathf.FloorToInt(_tasksForCurrentDay[0].CurrentQuest.RequestedGold * Random.Range(_tasksForCurrentDay[0].CurrentQuest.MinRewardPercent, _tasksForCurrentDay[0].CurrentQuest.MaxRewardPercent) + _tasksForCurrentDay[0].CurrentQuest.RequestedGold);
-                _inGameUIManager.ShowQuestResultBar(_tasksForCurrentDay[0].CurrentCharacter.DisplayName,
+                GameManager.StaticInstance.UI.ShowQuestResultBar(_tasksForCurrentDay[0].CurrentCharacter.DisplayName,
                     _tasksForCurrentDay[0].CurrentQuest.DisplayName,
                     $"{_tasksForCurrentDay[0].CurrentQuest.SuccessText} {goldGained} золота.");
                 CurrencyManager.StaticInstance.AddGold(goldGained);
             }
             else
             {
-                _inGameUIManager.ShowQuestResultBar(_tasksForCurrentDay[0].CurrentCharacter.DisplayName,
+                GameManager.StaticInstance.UI.ShowQuestResultBar(_tasksForCurrentDay[0].CurrentCharacter.DisplayName,
                     _tasksForCurrentDay[0].CurrentQuest.DisplayName, _tasksForCurrentDay[0].CurrentQuest.FailedText);
             }
         }
         else
         {
-            _inGameUIManager.ShowQuestRequestBar(_tasksForCurrentDay[0].CurrentCharacter.DisplayName,
+            GameManager.StaticInstance.UI.ShowQuestRequestBar(_tasksForCurrentDay[0].CurrentCharacter.DisplayName,
                     _tasksForCurrentDay[0].CurrentQuest.DisplayName,
                     $"{_tasksForCurrentDay[0].CurrentQuest.Description} {_tasksForCurrentDay[0].CurrentQuest.RequestedGold} золота.");
         }

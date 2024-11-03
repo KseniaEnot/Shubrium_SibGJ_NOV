@@ -4,6 +4,7 @@ using UnityEngine;
 public class DayDisplay : MonoBehaviour
 {
     [SerializeField] private GameObject _layout;
+	[SerializeField] private string _dayString = "День: ";
     [SerializeField] private TextMeshProUGUI _text;
 
     private void OnEnable()
@@ -19,6 +20,6 @@ public class DayDisplay : MonoBehaviour
     private void UpdateText(int value)
     {
         _layout.SetActive(true);
-        _text.text = value.ToString();
+        _text.text = _dayString + value.ToString();
     }
 }

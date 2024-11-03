@@ -6,9 +6,7 @@ public class MiniGameManager : MonoBehaviour
 {
     [SerializeField] private GameObject _playerBag;
     [SerializeField] private GameObject _characterBag;
-
-    [SerializeField] private int _spawnedCoinsCount;
-    [SerializeField] private int _lootedCoinsCount;//
+    [SerializeField] private int _lootedCoinsCount;
 
     [Header("For players's bag")]
     [SerializeField] private float _spawnCooldown = 0.5f;
@@ -21,6 +19,8 @@ public class MiniGameManager : MonoBehaviour
     private bool _requiredCancelCoroutine;
     private float _cooldownTime;
     private List<GameObject> _spawnedCoins = new();
+
+    public int SpawnedCoinsCount;
 
     public void StartMiniGame()
     {
@@ -62,7 +62,7 @@ public class MiniGameManager : MonoBehaviour
                     {
                         coinSpawned = null;
                         _cooldownTime = 0f;
-                        _spawnedCoinsCount++;
+                        SpawnedCoinsCount++;
                         foreach (GameObject coin in _spawnedCoins)
                         {
                             if (!coin.activeSelf)
@@ -90,7 +90,7 @@ public class MiniGameManager : MonoBehaviour
 
     private IEnumerator RotateUp()
     {
-        while (_spawnedCoinsCount > 0)
+        while (SpawnedCoinsCount > 0)
         {
             yield return null;
         }
@@ -138,7 +138,7 @@ public class MiniGameManager : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         _lootedCoinsCount++;
-        _spawnedCoinsCount--;
+        SpawnedCoinsCount--;
         collision.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
         collision.gameObject.SetActive(false);
         EventBus.LootedCoinsUpdated(_lootedCoinsCount);
