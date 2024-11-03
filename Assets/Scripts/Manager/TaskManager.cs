@@ -155,9 +155,10 @@ public class TaskManager : MonoBehaviour
         }
         else
         {
+            string resStr = _tasksForCurrentDay[0].CurrentQuest.Description.Replace("{}", _tasksForCurrentDay[0].CurrentQuest.RequestedGold + " золота");
             GameManager.StaticInstance.UI.ShowQuestRequestBar(_tasksForCurrentDay[0].CurrentCharacter.DisplayName,
                     _tasksForCurrentDay[0].CurrentQuest.DisplayName,
-                    $"{_tasksForCurrentDay[0].CurrentQuest.Description} {_tasksForCurrentDay[0].CurrentQuest.RequestedGold} золота.");
+                    resStr);
         }
     }
 
