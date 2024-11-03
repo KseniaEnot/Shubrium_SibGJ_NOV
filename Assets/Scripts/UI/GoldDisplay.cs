@@ -18,7 +18,11 @@ public class GoldDisplay : MonoBehaviour
 
 	private void UpdateText(int value)
     {
-        _layout.SetActive(true);
         _text.text = value.ToString();
+	}
+
+	public void ToggleGoldVisible(bool visible)
+	{
+		_layout.SetActive(visible);
 	}
 }

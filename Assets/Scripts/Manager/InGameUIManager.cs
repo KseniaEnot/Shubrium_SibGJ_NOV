@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class InGameUIManager : MonoBehaviour
 {
+    public GoldDisplay GoldDisplay;
     [Header("New Game")]
     [SerializeField] private GameObject _newGameNotification;
     [SerializeField] private Button _newGameButtonOkay;
@@ -61,6 +62,7 @@ public class InGameUIManager : MonoBehaviour
     private void OnNewGameButtonOkayPressed()
     {
         _newGameNotification.SetActive(false);
+        GoldDisplay.ToggleGoldVisible(true);
         GameManager.StaticInstance.Currency.ForceUpdateGoldUI();
         OnSummaryOfDayButtonStartNewDayPressed();
     }
@@ -144,6 +146,7 @@ public class InGameUIManager : MonoBehaviour
         _questResultDescriptionText.text = descriptionText;
         _questResultBar.SetActive(true);
         _questResultButtonOkay.Select();
+        GoldDisplay.ToggleGoldVisible(true);
     }
 
     private void OnMiniGameButtonStartPressed()

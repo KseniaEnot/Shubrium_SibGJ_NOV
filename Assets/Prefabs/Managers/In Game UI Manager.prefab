@@ -4134,6 +4134,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a23690a37a66974681b899a9bd571b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  GoldDisplay: {fileID: 2641944634636906076}
   _newGameNotification: {fileID: 6216579140022674330}
   _newGameButtonOkay: {fileID: 2802546677598352008}
   _summaryOfDayBar: {fileID: 2235582191191257263}
@@ -4153,6 +4154,8 @@ MonoBehaviour:
   _miniGameBar: {fileID: 6967670256992569609}
   _miniGameButtonStart: {fileID: 8329427883237858860}
   _miniGameButtonEnd: {fileID: 6933241310924123903}
+  _gameOverMessage: "\u0412\u044B \u043E\u0441\u0442\u0430\u043B\u0438\u0441\u044C
+    \u043D\u0438 \u0441 \u0447\u0435\u043C! \u041A\u043E\u043D\u0435\u0446 \u0438\u0433\u0440\u044B."
 --- !u!223 &7931768002250035365
 Canvas:
   m_ObjectHideFlags: 0

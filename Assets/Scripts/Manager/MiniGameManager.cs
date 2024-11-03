@@ -30,6 +30,7 @@ public class MiniGameManager : MonoBehaviour
         _playerBag.SetActive(true);
         _characterBag.SetActive(true);
         EventBus.LootedCoinsUpdated(_lootedCoinsCount);
+        GameManager.StaticInstance.UI.GoldDisplay.ToggleGoldVisible(false);
     }
 
     public void StartSharing()
