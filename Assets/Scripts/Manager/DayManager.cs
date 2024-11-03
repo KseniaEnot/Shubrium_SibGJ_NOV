@@ -3,6 +3,7 @@ using UnityEngine;
 public class DayManager : MonoBehaviour
 {
     [SerializeField] private int _deadlineDay = 14;
+    [SerializeField, Range(0f, 10f)] private float _timeScale = 1f;
     private int _currentDay = 0;
 
     public int CurrentDay => _currentDay;
@@ -16,6 +17,11 @@ public class DayManager : MonoBehaviour
     private void OnDisable()
     {
         EventBus.OnNextDay -= NextDay;
+    }
+
+    private void Update()
+    {
+        Time.timeScale = _timeScale;
     }
 
     private void NextDay()
