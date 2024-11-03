@@ -84,7 +84,11 @@ public class TaskManager : MonoBehaviour
         }
         else
         {
-            GameManager.StaticInstance.UI.ShowSummaryOfDay($"Income: {GameManager.StaticInstance.Currency.IncomePerDay}\nOutcome: {GameManager.StaticInstance.Currency.OutcomePerDay}");
+            GameManager.StaticInstance.UI.ShowSummaryOfDay($"Доход за день: {GameManager.StaticInstance.Currency.IncomePerDay}\n" +
+                $"Расход за день: {GameManager.StaticInstance.Currency.OutcomePerDay}\n" +
+                $"До возврата долга осталось {GameManager.StaticInstance.Day.DeadlineDay - GameManager.StaticInstance.Day.CurrentDay} дней.\n" +
+                $"Осталось накопить {GameManager.StaticInstance.Currency.RequiredGold - GameManager.StaticInstance.Currency.CurrentGold} золота.");
+            // or EventBus.DayEnded?
         }
     }
 

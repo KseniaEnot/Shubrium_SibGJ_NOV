@@ -7,6 +7,7 @@ public class DayManager : MonoBehaviour
     private int _currentDay = 0;
 
     public int CurrentDay => _currentDay;
+    public int DeadlineDay => _deadlineDay;
 
     private void OnEnable()
     {
