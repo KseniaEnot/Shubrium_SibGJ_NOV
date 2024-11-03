@@ -58,7 +58,7 @@ public class MiniGameManager : MonoBehaviour
                 _cooldownTime += Mathf.InverseLerp(_angleToDropCoins, _maxDownAngle, currentAngle) * Time.deltaTime;
                 if (_cooldownTime >= _spawnCooldown)
                 {
-                    if (CurrencyManager.StaticInstance.ReduceGoldByMiniGame())
+                    if (GameManager.StaticInstance.Currency.ReduceGoldByMiniGame())
                     {
                         coinSpawned = null;
                         _cooldownTime = 0f;

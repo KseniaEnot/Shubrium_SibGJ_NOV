@@ -18,7 +18,7 @@ public class CoinManager : MonoBehaviour
     private IEnumerator CheckTimer(float time)
     {
         yield return new WaitForSeconds(time);
-        CurrencyManager.StaticInstance.AddGold(1);
+        GameManager.StaticInstance.Currency.AddGold(1);
         _rb.velocity = Vector2.zero;
         GameManager.StaticInstance.MiniGame.SpawnedCoinsCount--;
         gameObject.SetActive(false);

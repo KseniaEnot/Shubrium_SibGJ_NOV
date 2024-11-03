@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class CurrencyManager : Singleton<CurrencyManager>
+public class CurrencyManager : MonoBehaviour
 {
     [SerializeField] private int _startingGold = 100;
     [SerializeField] private int _requiredGold = 5000;
@@ -22,9 +22,8 @@ public class CurrencyManager : Singleton<CurrencyManager>
     public int IncomeOverall => _incomeOverall;
     public int OutcomeOverall => _outcomeOverall;
 
-    protected override void Awake()
+    private void Awake()
     {
-        base.Awake();
         _currentGold = _startingGold;
     }
 

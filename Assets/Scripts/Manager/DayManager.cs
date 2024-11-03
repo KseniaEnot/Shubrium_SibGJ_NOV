@@ -34,7 +34,7 @@ public class DayManager : MonoBehaviour
         {
             EventBus.DeadlineReached();
         }
-        else if (!CurrencyManager.StaticInstance.GameOver)
+        else if (!GameManager.StaticInstance.Currency.GameOver)
         {
             EventBus.DayChanged(CurrentDay);
         }

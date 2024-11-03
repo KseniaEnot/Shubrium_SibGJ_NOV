@@ -82,7 +82,7 @@ public class TaskManager : MonoBehaviour
         }
         else
         {
-            GameManager.StaticInstance.UI.ShowSummaryOfDay($"Income: {CurrencyManager.StaticInstance.IncomePerDay}\nOutcome: {CurrencyManager.StaticInstance.OutcomePerDay}");
+            GameManager.StaticInstance.UI.ShowSummaryOfDay($"Income: {GameManager.StaticInstance.Currency.IncomePerDay}\nOutcome: {GameManager.StaticInstance.Currency.OutcomePerDay}");
         }
     }
 
@@ -145,7 +145,7 @@ public class TaskManager : MonoBehaviour
                 GameManager.StaticInstance.UI.ShowQuestResultBar(_tasksForCurrentDay[0].CurrentCharacter.DisplayName,
                     _tasksForCurrentDay[0].CurrentQuest.DisplayName,
                     $"{_tasksForCurrentDay[0].CurrentQuest.SuccessText} {goldGained} золота.");
-                CurrencyManager.StaticInstance.AddGold(goldGained);
+                GameManager.StaticInstance.Currency.AddGold(goldGained);
             }
             else
             {

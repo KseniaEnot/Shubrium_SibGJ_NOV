@@ -5,8 +5,6 @@ using UnityEngine.UI;
 
 public class InGameUIManager : MonoBehaviour
 {
-    [SerializeField] private TaskManager _taskManager;
-    [SerializeField] private MiniGameManager _miniGameManager;
     [Header("New Game")]
     [SerializeField] private GameObject _newGameNotification;
     [SerializeField] private Button _newGameButtonOkay;
@@ -61,7 +59,7 @@ public class InGameUIManager : MonoBehaviour
     private void OnNewGameButtonOkayPressed()
     {
         _newGameNotification.SetActive(false);
-        CurrencyManager.StaticInstance.ForceUpdateGoldUI();
+        GameManager.StaticInstance.Currency.ForceUpdateGoldUI();
         OnSummaryOfDayButtonStartNewDayPressed();
     }
 
@@ -97,14 +95,14 @@ public class InGameUIManager : MonoBehaviour
 
     private void OnQuestRequestButtonDenyPressed()
     {
-        _taskManager.GetCurrentTaskNoGoldReactionText(out string characterName, out string questName, out string descriptionText);
+        GameManager.StaticInstance.Task.GetCurrentTaskNoGoldReactionText(out string characterName, out string questName, out string descriptionText);
         ShowQuestResultBar(characterName, questName, descriptionText);
         // play refuse clip
     }
 
     private void OnQuestRequestButtonAcceptPressed()
     {
-        if (CurrencyManager.StaticInstance.CurrentGold <= 1f)
+        if (GameManager.StaticInstance.Currency.CurrentGold <= 1f)
         {
             return;
         }
@@ -113,8 +111,8 @@ public class InGameUIManager : MonoBehaviour
         _miniGameBar.SetActive(true);
         _miniGameButtonStart.gameObject.SetActive(true);
         _miniGameButtonStart.Select();
-        _miniGameManager.StartMiniGame();
-        _taskManager.MarkCurrentTaskAsStarted();
+        GameManager.StaticInstance.MiniGame.StartMiniGame();
+        GameManager.StaticInstance.Task.MarkCurrentTaskAsStarted();
     }
     // RESULT BAR
     public void ShowQuestResultBar(string characterName, string questName, string descriptionText)
@@ -131,7 +129,7 @@ public class InGameUIManager : MonoBehaviour
     private void OnQuestResultButtonOkayPressed()
     {
         _questResultBar.SetActive(false);
-        _taskManager.RemoveCurrentTask();
+        GameManager.StaticInstance.Task.RemoveCurrentTask();
         EventBus.SendCharacterToExit();
     }
     // MINI GAME
@@ -147,7 +145,7 @@ public class InGameUIManager : MonoBehaviour
 
     private void OnMiniGameButtonStartPressed()
     {
-        _miniGameManager.StartSharing();
+        GameManager.StaticInstance.MiniGame.StartSharing();
         _miniGameButtonStart.gameObject.SetActive(false);
         _miniGameButtonEnd.gameObject.SetActive(true);
         _miniGameButtonEnd.Select();
@@ -156,23 +154,23 @@ public class InGameUIManager : MonoBehaviour
     private void OnMiniGameButtonEndPressed()
     {
         _miniGameButtonEnd.gameObject.SetActive(false);
-        _miniGameManager.StopSharing();
+        GameManager.StaticInstance.MiniGame.StopSharing();
     }
     // DEADLINE
     public void ShowDeadlineNotification()
     {
         _deadline = true;
-        ShowSummaryOfDay($"Итоговый доход: {CurrencyManager.StaticInstance.IncomeOverall}\n" +
-            $"Итоговый расход: {CurrencyManager.StaticInstance.OutcomeOverall}\n" +
-            $"Сумма долга: {CurrencyManager.StaticInstance.RequiredGold}\n" +
-            $"{CurrencyManager.StaticInstance.GetDeadLineResultText()}");
+        ShowSummaryOfDay($"Итоговый доход: {GameManager.StaticInstance.Currency.IncomeOverall}\n" +
+            $"Итоговый расход: {GameManager.StaticInstance.Currency.OutcomeOverall}\n" +
+            $"Сумма долга: {GameManager.StaticInstance.Currency.RequiredGold}\n" +
+            $"{GameManager.StaticInstance.Currency.GetDeadLineResultText()}");
     }
 
     public void ShowGameOverNotification()
     {
         _deadline = true;
         ShowSummaryOfDay($"Вы остались ни с чем! Конец игры.\n" +
-            $"Итоговый доход: {CurrencyManager.StaticInstance.IncomeOverall}\n" +
-            $"Итоговый расход: {CurrencyManager.StaticInstance.OutcomeOverall}");
+            $"Итоговый доход: {GameManager.StaticInstance.Currency.IncomeOverall}\n" +
+            $"Итоговый расход: {GameManager.StaticInstance.Currency.OutcomeOverall}");
     }
 }
