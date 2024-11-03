@@ -2334,8 +2334,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
+  m_Sprite: {fileID: 21300000, guid: f17d879d2605e9946b84ad6e7f482447, type: 3}
+  m_Type: 2
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -3196,11 +3196,11 @@ RectTransform:
   - {fileID: 6766652748840251923}
   m_Father: {fileID: 6505183202764725988}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.1}
-  m_AnchorMax: {x: 0.5, y: 0.8}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 700, y: 0}
-  m_Pivot: {x: 0.5, y: 0}
+  m_SizeDelta: {x: 900, y: 600}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5237491821975047916
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -3222,15 +3222,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.4716981, g: 0.4716981, b: 0.4716981, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
-  m_Type: 0
+  m_Sprite: {fileID: 21300000, guid: 356d7770a433df9478c5f0f584f4e901, type: 3}
+  m_Type: 2
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -3541,7 +3541,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 99.4
+  m_fontSize: 100
   m_fontSizeBase: 70
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -4056,6 +4056,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _layout: {fileID: 5486154548834617544}
+  _dayString: "\u0414\u0435\u043D\u044C: "
   _text: {fileID: 5360278442794564348}
 --- !u!1 &7581864800073498579
 GameObject:
@@ -4249,8 +4250,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a23690a37a66974681b899a9bd571b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _taskManager: {fileID: 0}
-  _miniGameManager: {fileID: 0}
   _newGameNotification: {fileID: 6216579140022674330}
   _newGameButtonOkay: {fileID: 2802546677598352008}
   _summaryOfDayBar: {fileID: 2235582191191257263}
