@@ -142,9 +142,11 @@ public class TaskManager : MonoBehaviour
         {
             if (_tasksForCurrentDay[0].QuestSuccessful)
             {
+                int goldGained = Mathf.FloorToInt(_tasksForCurrentDay[0].CurrentQuest.RequestedGold * Random.Range(_tasksForCurrentDay[0].CurrentQuest.MinRewardPercent, _tasksForCurrentDay[0].CurrentQuest.MaxRewardPercent) + _tasksForCurrentDay[0].CurrentQuest.RequestedGold);
                 _inGameUIManager.ShowQuestResultBar(_tasksForCurrentDay[0].CurrentCharacter.DisplayName,
                     _tasksForCurrentDay[0].CurrentQuest.DisplayName,
-                    $"{_tasksForCurrentDay[0].CurrentQuest.SuccessText} {_tasksForCurrentDay[0].CurrentQuest.RequestedGold * Random.Range(_tasksForCurrentDay[0].CurrentQuest.MinRewardPercent, _tasksForCurrentDay[0].CurrentQuest.MaxRewardPercent) + _tasksForCurrentDay[0].CurrentQuest.RequestedGold} золота.");
+                    $"{_tasksForCurrentDay[0].CurrentQuest.SuccessText} {goldGained} золота.");
+                CurrencyManager.StaticInstance.AddGold(goldGained);
             }
             else
             {

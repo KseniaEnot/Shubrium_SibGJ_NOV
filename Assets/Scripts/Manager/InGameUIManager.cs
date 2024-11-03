@@ -99,6 +99,7 @@ public class InGameUIManager : MonoBehaviour
     {
         _taskManager.GetCurrentTaskNoGoldReactionText(out string characterName, out string questName, out string descriptionText);
         ShowQuestResultBar(characterName, questName, descriptionText);
+        // play refuse clip
     }
 
     private void OnQuestRequestButtonAcceptPressed()
