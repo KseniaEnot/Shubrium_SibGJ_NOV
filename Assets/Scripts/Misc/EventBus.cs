@@ -1,5 +1,4 @@
 using System;
-using UnityEngine;
 
 public static class EventBus
 {
@@ -34,7 +33,7 @@ public static class EventBus
         OnDayChanged?.Invoke(value);
     }
 
-    public static void TriggerTimeOfDayChanged(bool isNight)
+    public static void TimeOfDayChanged(bool isNight)
     {
         OnTimeOfDayChanged(isNight);
     }
