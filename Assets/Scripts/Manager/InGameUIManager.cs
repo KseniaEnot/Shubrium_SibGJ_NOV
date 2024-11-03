@@ -64,6 +64,7 @@ public class InGameUIManager : MonoBehaviour
         _newGameNotification.SetActive(false);
         GoldDisplay.ToggleGoldVisible(true);
         GameManager.StaticInstance.Currency.ForceUpdateGoldUI();
+        //GameManager.StaticInstance.TaskManager
         OnSummaryOfDayButtonStartNewDayPressed();
     }
 
@@ -99,6 +100,8 @@ public class InGameUIManager : MonoBehaviour
 
     private void OnQuestRequestButtonDenyPressed()
     {
+        GameManager.StaticInstance.Task.LowerOverallRating();
+        GameManager.StaticInstance.Task.LowerCharacterRatings();
         GameManager.StaticInstance.Task.GetCurrentTaskNoGoldReactionText(out string characterName, out string questName, out string descriptionText);
         ShowQuestResultBar(characterName, questName, descriptionText);
         // play refuse clip

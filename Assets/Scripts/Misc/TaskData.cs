@@ -7,6 +7,7 @@ public class TaskData
     public QuestConfig CurrentQuest;
     public bool QuestStarted;
     public bool QuestSuccessful;
+    public int RequestedGold;
 
     public TaskData(CharacterConfig currentCharacter, QuestConfig currentQuest)
     {
@@ -24,4 +25,6 @@ public class TaskData
             QuestSuccessful = true;
         }
     }
+
+
 }
