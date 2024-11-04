@@ -52,6 +52,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _dontDestroyOnLoad: 0
   Day: {fileID: 3692707856468522782}
+  Character: {fileID: 4552149260964441861}
   Currency: {fileID: 9167490166873017994}
   UI: {fileID: 8337691637746618146}
   MiniGame: {fileID: 8014726882901772892}
@@ -137,10 +138,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1595116469674674034}
     m_Modifications:
-    - target: {fileID: 6216579140022674330, guid: dcf2774fe77ad42ab84a8fbbfc200cda, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 6505183202764725988, guid: dcf2774fe77ad42ab84a8fbbfc200cda, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -293,10 +290,6 @@ PrefabInstance:
     - target: {fileID: 3551728730933744709, guid: b4f4cece320d419419651e920a0605db, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5147469044489165195, guid: b4f4cece320d419419651e920a0605db, type: 3}
-      propertyPath: _requiredGold
-      value: 700
       objectReference: {fileID: 0}
     - target: {fileID: 7247502228816716591, guid: b4f4cece320d419419651e920a0605db, type: 3}
       propertyPath: m_Name
@@ -526,6 +519,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 873113b7e311ed745b6b2da57756f5f5, type: 3}
+--- !u!114 &4552149260964441861 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7045692693321810553, guid: 873113b7e311ed745b6b2da57756f5f5, type: 3}
+  m_PrefabInstance: {fileID: 6839612749083094396}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c7bc3fcea20ab44cb4ecaa1118ff2e3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &4877309279171574774 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2108952897019991690, guid: 873113b7e311ed745b6b2da57756f5f5, type: 3}

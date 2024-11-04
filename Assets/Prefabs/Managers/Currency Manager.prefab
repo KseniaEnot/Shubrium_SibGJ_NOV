@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _startingGold: 100
-  _requiredGold: 1000
+  _requiredGold: 700
   _loseText: "\u0412\u0430\u0441 \u043A\u0430\u0437\u043D\u0438\u043B\u0438..."
   _winText: "\u0412\u044B \u0441\u0432\u043E\u0431\u043E\u0434\u043D\u044B \u043E\u0442
     \u043E\u043A\u043E\u0432!"
