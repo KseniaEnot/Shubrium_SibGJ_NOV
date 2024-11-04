@@ -8,6 +8,7 @@ using UnityEngine.UI;
 
 public class InGameUIManager : MonoBehaviour
 {
+    [SerializeField] private StudioEventEmitter _dayEndEmitter;
     [SerializeField] private StudioEventEmitter _winEmitter;
     [SerializeField] private StudioEventEmitter _loseEmitter;
     public GoldDisplay GoldDisplay;
@@ -83,6 +84,7 @@ public class InGameUIManager : MonoBehaviour
 
     public void ShowSummaryOfDay(string text)
     {
+        _dayEndEmitter.Play();
         _summaryOfDayText.text = text;
         _summaryOfDayBar.SetActive(true);
         _summaryOfDayButtonStartNewDay.Select();
