@@ -21,7 +21,8 @@ MonoBehaviour:
     \u0434\u043B\u044F \u0441\u0442\u0440\u043E\u0438\u0442\u0435\u043B\u044C\u0441\u0442\u0432\u0430.
     \u0411\u0443\u0434\u0443 \u043E\u0447\u0435\u043D\u044C \u043F\u0440\u0438\u0437\u043D\u0430\u0442\u0435\u043B\u0435\u043D
     \u0437\u0430 \u043F\u043E\u043C\u043E\u0449\u044C!"
-  RequestedGold: 10
+  MinRequestedGold: 5
+  MaxRequestedGold: 17
   MinRewardPercent: 0.8
   MaxRewardPercent: 0.8
   SuccessText: "\u0421 \u0440\u0430\u0434\u043E\u0441\u0442\u044C\u044E \u0441\u043E\u043E\u0431\u0449\u0430\u044E,
@@ -44,6 +45,7 @@ MonoBehaviour:
     \u0441\u0435\u0439\u0447\u0430\u0441 \u0432\u0435\u0440\u043D\u0443\u0442\u044C
     \u0434\u043E\u043B\u0433 \u0431\u0443\u0434\u0435\u0442 \u043D\u0435\u043B\u0435\u0433\u043A\u043E."
   IsRepeatable: 1
-  MinSuccessChance: 0
-  MaxSuccessChance: 1
+  MinSuccessChance: 0.25
+  MaxSuccessChance: 0.9
   MaxGoldMultiplier: 1.5
+  MinGoldPercentToStopSharingGold: 0.25
