@@ -109,7 +109,7 @@ public class InGameUIManager : MonoBehaviour
 
     private void OnQuestRequestButtonAcceptPressed()
     {
-        if (GameManager.StaticInstance.Currency.CurrentGold < GameManager.StaticInstance.Task.CurrentTask.CurrentQuest.RequestedGold)
+        if (GameManager.StaticInstance.Currency.CurrentGold < GameManager.StaticInstance.Task.CurrentTask.RequestedGold)
         {
             // show notification "Not Enough Money"
             return;
@@ -162,7 +162,7 @@ public class InGameUIManager : MonoBehaviour
 
     private void OnMiniGameButtonEndPressed()
     {
-        if (GameManager.StaticInstance.MiniGame.LootedCoinsCount < GameManager.StaticInstance.Task.CurrentTask.CurrentQuest.RequestedGold * 0.25f)
+        if (GameManager.StaticInstance.MiniGame.LootedCoinsCount < GameManager.StaticInstance.Task.CurrentTask.MinGoldToStopSharingGold)
         {
             return;
         }

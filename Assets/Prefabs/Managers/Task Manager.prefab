@@ -46,3 +46,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _questSettingsConfig: {fileID: 11400000, guid: 8642abb2137f2e847aa03226a3d47a04, type: 2}
   _characterSettingsConfig: {fileID: 11400000, guid: a3540c0b9d73f15468e01586916a5964, type: 2}
+  _tasksForCurrentDay: []
+  _tasksForNextDay: []
+  _overallRating:
+    OverallRatingCoefficient: 1
+  _characterRatings: []
+  _requiredGoldTextColor: {r: 1, g: 1, b: 0, a: 1}
+  _incomeGoldTextColor: {r: 0.11372549, g: 1, b: 0, a: 1}
+  _outcomeGoldTextColor: {r: 1, g: 0, b: 0, a: 1}

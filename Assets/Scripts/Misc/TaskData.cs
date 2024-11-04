@@ -9,6 +9,8 @@ public class TaskData
     public bool QuestSuccessful;
     public int RequestedGold;
 
+    public int MinGoldToStopSharingGold => Mathf.FloorToInt(RequestedGold * CurrentQuest.MinGoldPercentToStopSharingGold);
+
     public TaskData(CharacterConfig currentCharacter, QuestConfig currentQuest)
     {
         CurrentCharacter = currentCharacter;
@@ -25,6 +27,4 @@ public class TaskData
             QuestSuccessful = true;
         }
     }
-
-
 }
