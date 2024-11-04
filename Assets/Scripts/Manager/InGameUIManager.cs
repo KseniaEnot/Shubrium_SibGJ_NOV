@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -165,6 +166,15 @@ public class InGameUIManager : MonoBehaviour
     {
         GameManager.StaticInstance.MiniGame.StartSharing();
         _miniGameButtonStart.gameObject.SetActive(false);
+        StartCoroutine(ShowEndGameButton());
+        /*_miniGameButtonEnd.gameObject.SetActive(true);
+        _miniGameButtonEnd.Select();*/
+    }
+
+    private IEnumerator ShowEndGameButton()
+    {
+        while (GameManager.StaticInstance.MiniGame.LootedCoinsCount < GameManager.StaticInstance.Task.CurrentTask.MinGoldToStopSharingGold)
+            yield return null;
         _miniGameButtonEnd.gameObject.SetActive(true);
         _miniGameButtonEnd.Select();
     }
