@@ -81,7 +81,7 @@ public class TaskManager : MonoBehaviour
                 _charactersWithoutQuest.Remove(tempCharacter);// remove from pool
                 _tasksForCurrentDay.Add(new(tempCharacter, tempCharacter.GetRandomQuest()));// add random quest to task pool
                 int randomGold = Random.Range(_tasksForCurrentDay[i].CurrentQuest.MinRequestedGold, _tasksForCurrentDay[i].CurrentQuest.MaxRequestedGold + 1);
-                Debug.Log($"{randomGold} * {_overallRating.CurrentRatingMultiplier} = {Mathf.FloorToInt(randomGold * _overallRating.CurrentRatingMultiplier)}");
+                //Debug.Log($"{randomGold} * {_overallRating.CurrentRatingMultiplier} = {Mathf.FloorToInt(randomGold * _overallRating.CurrentRatingMultiplier)}");
                 _tasksForCurrentDay[i].RequestedGold = Mathf.FloorToInt(randomGold * _overallRating.CurrentRatingMultiplier);
             }
         }
