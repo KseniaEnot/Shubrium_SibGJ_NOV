@@ -1,10 +1,12 @@
 using System.Collections;
+using FMODUnity;
 using UnityEngine;
 
 public class EnvironmentHandler : MonoBehaviour
 {
     [SerializeField] private Gradient _cameraGradient;
     [SerializeField] private GameObject[] _nightObjects;
+    [SerializeField] private StudioEventEmitter _ambienceEmitter;
     [SerializeField] private Light[] _lights;
     [SerializeField] private float[] _intensityMultiplier;
     [SerializeField] private float _fadeLightSpeed = 4f;
@@ -34,31 +36,20 @@ public class EnvironmentHandler : MonoBehaviour
 
     private IEnumerator FadeLight()
     {
-        if (_isNight)
+        float targetValue = _isNight ? 0f : 1f;
+
+        while (_intensity != targetValue)
         {
-            while (_intensity != 0f)
+            _intensity = Mathf.MoveTowards(_intensity, targetValue, _fadeLightSpeed * Time.deltaTime);
+            Camera.main.backgroundColor = _cameraGradient.Evaluate(_intensity);
+            foreach (Light l in _lights)
             {
-                _intensity = Mathf.MoveTowards(_intensity, 0f, _fadeLightSpeed * Time.deltaTime);
-                Camera.main.backgroundColor = _cameraGradient.Evaluate(_intensity);
-                foreach (Light l in _lights)
-                {
-                    l.color = _cameraGradient.Evaluate(_intensity);
-                }
-                yield return null;
+                l.color = _cameraGradient.Evaluate(_intensity);
             }
-        }
-        else
-        {
-            while (_intensity != 1f)
-            {
-                _intensity = Mathf.MoveTowards(_intensity, 1f, _fadeLightSpeed * Time.deltaTime);
-                Camera.main.backgroundColor = _cameraGradient.Evaluate(_intensity);
-                foreach (Light l in _lights)
-                {
-                    l.color = _cameraGradient.Evaluate(_intensity);
-                }
-                yield return null;
-            }
+
+            _ambienceEmitter.SetParameter("daytime", 1f - _intensity);
+
+            yield return null;
         }
     }
 }
