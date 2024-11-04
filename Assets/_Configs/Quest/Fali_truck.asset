@@ -30,8 +30,8 @@ MonoBehaviour:
     \u043C\u0435\u0440\u0435, \u044F \u0441\u0442\u0430\u043D\u0443 \u0433\u0435\u0440\u043E\u0435\u043C
     \u043C\u0435\u0441\u0442\u043D\u043E\u0433\u043E \u0444\u043E\u043B\u044C\u043A\u043B\u043E\u0440\u0430!
     \""
-  MinRequestedGold: 5
-  MaxRequestedGold: 17
+  MinRequestedGold: 10
+  MaxRequestedGold: 20
   MinRewardPercent: 0.8
   MaxRewardPercent: 0.8
   SuccessText: "\u0422\u0440\u044E\u043A \u0441 \u0440\u0430\u043F\u0438\u0440\u043E\u0439
@@ -69,4 +69,4 @@ MonoBehaviour:
   MinSuccessChance: 0.25
   MaxSuccessChance: 0.9
   MaxGoldMultiplier: 1.5
-  MinGoldPercentToStopSharingGold: 0.25
+  MinGoldPercentToStopSharingGold: 0.15
