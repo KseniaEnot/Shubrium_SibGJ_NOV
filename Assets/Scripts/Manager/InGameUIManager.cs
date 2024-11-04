@@ -100,6 +100,7 @@ public class InGameUIManager : MonoBehaviour
     // REQUEST BAR
     public void ShowQuestRequestBar(string characterName, string questName, string descriptionText)
     {
+        GameManager.StaticInstance.Character.CharacterAudioManager.PlayStartConservationQuestSound();
         _questRequestCharacterNameText.text = characterName;
         _questRequestQuestNameText.text = questName;
         _questRequestDescriptionText.text = descriptionText;
@@ -110,6 +111,7 @@ public class InGameUIManager : MonoBehaviour
 
     private void OnQuestRequestButtonDenyPressed()
     {
+        GameManager.StaticInstance.Character.CharacterAudioManager.PlayDenyQuestSound();
         GameManager.StaticInstance.Task.LowerOverallRating();
         GameManager.StaticInstance.Task.LowerCharacterRatings();
         GameManager.StaticInstance.Task.GetCurrentTaskNoGoldReactionText(out string characterName, out string questName, out string descriptionText);
@@ -124,6 +126,7 @@ public class InGameUIManager : MonoBehaviour
             // show notification "Not Enough Money"
             return;
         }
+        GameManager.StaticInstance.Character.CharacterAudioManager.PlayAcceptQuestSound();
         _questRequestBar.SetActive(false);
         _miniGameButtonEnd.gameObject.SetActive(false);
         _miniGameBar.SetActive(true);

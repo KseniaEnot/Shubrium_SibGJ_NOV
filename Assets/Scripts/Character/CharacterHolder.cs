@@ -12,6 +12,9 @@ public class CharacterHolder : MonoBehaviour
 
 	private List<GameObject> _characterModels = new();
 	private Animator _animator;
+	private CharacterAudioManager _characterAudioManager;
+
+	public CharacterAudioManager CharacterAudioManager => _characterAudioManager;
 
 	private void Awake()
 	{
@@ -44,7 +47,8 @@ public class CharacterHolder : MonoBehaviour
 			_characterModels[i].SetActive(i == index);
 		}
 		_animator = _characterModels[index].GetComponent<Animator>();
-	}
+        _characterAudioManager = _characterModels[index].GetComponent<CharacterAudioManager>();
+    }
 
 	private void SendToEnter()
 	{
