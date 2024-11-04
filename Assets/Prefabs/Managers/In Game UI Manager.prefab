@@ -75,7 +75,7 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
+    rgba: 4280508044
   m_fontColor: {r: 0.54901963, g: 0.36862746, b: 0.13725491, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
@@ -287,7 +287,7 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
+    rgba: 4279779719
   m_fontColor: {r: 0.5294118, g: 0.25490198, b: 0.09411765, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
@@ -846,11 +846,11 @@ MonoBehaviour:
   CollisionTag: 
   EventReference:
     Guid:
-      Data1: -1483413853
-      Data2: 1134621342
-      Data3: 395867569
-      Data4: -308940151
-    Path: event:/SFX/ui_click
+      Data1: -1547014490
+      Data2: 1095131261
+      Data3: 471676348
+      Data4: -582469612
+    Path: event:/SFX/ui_click_soft
   Event: 
   EventPlayTrigger: 17
   EventStopTrigger: 0
@@ -1119,7 +1119,7 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
+    rgba: 4279779719
   m_fontColor: {r: 0.5294118, g: 0.25490198, b: 0.09411765, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
@@ -1347,11 +1347,11 @@ MonoBehaviour:
   CollisionTag: 
   EventReference:
     Guid:
-      Data1: -1483413853
-      Data2: 1134621342
-      Data3: 395867569
-      Data4: -308940151
-    Path: event:/SFX/ui_click
+      Data1: -1547014490
+      Data2: 1095131261
+      Data3: 471676348
+      Data4: -582469612
+    Path: event:/SFX/ui_click_soft
   Event: 
   EventPlayTrigger: 17
   EventStopTrigger: 0
@@ -1378,11 +1378,11 @@ MonoBehaviour:
   CollisionTag: 
   EventReference:
     Guid:
-      Data1: -1547014490
-      Data2: 1095131261
-      Data3: 471676348
-      Data4: -582469612
-    Path: event:/SFX/ui_click_soft
+      Data1: -1483413853
+      Data2: 1134621342
+      Data3: 395867569
+      Data4: -308940151
+    Path: event:/SFX/ui_click
   Event: 
   EventPlayTrigger: 19
   EventStopTrigger: 0
@@ -2291,11 +2291,11 @@ MonoBehaviour:
   CollisionTag: 
   EventReference:
     Guid:
-      Data1: -1483413853
-      Data2: 1134621342
-      Data3: 395867569
-      Data4: -308940151
-    Path: event:/SFX/ui_click
+      Data1: -1547014490
+      Data2: 1095131261
+      Data3: 471676348
+      Data4: -582469612
+    Path: event:/SFX/ui_click_soft
   Event: 
   EventPlayTrigger: 17
   EventStopTrigger: 0
@@ -2506,11 +2506,11 @@ MonoBehaviour:
   CollisionTag: 
   EventReference:
     Guid:
-      Data1: -1483413853
-      Data2: 1134621342
-      Data3: 395867569
-      Data4: -308940151
-    Path: event:/SFX/ui_click
+      Data1: -1547014490
+      Data2: 1095131261
+      Data3: 471676348
+      Data4: -582469612
+    Path: event:/SFX/ui_click_soft
   Event: 
   EventPlayTrigger: 17
   EventStopTrigger: 0
@@ -2537,11 +2537,11 @@ MonoBehaviour:
   CollisionTag: 
   EventReference:
     Guid:
-      Data1: -1547014490
-      Data2: 1095131261
-      Data3: 471676348
-      Data4: -582469612
-    Path: event:/SFX/ui_click_soft
+      Data1: -1483413853
+      Data2: 1134621342
+      Data3: 395867569
+      Data4: -308940151
+    Path: event:/SFX/ui_click
   Event: 
   EventPlayTrigger: 19
   EventStopTrigger: 0
@@ -2721,11 +2721,11 @@ MonoBehaviour:
   CollisionTag: 
   EventReference:
     Guid:
-      Data1: -1483413853
-      Data2: 1134621342
-      Data3: 395867569
-      Data4: -308940151
-    Path: event:/SFX/ui_click
+      Data1: -1547014490
+      Data2: 1095131261
+      Data3: 471676348
+      Data4: -582469612
+    Path: event:/SFX/ui_click_soft
   Event: 
   EventPlayTrigger: 17
   EventStopTrigger: 0
@@ -2752,11 +2752,11 @@ MonoBehaviour:
   CollisionTag: 
   EventReference:
     Guid:
-      Data1: -1547014490
-      Data2: 1095131261
-      Data3: 471676348
-      Data4: -582469612
-    Path: event:/SFX/ui_click_soft
+      Data1: -1483413853
+      Data2: 1134621342
+      Data3: 395867569
+      Data4: -308940151
+    Path: event:/SFX/ui_click
   Event: 
   EventPlayTrigger: 19
   EventStopTrigger: 0
@@ -3251,7 +3251,7 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
+    rgba: 4280508044
   m_fontColor: {r: 0.54901963, g: 0.36862746, b: 0.13725491, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
@@ -4045,7 +4045,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &4227142373518053644
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5093,7 +5093,7 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
+    rgba: 4279779719
   m_fontColor: {r: 0.5294118, g: 0.25490198, b: 0.09411765, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
@@ -5228,7 +5228,7 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
+    rgba: 4280508044
   m_fontColor: {r: 0.54901963, g: 0.36862746, b: 0.13725491, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
