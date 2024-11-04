@@ -38,7 +38,7 @@ public class TaskManager : MonoBehaviour
 
     private void RefreshPools(int value, bool isDeadline, bool isGameOver)
     {
-        if(isGameOver)
+        if (isGameOver)
         {
             ///// REWORK
             GameManager.StaticInstance.UI.ShowGameOverNotification($"{_gameOverMessage}\n" +
@@ -47,7 +47,7 @@ public class TaskManager : MonoBehaviour
             return;
         }
         _deadline = isDeadline;
-        if(!_deadline)
+        if (!_deadline)
         {
             if (_characterRatings.Count == 0)
             {
@@ -146,7 +146,7 @@ public class TaskManager : MonoBehaviour
 
     private void MiniGameCompleted(int goldAmount)
     {
-        int minGold = 0;
+        int minGold = Mathf.CeilToInt(_tasksForCurrentDay[0].CurrentQuest.MinGoldPercentToStopSharingGold * _tasksForCurrentDay[0].RequestedGold);
         int maxGold = Mathf.FloorToInt(_tasksForCurrentDay[0].RequestedGold * _tasksForCurrentDay[0].CurrentQuest.MaxGoldMultiplier);
         float result = Mathf.InverseLerp(minGold, maxGold, goldAmount);
         _tasksForCurrentDay[0].RollQuestStateIsSuccessful(result);
