@@ -37,7 +37,17 @@ public class InGameUIManager : MonoBehaviour
     [SerializeField] private GameObject _miniGameBar;
     [SerializeField] private Button _miniGameButtonStart;
     [SerializeField] private Button _miniGameButtonEnd;
+    [Header("Main Menu")]
+    [SerializeField] private GameObject _mainMenuWindow;
+    [SerializeField] private Button _mainMenuButtonOpen;
+    [SerializeField] private Button _mainMenuButtonContinueGame;
+    [SerializeField] private Button _mainMenuButtonSettings;
+    [SerializeField] private Button _mainMenuButtonQuitGame;
+    [Header("Settings Menu")]
+    [SerializeField] private GameObject _settingMenuWindow;
+    [SerializeField] private Button _settingsMenuButtonBack;
 
+    private bool _miniGameStarted;
     private bool _deadline;
 
     private void OnEnable()
@@ -51,6 +61,13 @@ public class InGameUIManager : MonoBehaviour
         _questResultButtonOkay.onClick.AddListener(OnQuestResultButtonOkayPressed);
         _miniGameButtonStart.onClick.AddListener(OnMiniGameButtonStartPressed);
         _miniGameButtonEnd.onClick.AddListener(OnMiniGameButtonEndPressed);
+        // main menu
+        _mainMenuButtonOpen.onClick.AddListener(OnMainMenuButtonOpenPressed);
+        _mainMenuButtonContinueGame.onClick.AddListener(OnMainMenuButtonStartGamePressed);
+        _mainMenuButtonSettings.onClick.AddListener(OnMainMenuButtonSettingsPressed);
+        _mainMenuButtonQuitGame.onClick.AddListener(OnMainMenuButtonQuitGamePressed);
+        // settings
+        _settingsMenuButtonBack.onClick.AddListener(OnSettingsMenuButtonBackPressed);
         Invoke(nameof(DeleyedEnable), 0.05f);
     }
 
@@ -71,6 +88,13 @@ public class InGameUIManager : MonoBehaviour
         _questResultButtonOkay.onClick.RemoveListener(OnQuestResultButtonOkayPressed);
         _miniGameButtonStart.onClick.RemoveListener(OnMiniGameButtonStartPressed);
         _miniGameButtonEnd.onClick.RemoveListener(OnMiniGameButtonEndPressed);
+        // main menu
+        _mainMenuButtonOpen.onClick.RemoveListener(OnMainMenuButtonOpenPressed);
+        _mainMenuButtonContinueGame.onClick.RemoveListener(OnMainMenuButtonStartGamePressed);
+        _mainMenuButtonSettings.onClick.RemoveListener(OnMainMenuButtonSettingsPressed);
+        _mainMenuButtonQuitGame.onClick.RemoveListener(OnMainMenuButtonQuitGamePressed);
+        // settings
+        _settingsMenuButtonBack.onClick.RemoveListener(OnSettingsMenuButtonBackPressed);
     }
     // SUMMARY OF DAY
     private void OnNewGameButtonOkayPressed()
@@ -138,6 +162,7 @@ public class InGameUIManager : MonoBehaviour
         _miniGameButtonStart.Select();
         GameManager.StaticInstance.MiniGame.StartMiniGame();
         GameManager.StaticInstance.Task.MarkCurrentTaskAsStarted();
+        _miniGameStarted = true;
     }
     // RESULT BAR
     public void ShowQuestResultBar(string characterName, string questName, string descriptionText)
@@ -169,6 +194,7 @@ public class InGameUIManager : MonoBehaviour
         _questResultBar.SetActive(true);
         _questResultButtonOkay.Select();
         GoldDisplay.ToggleGoldVisible(true);
+        _miniGameStarted = false;
     }
 
     private void OnMiniGameButtonStartPressed()
@@ -217,5 +243,36 @@ public class InGameUIManager : MonoBehaviour
         _deadline = true;
         _loseEmitter.Play();
         ShowSummaryOfDay(text);
+    }
+    // MAIN MENU
+    private void OnMainMenuButtonOpenPressed()
+    {
+        if (_miniGameStarted)
+        {
+            return;
+        }
+        _mainMenuWindow.SetActive(true);
+    }
+
+    private void OnMainMenuButtonStartGamePressed()
+    {
+        _mainMenuWindow.SetActive(false);
+    }
+
+    private void OnMainMenuButtonSettingsPressed()
+    {
+        _settingMenuWindow.SetActive(true);
+        _settingsMenuButtonBack.Select();
+    }
+
+    private void OnSettingsMenuButtonBackPressed()
+    {
+        _settingMenuWindow.SetActive(false);
+        _mainMenuButtonSettings.Select();
+    }
+
+    private void OnMainMenuButtonQuitGamePressed()
+    {
+        SceneManager.LoadScene(0);
     }
 }
