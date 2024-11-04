@@ -1,3 +1,4 @@
+using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -9,6 +10,7 @@ public class InGameUIManager : MonoBehaviour
     [Header("New Game")]
     [SerializeField] private GameObject _newGameNotification;
     [SerializeField] private Button _newGameButtonOkay;
+    [SerializeField] private TextMeshProUGUI _textNewGameNotification;
     [Header("Summary Of Day")]
     [SerializeField] private GameObject _summaryOfDayBar;
     [SerializeField] private TextMeshProUGUI _summaryOfDayText;
@@ -46,6 +48,16 @@ public class InGameUIManager : MonoBehaviour
         _questResultButtonOkay.onClick.AddListener(OnQuestResultButtonOkayPressed);
         _miniGameButtonStart.onClick.AddListener(OnMiniGameButtonStartPressed);
         _miniGameButtonEnd.onClick.AddListener(OnMiniGameButtonEndPressed);
+        Invoke(nameof(DeleyedEnable), 0.05f);
+    }
+
+    private void DeleyedEnable()
+    {
+        _textNewGameNotification.text = _textNewGameNotification.text.Replace("{g}",
+                Convert.ToString(GameManager.StaticInstance.Currency.RequiredGold));
+        _textNewGameNotification.text = _textNewGameNotification.text.Replace("{d}",
+                Convert.ToString(GameManager.StaticInstance.Day.DeadlineDay));
+
     }
 
     private void OnDisable()
