@@ -17,6 +17,7 @@ public class EnvironmentHandler : MonoBehaviour
     private void OnEnable()
     {
         EventBus.OnTimeOfDayChanged += HandleTimeOfDayChange;
+        _ambienceEmitter.SetParameter("daytime", _intensity);
     }
 
     private void OnDisable()

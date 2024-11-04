@@ -1,7 +1,9 @@
+using FMODUnity;
 using UnityEngine;
 
 public class CurrencyManager : MonoBehaviour
 {
+    [SerializeField] private StudioEventEmitter _emitter;
     [SerializeField] private int _startingGold = 100;
     [SerializeField] private int _requiredGold = 5000;
     [SerializeField, TextArea] private string _loseText = "You died! =(";
@@ -68,6 +70,7 @@ public class CurrencyManager : MonoBehaviour
         _currentGold += amount;
         _incomePerDay += amount;
         _incomeOverall += amount;
+        _emitter.Play();
         EventBus.GoldChanged(_currentGold);
     }
 
@@ -76,14 +79,16 @@ public class CurrencyManager : MonoBehaviour
         EventBus.GoldChanged(_currentGold);
     }
 
-    public string GetDeadLineResultText()
+    public string GetDeadLineResultText(out bool win)
     {
         if (_currentGold >= _requiredGold)
         {
+            win = true;
             return _winText;
         }
         else
         {
+            win = false;
             return _loseText;
         }
     }

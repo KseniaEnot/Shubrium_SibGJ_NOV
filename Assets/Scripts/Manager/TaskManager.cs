@@ -117,7 +117,7 @@ public class TaskManager : MonoBehaviour
             $"Итоговый доход: {GameManager.StaticInstance.Currency.IncomeOverall}\n" +
             $"Итоговый расход: {GameManager.StaticInstance.Currency.OutcomeOverall}\n" +
             $"Сумма долга: {GameManager.StaticInstance.Currency.RequiredGold}\n" +
-            $"{GameManager.StaticInstance.Currency.GetDeadLineResultText()}");
+            $"{GameManager.StaticInstance.Currency.GetDeadLineResultText(out bool win)}", win);
         }
     }
 

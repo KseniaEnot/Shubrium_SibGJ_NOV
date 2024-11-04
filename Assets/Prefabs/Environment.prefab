@@ -775,7 +775,7 @@ MonoBehaviour:
   NonRigidbodyVelocity: 0
   Params:
   - Name: daytime
-    Value: 0
+    Value: 1
   OverrideAttenuation: 0
   OverrideMinDistance: 1
   OverrideMaxDistance: 20
@@ -3872,10 +3872,7 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 2943856395111939775, guid: f9b62a3ba52cd4f7c9fee36ae1325996, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2449692931575355539}
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 4498905104610503330, guid: f9b62a3ba52cd4f7c9fee36ae1325996, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 3741426928045569971}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f9b62a3ba52cd4f7c9fee36ae1325996, type: 3}
 --- !u!4 &5580834406082918393 stripped
 Transform:
@@ -3887,37 +3884,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 4498905104610503330, guid: f9b62a3ba52cd4f7c9fee36ae1325996, type: 3}
   m_PrefabInstance: {fileID: 7325587039971248454}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &3741426928045569971
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6613224627234743268}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  CollisionTag: 
-  EventReference:
-    Guid:
-      Data1: 1189304912
-      Data2: 1150100944
-      Data3: 1014951334
-      Data4: 272061461
-    Path: event:/SFX/torch_ignite
-  Event: 
-  EventPlayTrigger: 11
-  EventStopTrigger: 12
-  AllowFadeout: 1
-  TriggerOnce: 0
-  Preload: 0
-  NonRigidbodyVelocity: 0
-  Params: []
-  OverrideAttenuation: 0
-  OverrideMinDistance: 1
-  OverrideMaxDistance: 20
 --- !u!1001 &7383385496676512932
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3992,10 +3958,7 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 2943856395111939775, guid: f9b62a3ba52cd4f7c9fee36ae1325996, type: 3}
       insertIndex: -1
       addedObject: {fileID: 6294072470554106101}
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 4498905104610503330, guid: f9b62a3ba52cd4f7c9fee36ae1325996, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 176722145637144145}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f9b62a3ba52cd4f7c9fee36ae1325996, type: 3}
 --- !u!4 &5669363663027571227 stripped
 Transform:
@@ -4007,37 +3970,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 4498905104610503330, guid: f9b62a3ba52cd4f7c9fee36ae1325996, type: 3}
   m_PrefabInstance: {fileID: 7383385496676512932}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &176722145637144145
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6347928844429467142}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  CollisionTag: 
-  EventReference:
-    Guid:
-      Data1: 1189304912
-      Data2: 1150100944
-      Data3: 1014951334
-      Data4: 272061461
-    Path: event:/SFX/torch_ignite
-  Event: 
-  EventPlayTrigger: 11
-  EventStopTrigger: 12
-  AllowFadeout: 1
-  TriggerOnce: 0
-  Preload: 0
-  NonRigidbodyVelocity: 0
-  Params: []
-  OverrideAttenuation: 0
-  OverrideMinDistance: 1
-  OverrideMaxDistance: 20
 --- !u!1001 &7721152487062832447
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4326,10 +4258,7 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 2943856395111939775, guid: f9b62a3ba52cd4f7c9fee36ae1325996, type: 3}
       insertIndex: -1
       addedObject: {fileID: 246968779110253524}
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 4498905104610503330, guid: f9b62a3ba52cd4f7c9fee36ae1325996, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 4770612980563896971}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f9b62a3ba52cd4f7c9fee36ae1325996, type: 3}
 --- !u!4 &5139892451023778637 stripped
 Transform:
@@ -4341,37 +4270,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 4498905104610503330, guid: f9b62a3ba52cd4f7c9fee36ae1325996, type: 3}
   m_PrefabInstance: {fileID: 8038429699431681522}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &4770612980563896971
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5900119461516765008}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  CollisionTag: 
-  EventReference:
-    Guid:
-      Data1: 1189304912
-      Data2: 1150100944
-      Data3: 1014951334
-      Data4: 272061461
-    Path: event:/SFX/torch_ignite
-  Event: 
-  EventPlayTrigger: 11
-  EventStopTrigger: 12
-  AllowFadeout: 1
-  TriggerOnce: 0
-  Preload: 0
-  NonRigidbodyVelocity: 0
-  Params: []
-  OverrideAttenuation: 0
-  OverrideMinDistance: 1
-  OverrideMaxDistance: 20
 --- !u!1001 &8591515496362061995
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4496,47 +4394,13 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 2943856395111939775, guid: f9b62a3ba52cd4f7c9fee36ae1325996, type: 3}
       insertIndex: -1
       addedObject: {fileID: 204239442601852277}
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 4498905104610503330, guid: f9b62a3ba52cd4f7c9fee36ae1325996, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 4439723423476203306}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f9b62a3ba52cd4f7c9fee36ae1325996, type: 3}
 --- !u!1 &5040603506148938891 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4498905104610503330, guid: f9b62a3ba52cd4f7c9fee36ae1325996, type: 3}
   m_PrefabInstance: {fileID: 8907135405230964265}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &4439723423476203306
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5040603506148938891}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  CollisionTag: 
-  EventReference:
-    Guid:
-      Data1: 1189304912
-      Data2: 1150100944
-      Data3: 1014951334
-      Data4: 272061461
-    Path: event:/SFX/torch_ignite
-  Event: 
-  EventPlayTrigger: 11
-  EventStopTrigger: 12
-  AllowFadeout: 1
-  TriggerOnce: 0
-  Preload: 0
-  NonRigidbodyVelocity: 0
-  Params: []
-  OverrideAttenuation: 0
-  OverrideMinDistance: 1
-  OverrideMaxDistance: 20
 --- !u!4 &6000533851065024662 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2943856395111939775, guid: f9b62a3ba52cd4f7c9fee36ae1325996, type: 3}
