@@ -15,7 +15,7 @@ MonoBehaviour:
   TasksLeftToEnableNight: 2
   MinNewQuestsPerDay: 3
   MaxNewQuestsPerDay: 4
-  MaxPercentToLowResultReaction: 0.33
+  MaxPercentToLowResultReaction: 0.25
   MinPercentToHighResultReaction: 0.66
   OverallRatingReduceValue: 0.5
   OverallRatingAddValue: 0.3
