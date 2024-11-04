@@ -113,7 +113,7 @@ MonoBehaviour:
   _intensityMultiplier:
   - 2
   - 0.5
-  _fadeLightSpeed: 1.5
+  _fadeLightSpeed: 0.5
 --- !u!1 &252835592391675782
 GameObject:
   m_ObjectHideFlags: 0

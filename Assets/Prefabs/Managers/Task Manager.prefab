@@ -49,8 +49,10 @@ MonoBehaviour:
   _tasksForCurrentDay: []
   _tasksForNextDay: []
   _overallRating:
-    OverallRatingCoefficient: 1
+    CurrentRatingMultiplier: 1
   _characterRatings: []
-  _requiredGoldTextColor: {r: 1, g: 1, b: 0, a: 1}
-  _incomeGoldTextColor: {r: 0.11372549, g: 1, b: 0, a: 1}
-  _outcomeGoldTextColor: {r: 1, g: 0, b: 0, a: 1}
+  _requiredGoldTextColor: {r: 1, g: 0.5647059, b: 0, a: 1}
+  _incomeGoldTextColor: {r: 1, g: 1, b: 1, a: 1}
+  _outcomeGoldTextColor: {r: 1, g: 1, b: 1, a: 1}
+  _gameOverMessage: "\u0412\u044B \u043E\u0441\u0442\u0430\u043B\u0438\u0441\u044C
+    \u043D\u0438 \u0441 \u0447\u0435\u043C! \u041A\u043E\u043D\u0435\u0446 \u0438\u0433\u0440\u044B."

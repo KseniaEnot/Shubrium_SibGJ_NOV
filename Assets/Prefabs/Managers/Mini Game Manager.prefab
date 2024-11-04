@@ -114,7 +114,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 2
   m_TargetDisplay: 0
 --- !u!114 &1256697409397366218
 MonoBehaviour:
@@ -539,7 +539,7 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
+  m_PixelsPerUnitMultiplier: 5
 --- !u!1 &7571906948087842352
 GameObject:
   m_ObjectHideFlags: 0
@@ -739,7 +739,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u0417\u0430\u043F\u0440\u043E\u0448\u0435\u043D\u043E: 10"
+  m_text: "\u0417\u0430\u043F\u0440\u043E\u0448\u0435\u043D\u043E: 100"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 2efb831970a99ba48807a74361205b5c, type: 2}
   m_sharedMaterial: {fileID: 920055050941363591, guid: 2efb831970a99ba48807a74361205b5c, type: 2}
@@ -766,10 +766,10 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 30
-  m_fontSizeBase: 36
+  m_fontSize: 10
+  m_fontSizeBase: 10
   m_fontWeight: 400
-  m_enableAutoSizing: 1
+  m_enableAutoSizing: 0
   m_fontSizeMin: 0
   m_fontSizeMax: 30
   m_fontStyle: 0
@@ -782,7 +782,7 @@ MonoBehaviour:
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
-  m_enableWordWrapping: 1
+  m_enableWordWrapping: 0
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
   m_linkedTextComponent: {fileID: 0}
@@ -901,7 +901,7 @@ MonoBehaviour:
   _spawnCooldown: 0.2
   _coinPrefab: {fileID: 6100856498369052359, guid: 5843166b4f56e2443aae07c89934fbae, type: 3}
   _rotateDownSpeed: 135
-  _rotateUpSpeed: 180
+  _rotateUpSpeed: 135
   _angleToDropCoins: 75
   _maxDownAngle: 150
   SpawnedCoinsCount: 0

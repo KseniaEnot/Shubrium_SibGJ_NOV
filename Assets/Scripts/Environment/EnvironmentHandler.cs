@@ -47,7 +47,7 @@ public class EnvironmentHandler : MonoBehaviour
                 l.color = _cameraGradient.Evaluate(_intensity);
             }
 
-            _ambienceEmitter.SetParameter("daytime", 1f - _intensity);
+            _ambienceEmitter.SetParameter("daytime", _intensity);
 
             yield return null;
         }

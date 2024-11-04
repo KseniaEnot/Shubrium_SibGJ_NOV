@@ -13,8 +13,9 @@ public class TaskManager : MonoBehaviour
     [SerializeField] private OverallRating _overallRating;
     [SerializeField] private List<CharacterRating> _characterRatings = new();
     [SerializeField] private Color _requiredGoldTextColor = Color.yellow;// = "#FFFF00";
-    [SerializeField] private Color _incomeGoldTextColor = Color.green;
-    [SerializeField] private Color _outcomeGoldTextColor = Color.red;
+    [SerializeField] private Color _incomeGoldTextColor = Color.white;
+    [SerializeField] private Color _outcomeGoldTextColor = Color.white;
+    [SerializeField] private Color _daysLeftTextColor = Color.white;
     [Header("Game Over")]
     [SerializeField] private string _gameOverMessage = "Вы остались ни с чем! Конец игры.";
 
@@ -106,8 +107,8 @@ public class TaskManager : MonoBehaviour
         {
             GameManager.StaticInstance.UI.ShowSummaryOfDay($"Доход за день: <b><color=#{ColorUtility.ToHtmlStringRGBA(_incomeGoldTextColor)}>{GameManager.StaticInstance.Currency.IncomePerDay}</color></b>\n" +
                 $"Расход за день: <b><color=#{ColorUtility.ToHtmlStringRGBA(_outcomeGoldTextColor)}>{-GameManager.StaticInstance.Currency.OutcomePerDay}</color></b>\n" +
-                $"До возврата долга осталось {GameManager.StaticInstance.Day.DeadlineDay - GameManager.StaticInstance.Day.CurrentDay} дней.\n" +
-                $"Осталось накопить <b><color=#{ColorUtility.ToHtmlStringRGBA(_requiredGoldTextColor)}>{GameManager.StaticInstance.Currency.RequiredGold - GameManager.StaticInstance.Currency.CurrentGold}</color></b>.");
+                $"Долг: <b><color=#{ColorUtility.ToHtmlStringRGBA(_requiredGoldTextColor)}>{GameManager.StaticInstance.Currency.RequiredGold - GameManager.StaticInstance.Currency.CurrentGold}</color></b>\n" +
+                $"До возврата долга осталось <b><color=#{ColorUtility.ToHtmlStringRGBA(_daysLeftTextColor)}>{GameManager.StaticInstance.Day.DeadlineDay - GameManager.StaticInstance.Day.CurrentDay}</color></b> дней");
         }
         else
         {
