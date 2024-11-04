@@ -86,7 +86,7 @@ public class TaskManager : MonoBehaviour
             tempCharacter = _charactersWithoutQuest[Random.Range(0, _charactersWithoutQuest.Count)];// get character without quest
             _charactersWithoutQuest.Remove(tempCharacter);// remove from pool
             _tasksForCurrentDay.Add(new(tempCharacter, tempCharacter.GetRandomQuest()));// add random quest to task pool
-            _tasksForCurrentDay[i].RequestedGold = Mathf.RoundToInt(Random.Range(_tasksForCurrentDay[i].CurrentQuest.MinRequestedGold, _tasksForCurrentDay[i].CurrentQuest.MaxRequestedGold) * _overallRating.CurrentRatingMultiplier);
+            _tasksForCurrentDay[i].RequestedGold = Mathf.FloorToInt(Random.Range(_tasksForCurrentDay[i].CurrentQuest.MinRequestedGold, _tasksForCurrentDay[i].CurrentQuest.MaxRequestedGold) * _overallRating.CurrentRatingMultiplier);
         }
         CheckTasks();
     }
@@ -95,6 +95,8 @@ public class TaskManager : MonoBehaviour
     {
         if (_tasksForCurrentDay.Count > 0)
         {
+            // start coroutine Audio (knock-knock in door, when open, footstep 2 times, when close door)
+            // wait up actions than start down actions
             if (_tasksForCurrentDay.Count == _questSettingsConfig.TasksLeftToEnableNight)
             {
                 EventBus.TimeOfDayChanged(true);

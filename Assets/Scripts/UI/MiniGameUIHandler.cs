@@ -22,11 +22,11 @@ public class MiniGameUIHandler : MonoBehaviour
 
 	private void DrawRequestedCoins(int value)
 	{
-		_requestedCoinsText.text = _requestedString + value.ToString();
+		_requestedCoinsText.text = $"{_requestedString} {value}";
 	}
 
 	private void DrawLootedCoins(int value)
 	{
-		_lootedCoinsText.text = _lootedString + value.ToString();
+        _lootedCoinsText.text = $"{_lootedString} {value}";
 	}
 }
