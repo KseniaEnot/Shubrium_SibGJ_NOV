@@ -78,16 +78,18 @@ public class TaskManager : MonoBehaviour
         {
             _charactersWithoutQuest.Remove(_tasksForCurrentDay[i].CurrentCharacter);// remove character from pool
         }
-        _tasksForNextDay.Clear();
         int questCount = Random.Range(_questSettingsConfig.MinNewQuestsPerDay, _questSettingsConfig.MaxNewQuestsPerDay + 1);// how many new quest appear today
         CharacterConfig tempCharacter;
-        for (int i = 0; i < questCount; i++)
+        for (int i = _tasksForNextDay.Count; i < questCount + _tasksForNextDay.Count; i++)
         {
             tempCharacter = _charactersWithoutQuest[Random.Range(0, _charactersWithoutQuest.Count)];// get character without quest
             _charactersWithoutQuest.Remove(tempCharacter);// remove from pool
             _tasksForCurrentDay.Add(new(tempCharacter, tempCharacter.GetRandomQuest()));// add random quest to task pool
-            _tasksForCurrentDay[i].RequestedGold = Mathf.FloorToInt(Random.Range(_tasksForCurrentDay[i].CurrentQuest.MinRequestedGold, _tasksForCurrentDay[i].CurrentQuest.MaxRequestedGold) * _overallRating.CurrentRatingMultiplier);
+            int randomGold = Random.Range(_tasksForCurrentDay[i].CurrentQuest.MinRequestedGold, _tasksForCurrentDay[i].CurrentQuest.MaxRequestedGold + 1);
+            Debug.Log($"{randomGold} * {_overallRating.CurrentRatingMultiplier} = {Mathf.FloorToInt(randomGold * _overallRating.CurrentRatingMultiplier)}");
+            _tasksForCurrentDay[i].RequestedGold = Mathf.FloorToInt(randomGold * _overallRating.CurrentRatingMultiplier);
         }
+        _tasksForNextDay.Clear();
         CheckTasks();
     }
 

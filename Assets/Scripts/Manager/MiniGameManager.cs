@@ -50,7 +50,6 @@ public class MiniGameManager : MonoBehaviour
         while (!_requiredCancelCoroutine)
         {
             currentAngle = _playerBag.transform.localEulerAngles.z;
-            Debug.Log(currentAngle);
             if (currentAngle < _maxDownAngle || currentAngle > 355f)
             {
                 _playerBag.transform.Rotate(Vector3.forward * _rotateDownSpeed * Time.deltaTime);
@@ -129,7 +128,6 @@ public class MiniGameManager : MonoBehaviour
             //        }
             //    }
             //}
-            Debug.Log(currentAngle);
             yield return null;
         }
         _playerBag.SetActive(false);
