@@ -107,7 +107,7 @@ public class TaskManager : MonoBehaviour
         {
             GameManager.StaticInstance.UI.ShowSummaryOfDay($"Доход за день: <b><color=#{ColorUtility.ToHtmlStringRGBA(_incomeGoldTextColor)}>{GameManager.StaticInstance.Currency.IncomePerDay}</color></b>\n" +
                 $"Расход за день: <b><color=#{ColorUtility.ToHtmlStringRGBA(_outcomeGoldTextColor)}>{-GameManager.StaticInstance.Currency.OutcomePerDay}</color></b>\n" +
-                $"Долг: <b><color=#{ColorUtility.ToHtmlStringRGBA(_requiredGoldTextColor)}>{GameManager.StaticInstance.Currency.RequiredGold - GameManager.StaticInstance.Currency.CurrentGold}</color></b>\n" +
+                $"Долг: <b><color=#{ColorUtility.ToHtmlStringRGBA(_requiredGoldTextColor)}>{GameManager.StaticInstance.Currency.RequiredGold}</color></b>\n" +
                 $"До возврата долга осталось <b><color=#{ColorUtility.ToHtmlStringRGBA(_daysLeftTextColor)}>{GameManager.StaticInstance.Day.DeadlineDay - GameManager.StaticInstance.Day.CurrentDay}</color></b> дней");
         }
         else
