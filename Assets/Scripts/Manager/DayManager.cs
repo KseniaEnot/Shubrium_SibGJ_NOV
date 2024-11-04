@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class DayManager : MonoBehaviour
 {
-    [SerializeField] private int _deadlineDay = 14;
+    [SerializeField] private int _deadlineDay = 7;
     [SerializeField, Range(0f, 10f)] private float _timeScale = 1f;
     private int _currentDay = 0;
 
@@ -33,13 +33,6 @@ public class DayManager : MonoBehaviour
     private void UpdateDay()
     {
         EventBus.TimeOfDayChanged(false);
-        if (_currentDay == _deadlineDay)
-        {
-            EventBus.DeadlineReached();
-        }
-        else if (!GameManager.StaticInstance.Currency.GameOver)
-        {
-            EventBus.DayChanged(CurrentDay);
-        }
+        EventBus.DayChanged(CurrentDay, _currentDay == _deadlineDay, GameManager.StaticInstance.Currency.GameOver);
     }
 }

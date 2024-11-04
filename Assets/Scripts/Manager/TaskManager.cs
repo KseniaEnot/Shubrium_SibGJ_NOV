@@ -15,79 +15,75 @@ public class TaskManager : MonoBehaviour
     [SerializeField] private Color _requiredGoldTextColor = Color.yellow;// = "#FFFF00";
     [SerializeField] private Color _incomeGoldTextColor = Color.green;
     [SerializeField] private Color _outcomeGoldTextColor = Color.red;
+    [Header("Game Over")]
+    [SerializeField] private string _gameOverMessage = "Вы остались ни с чем! Конец игры.";
 
     public TaskData CurrentTask => _tasksForCurrentDay[0];
 
     private void OnEnable()
     {
-        EventBus.OnDeadlineReached += OnReachedDeadline;
         EventBus.OnDayChanged += RefreshPools;
         EventBus.OnCharacterReachedEnter += OnCharacterReachedEnter;
         EventBus.OnCharacterReachedExit += OnCharacterReachedExit;
         EventBus.OnAllCoinsLooted += MiniGameCompleted;
-        EventBus.OnGameOver += OnGameOver;
     }
 
     private void OnDisable()
     {
-        EventBus.OnDeadlineReached -= OnReachedDeadline;
         EventBus.OnDayChanged -= RefreshPools;
         EventBus.OnCharacterReachedEnter -= OnCharacterReachedEnter;
         EventBus.OnCharacterReachedExit -= OnCharacterReachedExit;
         EventBus.OnAllCoinsLooted -= MiniGameCompleted;
-        EventBus.OnGameOver -= OnGameOver;
     }
 
-    private void OnGameOver()
+    private void RefreshPools(int value, bool isDeadline, bool isGameOver)
     {
-        _deadline = true;
-        GameManager.StaticInstance.UI.ShowGameOverNotification();
-    }
-
-    private void OnReachedDeadline()
-    {
-        _deadline = true;
-        GameManager.StaticInstance.UI.ShowDeadlineNotification();
-    }
-
-    private void RefreshPools(int value)
-    {
-        if (_characterRatings.Count == 0)
+        if(isGameOver)
         {
-            _overallRating = new();
-            for (int i = 0; i < _characterSettingsConfig.CharacterConfigs.Count; i++)
-            {
-                _characterRatings.Add(new(_characterSettingsConfig.CharacterConfigs[i]));
-            }
-        }
-
-        if (_deadline)
-        {
+            ///// REWORK
+            GameManager.StaticInstance.UI.ShowGameOverNotification($"{_gameOverMessage}\n" +
+            $"Итоговый доход: {GameManager.StaticInstance.Currency.IncomeOverall}\n" +
+            $"Итоговый расход: {GameManager.StaticInstance.Currency.OutcomeOverall}");
             return;
         }
-        _charactersWithoutQuest.Clear();// clear pool
-        for (int i = 0; i < _characterSettingsConfig.CharacterConfigs.Count; i++)
+        _deadline = isDeadline;
+        if(!_deadline)
         {
-            _charactersWithoutQuest.Add(_characterSettingsConfig.CharacterConfigs[i]);// add characters to pool
+            if (_characterRatings.Count == 0)
+            {
+                _overallRating = new();
+                for (int i = 0; i < _characterSettingsConfig.CharacterConfigs.Count; i++)
+                {
+                    _characterRatings.Add(new(_characterSettingsConfig.CharacterConfigs[i]));
+                }
+            }
+            _charactersWithoutQuest.Clear();// clear pool
+            for (int i = 0; i < _characterSettingsConfig.CharacterConfigs.Count; i++)
+            {
+                _charactersWithoutQuest.Add(_characterSettingsConfig.CharacterConfigs[i]);// add characters to pool
+            }
         }
         foreach (TaskData task in _tasksForNextDay)
         {
             _tasksForCurrentDay.Add(task);
         }
-        for (int i = _tasksForCurrentDay.Count - 1; i >= 0; i--)
+        if (!_deadline)
         {
-            _charactersWithoutQuest.Remove(_tasksForCurrentDay[i].CurrentCharacter);// remove character from pool
-        }
-        int questCount = Random.Range(_questSettingsConfig.MinNewQuestsPerDay, _questSettingsConfig.MaxNewQuestsPerDay + 1);// how many new quest appear today
-        CharacterConfig tempCharacter;
-        for (int i = _tasksForNextDay.Count; i < questCount + _tasksForNextDay.Count; i++)
-        {
-            tempCharacter = _charactersWithoutQuest[Random.Range(0, _charactersWithoutQuest.Count)];// get character without quest
-            _charactersWithoutQuest.Remove(tempCharacter);// remove from pool
-            _tasksForCurrentDay.Add(new(tempCharacter, tempCharacter.GetRandomQuest()));// add random quest to task pool
-            int randomGold = Random.Range(_tasksForCurrentDay[i].CurrentQuest.MinRequestedGold, _tasksForCurrentDay[i].CurrentQuest.MaxRequestedGold + 1);
-            Debug.Log($"{randomGold} * {_overallRating.CurrentRatingMultiplier} = {Mathf.FloorToInt(randomGold * _overallRating.CurrentRatingMultiplier)}");
-            _tasksForCurrentDay[i].RequestedGold = Mathf.FloorToInt(randomGold * _overallRating.CurrentRatingMultiplier);
+            for (int i = _tasksForCurrentDay.Count - 1; i >= 0; i--)
+            {
+                _charactersWithoutQuest.Remove(_tasksForCurrentDay[i].CurrentCharacter);// remove character from pool
+            }
+            int questCount = Random.Range(_questSettingsConfig.MinNewQuestsPerDay, _questSettingsConfig.MaxNewQuestsPerDay + 1);// how many new quest appear today
+            CharacterConfig tempCharacter;
+            for (int i = _tasksForNextDay.Count; i < questCount + _tasksForNextDay.Count; i++)
+            {
+                tempCharacter = _charactersWithoutQuest[Random.Range(0, _charactersWithoutQuest.Count)];// get character without quest
+                _charactersWithoutQuest.Remove(tempCharacter);// remove from pool
+                _tasksForCurrentDay.Add(new(tempCharacter, tempCharacter.GetRandomQuest()));// add random quest to task pool
+                int randomGold = Random.Range(_tasksForCurrentDay[i].CurrentQuest.MinRequestedGold, _tasksForCurrentDay[i].CurrentQuest.MaxRequestedGold + 1);
+                Debug.Log($"{randomGold} * {_overallRating.CurrentRatingMultiplier} = {Mathf.FloorToInt(randomGold * _overallRating.CurrentRatingMultiplier)}");
+                _tasksForCurrentDay[i].RequestedGold = Mathf.FloorToInt(randomGold * _overallRating.CurrentRatingMultiplier);
+            }
         }
         _tasksForNextDay.Clear();
         CheckTasks();
@@ -99,20 +95,28 @@ public class TaskManager : MonoBehaviour
         {
             // start coroutine Audio (knock-knock in door, when open, footstep 2 times, when close door)
             // wait up actions than start down actions
-            if (_tasksForCurrentDay.Count == _questSettingsConfig.TasksLeftToEnableNight)
+            if (!_deadline && _tasksForCurrentDay.Count == _questSettingsConfig.TasksLeftToEnableNight)
             {
                 EventBus.TimeOfDayChanged(true);
             }
             EventBus.SendCharacter(_characterSettingsConfig.CharacterConfigs.IndexOf(_tasksForCurrentDay[0].CurrentCharacter));
             EventBus.SendCharacterToEnter();
         }
-        else
+        else if (!_deadline)
         {
             GameManager.StaticInstance.UI.ShowSummaryOfDay($"Доход за день: <b><color=#{ColorUtility.ToHtmlStringRGBA(_incomeGoldTextColor)}>{GameManager.StaticInstance.Currency.IncomePerDay}</color></b>\n" +
                 $"Расход за день: <b><color=#{ColorUtility.ToHtmlStringRGBA(_outcomeGoldTextColor)}>{-GameManager.StaticInstance.Currency.OutcomePerDay}</color></b>\n" +
                 $"До возврата долга осталось {GameManager.StaticInstance.Day.DeadlineDay - GameManager.StaticInstance.Day.CurrentDay} дней.\n" +
                 $"Осталось накопить <b><color=#{ColorUtility.ToHtmlStringRGBA(_requiredGoldTextColor)}>{GameManager.StaticInstance.Currency.RequiredGold - GameManager.StaticInstance.Currency.CurrentGold}</color></b>.");
-            // or EventBus.DayEnded?
+        }
+        else
+        {
+            ///// REWORK
+            GameManager.StaticInstance.UI.ShowDeadlineNotification($"Сейчас имеется: {GameManager.StaticInstance.Currency.CurrentGold}\n" +
+            $"Итоговый доход: {GameManager.StaticInstance.Currency.IncomeOverall}\n" +
+            $"Итоговый расход: {GameManager.StaticInstance.Currency.OutcomeOverall}\n" +
+            $"Сумма долга: {GameManager.StaticInstance.Currency.RequiredGold}\n" +
+            $"{GameManager.StaticInstance.Currency.GetDeadLineResultText()}");
         }
     }
 

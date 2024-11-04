@@ -42,9 +42,8 @@ public class CurrencyManager : MonoBehaviour
         if (_incomePerDay == 0 && _outcomePerDay == 0 && _currentGold == 0)
         {
             _gameOver = true;
-            EventBus.GameOver();
         }
-        else
+        else// need else???
         {
             _incomePerDay = 0;
             _outcomePerDay = 0;

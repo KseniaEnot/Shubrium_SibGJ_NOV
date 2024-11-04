@@ -32,8 +32,6 @@ public class InGameUIManager : MonoBehaviour
     [SerializeField] private GameObject _miniGameBar;
     [SerializeField] private Button _miniGameButtonStart;
     [SerializeField] private Button _miniGameButtonEnd;
-    [Header("Game Over")]
-    [SerializeField] private string _gameOverMessage = "Вы остались ни с чем! Конец игры.";
 
     private bool _deadline;
 
@@ -57,7 +55,6 @@ public class InGameUIManager : MonoBehaviour
                 Convert.ToString(GameManager.StaticInstance.Currency.RequiredGold));
         _textNewGameNotification.text = _textNewGameNotification.text.Replace("{d}",
                 Convert.ToString(GameManager.StaticInstance.Day.DeadlineDay));
-
     }
 
     private void OnDisable()
@@ -182,21 +179,15 @@ public class InGameUIManager : MonoBehaviour
         GameManager.StaticInstance.MiniGame.StopSharing();
     }
     // DEADLINE
-    public void ShowDeadlineNotification()
+    public void ShowDeadlineNotification(string text)
     {
         _deadline = true;
-        ShowSummaryOfDay($"Сейчас имеется: {GameManager.StaticInstance.Currency.CurrentGold}\n" +
-            $"Итоговый доход: {GameManager.StaticInstance.Currency.IncomeOverall}\n" +
-            $"Итоговый расход: {GameManager.StaticInstance.Currency.OutcomeOverall}\n" +
-            $"Сумма долга: {GameManager.StaticInstance.Currency.RequiredGold}\n" +
-            $"{GameManager.StaticInstance.Currency.GetDeadLineResultText()}");
+        ShowSummaryOfDay(text);
     }
 
-    public void ShowGameOverNotification()
+    public void ShowGameOverNotification(string text)
     {
         _deadline = true;
-        ShowSummaryOfDay($"{_gameOverMessage}\n" +
-            $"Итоговый доход: {GameManager.StaticInstance.Currency.IncomeOverall}\n" +
-            $"Итоговый расход: {GameManager.StaticInstance.Currency.OutcomeOverall}");
+        ShowSummaryOfDay(text);
     }
 }

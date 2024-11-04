@@ -4,9 +4,8 @@ public static class EventBus
 {
     public static event Action OnGameStarted;
     public static event Action OnNextDay;
-    public static event Action<int> OnDayChanged;
+    public static event Action<int, bool, bool> OnDayChanged;
     public static event Action<bool> OnTimeOfDayChanged;
-    public static event Action OnDeadlineReached;
     public static event Action<int> OnGoldChanged;
     public static event Action<int> OnSendCharacter;
     public static event Action OnSendCharacterToEnter;
@@ -16,7 +15,6 @@ public static class EventBus
     public static event Action<int> OnRequiredCoinsUpdated;
     public static event Action<int> OnLootedCoinsUpdated;
     public static event Action<int> OnAllCoinsLooted;
-    public static event Action OnGameOver;
 
     public static void GameStarted()
     {
@@ -28,19 +26,14 @@ public static class EventBus
         OnNextDay?.Invoke();
     }
 
-    public static void DayChanged(int value)
+    public static void DayChanged(int value, bool isDeadline, bool isGameOver)
     {
-        OnDayChanged?.Invoke(value);
+        OnDayChanged?.Invoke(value, isDeadline, isGameOver);
     }
 
     public static void TimeOfDayChanged(bool isNight)
     {
         OnTimeOfDayChanged(isNight);
-    }
-
-    public static void DeadlineReached()
-    {
-        OnDeadlineReached?.Invoke();
     }
 
     public static void GoldChanged(int value)
@@ -86,10 +79,5 @@ public static class EventBus
     public static void AllCoinsLooted(int amount)
     {
         OnAllCoinsLooted?.Invoke(amount);
-    }
-
-    public static void GameOver()
-    {
-        OnGameOver?.Invoke();
     }
 }
