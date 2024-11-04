@@ -1,9 +1,11 @@
+using FMODUnity;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class MiniGameManager : MonoBehaviour
 {
+    [SerializeField] private EventReference _coinAudioRef;
     [SerializeField] private GameObject _playerBag;
     [SerializeField] private GameObject _characterBag;
     [SerializeField] private int _lootedCoinsCount;
@@ -22,6 +24,7 @@ public class MiniGameManager : MonoBehaviour
 
     public int SpawnedCoinsCount;
     public int LootedCoinsCount => _lootedCoinsCount;
+    public EventReference CoinAudioRef => _coinAudioRef;
 
     public void StartMiniGame()
     {
@@ -137,6 +140,7 @@ public class MiniGameManager : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        RuntimeManager.PlayOneShot(_coinAudioRef, Camera.main.transform.position);
         _lootedCoinsCount++;
         SpawnedCoinsCount--;
         collision.GetComponent<Rigidbody2D>().velocity = Vector2.zero;

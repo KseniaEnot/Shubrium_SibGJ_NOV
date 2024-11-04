@@ -10,7 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 5542211908949208079}
   - component: {fileID: 2835656673335938994}
-  m_Layer: 0
+  - component: {fileID: 7973495684256523633}
+  m_Layer: 6
   m_Name: Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -73,7 +74,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: -2413806693520163455, guid: 31d2a0cca6eaecb49ac49245a29d7fbf, type: 3}
+  m_Sprite: {fileID: 21300000, guid: cb5c1f65b6bf5594abe34b50489714f0, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -84,6 +85,59 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!60 &7973495684256523633
+PolygonCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2051313656082542617}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 0.39062497, y: 0.39062497}
+    newSize: {x: 1, y: 1}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Points:
+    m_Paths:
+    - - {x: 0.1602652, y: 0.14147896}
+      - {x: 0.13564605, y: -0.024849556}
+      - {x: -0.12857632, y: -0.017001487}
+      - {x: -0.15342066, y: 0.13415189}
+      - {x: -2.1102145, y: -0.014561586}
+      - {x: -0.12890851, y: -0.12798509}
+      - {x: 0.11884303, y: -0.1297544}
+      - {x: 1.9186889, y: -0.0039234683}
+  m_UseDelaunayMesh: 0
 --- !u!1 &2930636137649227049
 GameObject:
   m_ObjectHideFlags: 0
@@ -158,7 +212,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: -2413806693520163455, guid: 31d2a0cca6eaecb49ac49245a29d7fbf, type: 3}
+  m_Sprite: {fileID: 21300000, guid: cb5c1f65b6bf5594abe34b50489714f0, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -205,7 +259,7 @@ PolygonCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.33333334, y: 0.33333334}
+    oldSize: {x: 0.39062497, y: 0.39062497}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -213,20 +267,14 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: 0.11916427, y: 0.11619282}
-      - {x: 0.112829536, y: 0.035348892}
-      - {x: 0.112497985, y: -0.06853378}
-      - {x: 0.06723863, y: -0.11712545}
-      - {x: -0.06527498, y: -0.11930072}
-      - {x: -0.1128528, y: -0.07803416}
-      - {x: -0.113844246, y: 0.025160491}
-      - {x: -0.1259145, y: 0.107889116}
-      - {x: -0.14524132, y: 0.085953474}
-      - {x: -0.15251087, y: -0.07052559}
-      - {x: -0.090118006, y: -0.1501511}
-      - {x: 0.08597779, y: -0.1501512}
-      - {x: 0.1515784, y: -0.07954621}
-      - {x: 0.13825491, y: 0.10025132}
+    - - {x: 0.081066474, y: 0.07324618}
+      - {x: 0.110058755, y: -0.10526675}
+      - {x: -0.11029969, y: -0.10960311}
+      - {x: -0.0912801, y: 0.07810354}
+      - {x: -0.14593402, y: -0.024183929}
+      - {x: -0.12890851, y: -0.12798509}
+      - {x: 0.12615368, y: -0.122443736}
+      - {x: 0.14933792, y: -0.028588533}
   m_UseDelaunayMesh: 0
 --- !u!1 &3778883067657009772
 GameObject:
@@ -285,7 +333,7 @@ Transform:
   m_GameObject: {fileID: 8400631555077021271}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0.1, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -303,7 +351,6 @@ GameObject:
   - component: {fileID: 2677369755247978813}
   - component: {fileID: 3404729191108976873}
   - component: {fileID: 4976305619487987975}
-  - component: {fileID: 1275534893786657768}
   m_Layer: 6
   m_Name: Mini Game Manager
   m_TagString: Untagged
@@ -340,6 +387,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38c40963d24f09b4899614808fd72264, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _coinAudioRef:
+    Guid:
+      Data1: 1836851131
+      Data2: 1124447782
+      Data3: 296576676
+      Data4: -216513634
+    Path: event:/SFX/money_fall
   _playerBag: {fileID: 3778883067657009772}
   _characterBag: {fileID: 8400631555077021271}
   _lootedCoinsCount: 0
@@ -377,48 +431,3 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!61 &1275534893786657768
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8662634176154695961}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 30, y: 0.3}
-  m_EdgeRadius: 0
