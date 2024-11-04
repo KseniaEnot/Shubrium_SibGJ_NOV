@@ -1,3 +1,4 @@
+using FMODUnity;
 using System;
 using System.Collections;
 using TMPro;
@@ -7,6 +8,8 @@ using UnityEngine.UI;
 
 public class InGameUIManager : MonoBehaviour
 {
+    [SerializeField] private StudioEventEmitter _winEmitter;
+    [SerializeField] private StudioEventEmitter _loseEmitter;
     public GoldDisplay GoldDisplay;
     [Header("New Game")]
     [SerializeField] private GameObject _newGameNotification;
@@ -111,7 +114,6 @@ public class InGameUIManager : MonoBehaviour
 
     private void OnQuestRequestButtonDenyPressed()
     {
-        GameManager.StaticInstance.Character.CharacterAudioManager.PlayDenyQuestSound();
         GameManager.StaticInstance.Task.LowerOverallRating();
         GameManager.StaticInstance.Task.LowerCharacterRatings();
         GameManager.StaticInstance.Task.GetCurrentTaskNoGoldReactionText(out string characterName, out string questName, out string descriptionText);
@@ -138,6 +140,7 @@ public class InGameUIManager : MonoBehaviour
     // RESULT BAR
     public void ShowQuestResultBar(string characterName, string questName, string descriptionText)
     {
+        GameManager.StaticInstance.Character.CharacterAudioManager.PlayStartConservationQuestSound();
         _questResultCharacterNameText.text = characterName;
         _questResultQuestNameText.text = questName;
         _questResultDescriptionText.text = descriptionText;
@@ -156,6 +159,7 @@ public class InGameUIManager : MonoBehaviour
     // MINI GAME
     public void OnMiniGameCompleted(string characterName, string questName, string descriptionText)
     {
+        GameManager.StaticInstance.Character.CharacterAudioManager.PlayStartConservationQuestSound();
         _miniGameBar.SetActive(false);
         _questResultCharacterNameText.text = characterName;
         _questResultQuestNameText.text = questName;
@@ -192,15 +196,24 @@ public class InGameUIManager : MonoBehaviour
         GameManager.StaticInstance.MiniGame.StopSharing();
     }
     // DEADLINE
-    public void ShowDeadlineNotification(string text)
+    public void ShowDeadlineNotification(string text, bool win)
     {
         _deadline = true;
+        if (win)
+        {
+            _winEmitter.Play();
+        }
+        else
+        {
+            _loseEmitter.Play();
+        }
         ShowSummaryOfDay(text);
     }
 
     public void ShowGameOverNotification(string text)
     {
         _deadline = true;
+        _loseEmitter.Play();
         ShowSummaryOfDay(text);
     }
 }

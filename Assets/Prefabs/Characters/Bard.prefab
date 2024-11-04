@@ -58,7 +58,7 @@ Transform:
   m_GameObject: {fileID: 45772600244045692}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.4311748, y: 2.5297997, z: 0.77214146}
+  m_LocalPosition: {x: -0.014000058, y: 2.809, z: 0.5109998}
   m_LocalScale: {x: 1.8, y: 1.8, z: 1.8}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -93,7 +93,7 @@ MonoBehaviour:
   NonRigidbodyVelocity: 0
   Params:
   - Name: char_type
-    Value: 7
+    Value: 0
   OverrideAttenuation: 0
   OverrideMinDistance: 1
   OverrideMaxDistance: 20
@@ -1789,7 +1789,7 @@ Transform:
   m_GameObject: {fileID: 6734010051542337724}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.4311748, y: 2.5297997, z: 0.77214146}
+  m_LocalPosition: {x: -0.014000058, y: 2.809, z: 0.5109998}
   m_LocalScale: {x: 1.8, y: 1.8, z: 1.8}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1824,7 +1824,7 @@ MonoBehaviour:
   NonRigidbodyVelocity: 0
   Params:
   - Name: char_type
-    Value: 7
+    Value: 0
   OverrideAttenuation: 0
   OverrideMinDistance: 1
   OverrideMaxDistance: 20
@@ -1993,7 +1993,7 @@ Transform:
   m_GameObject: {fileID: 7100699048752907809}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.4311748, y: 2.5297997, z: 0.77214146}
+  m_LocalPosition: {x: -0.014000058, y: 2.809, z: 0.5109998}
   m_LocalScale: {x: 1.8, y: 1.8, z: 1.8}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2028,7 +2028,7 @@ MonoBehaviour:
   NonRigidbodyVelocity: 0
   Params:
   - Name: char_type
-    Value: 7
+    Value: 0
   OverrideAttenuation: 0
   OverrideMinDistance: 1
   OverrideMaxDistance: 20
@@ -2312,7 +2312,7 @@ Transform:
   m_GameObject: {fileID: 8346200903886017995}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.4311748, y: -0.010000259, z: 0.32214165}
+  m_LocalPosition: {x: -0.014, y: -0.010000259, z: 0.061}
   m_LocalScale: {x: 1.8, y: 1.8, z: 1.8}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2347,7 +2347,7 @@ MonoBehaviour:
   NonRigidbodyVelocity: 0
   Params:
   - Name: char_type
-    Value: 7
+    Value: 0
   OverrideAttenuation: 0
   OverrideMinDistance: 1
   OverrideMaxDistance: 20

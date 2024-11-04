@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3551728730933744709}
   - component: {fileID: 5147469044489165195}
+  - component: {fileID: 1581573167208306441}
   m_Layer: 0
   m_Name: Currency Manager
   m_TagString: Untagged
@@ -44,10 +45,42 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c146fcc1fb4d06c46bb47cbe8bb98157, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _emitter: {fileID: 1581573167208306441}
   _startingGold: 100
   _requiredGold: 600
   _loseText: "\u0412\u0430\u0441 \u043A\u0430\u0437\u043D\u0438\u043B\u0438 \u0437\u0430
-    \u043D\u0435\u0443\u043B\u043F\u0442\u0443 \u0434\u043E\u043B\u0433\u0430."
+    \u043D\u0435\u0443\u043F\u043B\u0430\u0442\u0443 \u0434\u043E\u043B\u0433\u0430."
   _winText: "\u0412\u044B \u0441\u0432\u043E\u0431\u043E\u0434\u043D\u044B \u043E\u0442
     \u0434\u043E\u043B\u0433\u0430. \u0412\u043F\u0435\u0440\u0435\u0434\u0438 \u0442\u043E\u043B\u044C\u043A\u043E
     \u0441\u0432\u0435\u0442\u043B\u043E\u0435 \u0431\u0443\u0434\u0443\u0449\u0435\u0435! "
+--- !u!114 &1581573167208306441
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7247502228816716591}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollisionTag: 
+  EventReference:
+    Guid:
+      Data1: -2048969739
+      Data2: 1329452994
+      Data3: -252044902
+      Data4: 872061793
+    Path: event:/SFX/money_recieve
+  Event: 
+  EventPlayTrigger: 0
+  EventStopTrigger: 0
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 0
+  NonRigidbodyVelocity: 0
+  Params: []
+  OverrideAttenuation: 0
+  OverrideMinDistance: 1
+  OverrideMaxDistance: 20
