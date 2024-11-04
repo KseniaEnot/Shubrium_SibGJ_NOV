@@ -44,5 +44,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5fba6b4e20f1d4714a0954193609bf17, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _deadlineDay: 7
+  _deadlineDay: 2
   _timeScale: 1
